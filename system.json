@@ -1,11 +1,18 @@
 {
+  "id": "valor",
   "name": "valor",
   "title": "Valor",
   "description": "The Valor system for FoundryVTT!",
   "version": "1.0.0",
-  "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "9",
-  "author": "Daniel Letterman",
+  "compatibility": {
+    "minimum": 11,
+    "verified": "11.299"
+  },
+  "authors": "Daniel Letterman",
+  "authors": [
+    {"name": "Daniel Letterman"},
+    {"name": "Gabe Williams"}
+  ],
   "esmodules": ["module/valor.mjs"],
   "styles": ["css/valor.css"],
   "scripts": [],
@@ -17,12 +24,13 @@
       "path": "lang/en.json"
     }
   ],
-  "gridDistance": 5,
-  "gridUnits": "ft",
+  "gridDistance": 1,
+  "gridUnits": "sq",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
   "url": "",
   "manifest": "",
   "download": "",
-  "license": "LICENSE.txt"
+  "changelog": "",
+  "license": "https://github.com/TCX0Lt0X/valor/blob/master/LICENSE.txt"
 }
