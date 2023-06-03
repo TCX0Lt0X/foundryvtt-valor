@@ -1,23 +1,29 @@
-export const BOILERPLATE = {};
+export const VALOR = {};
+
+// Define constants here, such as:
+VALOR.foobar = {
+  'bas': 'VALOR.bas',
+  'bar': 'VALOR.bar'
+};
 
 /**
  * The set of Ability Scores used within the sytem.
  * @type {Object}
  */
- BOILERPLATE.abilities = {
-  "str": "BOILERPLATE.AbilityStr",
-  "dex": "BOILERPLATE.AbilityDex",
-  "con": "BOILERPLATE.AbilityCon",
-  "int": "BOILERPLATE.AbilityInt",
-  "wis": "BOILERPLATE.AbilityWis",
-  "cha": "BOILERPLATE.AbilityCha"
+ VALOR.abilities = {
+  "str": "VALOR.AbilityStr",
+  "dex": "VALOR.AbilityDex",
+  "con": "VALOR.AbilityCon",
+  "int": "VALOR.AbilityInt",
+  "wis": "VALOR.AbilityWis",
+  "cha": "VALOR.AbilityCha"
 };
 
-BOILERPLATE.abilityAbbreviations = {
-  "str": "BOILERPLATE.AbilityStrAbbr",
-  "dex": "BOILERPLATE.AbilityDexAbbr",
-  "con": "BOILERPLATE.AbilityConAbbr",
-  "int": "BOILERPLATE.AbilityIntAbbr",
-  "wis": "BOILERPLATE.AbilityWisAbbr",
-  "cha": "BOILERPLATE.AbilityChaAbbr"
+VALOR.abilityAbbreviations = {
+  "str": "VALOR.AbilityStrAbbr",
+  "dex": "VALOR.AbilityDexAbbr",
+  "con": "VALOR.AbilityConAbbr",
+  "int": "VALOR.AbilityIntAbbr",
+  "wis": "VALOR.AbilityWisAbbr",
+  "cha": "VALOR.AbilityChaAbbr"
 };

@@ -223,19 +223,12 @@
   text-align: center;
 }
 
-/* Styles limited to boilerplate sheets */
-.boilerplate {
-  /* ----------------------------------------- */
-  /*  Items Lists                              */
-  /* ----------------------------------------- */
-  /* Example style for Boilerplate (can be removed if not needed) */
-}
-
-.boilerplate .item-form {
+/* Styles limited to valor sheets */
+.valor .item-form {
   font-family: "Roboto", sans-serif;
 }
 
-.boilerplate .sheet-header {
+.valor .sheet-header {
   -webkit-box-flex: 0;
   -ms-flex: 0 auto;
   flex: 0 auto;
@@ -255,7 +248,7 @@
   margin-bottom: 10px;
 }
 
-.boilerplate .sheet-header .profile-img {
+.valor .sheet-header .profile-img {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 100px;
   flex: 0 0 100px;
@@ -263,50 +256,50 @@
   margin-right: 10px;
 }
 
-.boilerplate .sheet-header .header-fields {
+.valor .sheet-header .header-fields {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
 }
 
-.boilerplate .sheet-header h1.charname {
+.valor .sheet-header h1.charname {
   height: 50px;
   padding: 0px;
   margin: 5px 0;
   border-bottom: 0;
 }
 
-.boilerplate .sheet-header h1.charname input {
+.valor .sheet-header h1.charname input {
   width: 100%;
   height: 100%;
   margin: 0;
 }
 
-.boilerplate .sheet-tabs {
+.valor .sheet-tabs {
   -webkit-box-flex: 0;
   -ms-flex: 0;
   flex: 0;
 }
 
-.boilerplate .sheet-body,
-.boilerplate .sheet-body .tab,
-.boilerplate .sheet-body .tab .editor {
+.valor .sheet-body,
+.valor .sheet-body .tab,
+.valor .sheet-body .tab .editor {
   height: 100%;
 }
 
-.boilerplate .tox .tox-editor-container {
+.valor .tox .tox-editor-container {
   background: #fff;
 }
 
-.boilerplate .tox .tox-edit-area {
+.valor .tox .tox-edit-area {
   padding: 0 8px;
 }
 
-.boilerplate .resource-label {
+.valor .resource-label {
   font-weight: bold;
 }
 
-.boilerplate .items-header {
+.valor .items-header {
   height: 28px;
   margin: 2px 0;
   padding: 0;
@@ -318,12 +311,12 @@
   font-weight: bold;
 }
 
-.boilerplate .items-header > * {
+.valor .items-header > * {
   font-size: 14px;
   text-align: center;
 }
 
-.boilerplate .items-header .item-name {
+.valor .items-header .item-name {
   font-weight: bold;
   padding-left: 5px;
   text-align: left;
@@ -332,7 +325,7 @@
   display: flex;
 }
 
-.boilerplate .items-list {
+.valor .items-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -341,13 +334,13 @@
   color: #444;
 }
 
-.boilerplate .items-list .item-list {
+.valor .items-list .item-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.boilerplate .items-list .item-name {
+.valor .items-list .item-name {
   -webkit-box-flex: 2;
   -ms-flex: 2;
   flex: 2;
@@ -363,13 +356,13 @@
   display: flex;
 }
 
-.boilerplate .items-list .item-name h3, .boilerplate .items-list .item-name h4 {
+.valor .items-list .item-name h3, .valor .items-list .item-name h4 {
   margin: 0;
   white-space: nowrap;
   overflow-x: hidden;
 }
 
-.boilerplate .items-list .item-controls {
+.valor .items-list .item-controls {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -381,13 +374,13 @@
   justify-content: flex-end;
 }
 
-.boilerplate .items-list .item-controls a {
+.valor .items-list .item-controls a {
   font-size: 12px;
   text-align: center;
   margin: 0 6px;
 }
 
-.boilerplate .items-list .item {
+.valor .items-list .item {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -395,15 +388,15 @@
   border-bottom: 1px solid #c9c7b8;
 }
 
-.boilerplate .items-list .item:last-child {
+.valor .items-list .item:last-child {
   border-bottom: none;
 }
 
-.boilerplate .items-list .item .item-name {
+.valor .items-list .item .item-name {
   color: #191813;
 }
 
-.boilerplate .items-list .item .item-name .item-image {
+.valor .items-list .item .item-name .item-image {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 30px;
   flex: 0 0 30px;
@@ -413,14 +406,14 @@
   margin-right: 5px;
 }
 
-.boilerplate .items-list .item-prop {
+.valor .items-list .item-prop {
   text-align: center;
   border-left: 1px solid #c9c7b8;
   border-right: 1px solid #c9c7b8;
   font-size: 12px;
 }
 
-.boilerplate .items-list .items-header {
+.valor .items-list .items-header {
   height: 28px;
   margin: 2px 0;
   padding: 0;
@@ -432,32 +425,32 @@
   font-weight: bold;
 }
 
-.boilerplate .items-list .items-header > * {
+.valor .items-list .items-header > * {
   font-size: 12px;
   text-align: center;
 }
 
-.boilerplate .items-list .items-header .item-name {
+.valor .items-list .items-header .item-name {
   padding-left: 5px;
   text-align: left;
 }
 
-.boilerplate .item-formula {
+.valor .item-formula {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 200px;
   flex: 0 0 200px;
   padding: 0 8px;
 }
 
-.boilerplate .effects .item .effect-source,
-.boilerplate .effects .item .effect-duration,
-.boilerplate .effects .item .effect-controls {
+.valor .effects .item .effect-source,
+.valor .effects .item .effect-duration,
+.valor .effects .item .effect-controls {
   text-align: center;
   border-left: 1px solid #c9c7b8;
   border-right: 1px solid #c9c7b8;
   font-size: 12px;
 }
 
-.boilerplate .effects .item .effect-controls {
+.valor .effects .item .effect-controls {
   border: none;
 }
