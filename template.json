@@ -52,20 +52,6 @@
           "resolve": {
             "value": 1
           }
-        },
-        "attack": {
-          "strength": {
-            "value": 1
-          },
-          "agility": {
-            "value": 1
-          },
-          "spirit": {
-            "value": 1
-          },
-          "mind": {
-            "value": 1
-          }
         }
       },
       "statistic": {
@@ -80,6 +66,23 @@
           "max": 0,
           "increment": 0
         },
+        "attack": {
+          "strength": {
+            "value": 0
+          },
+          "agility": {
+            "value": 0
+          },
+          "spirit": {
+            "value": 0
+          },
+          "mind": {
+            "value": 0
+          }
+        },
+        "damageIncrement": {
+          "value": 0
+        },
         "defense": {
           "value": 0
         },
@@ -89,16 +92,13 @@
         "move": {
           "value": 0
         },
-        "damage": {
-          "increment": 0
-        },
-        "initiative": {
-          "value": 0
-        },
         "valor": {
           "value": 0,
           "max": 10,
           "min": -20
+        },
+        "initiative": {
+          "value": 0
         }
       },
       "misc": {
@@ -117,7 +117,9 @@
           "value": 0,
           "max": 1
         },
-        "type": "Elite"
+        "type": {
+          "value": "Elite"
+        }
       }
     }
   },

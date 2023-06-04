@@ -19,7 +19,7 @@ export class valorActorSheet extends ActorSheet {
 
   /** @override */
   get template() {
-    return `systems/valor/templates/actor/actor-${this.actor.data.type}-sheet.html`;
+    return `systems/valor/templates/actor/actor-${this.actor.type}-sheet.html`;
   }
 
   /* -------------------------------------------- */
@@ -33,10 +33,10 @@ export class valorActorSheet extends ActorSheet {
     const context = super.getData();
 
     // Use a safe clone of the actor data for further operations.
-    const actorData = this.actor.data.toObject(false);
+    const actorData = this.actor.toObject(false);
 
-    // Add the actor's data to context.data for easier access, as well as flags.
-    context.data = actorData.data;
+    // Add the actor's data to context.system for easier access, as well as flags.
+    context.system = actorData.system;
     context.flags = actorData.flags;
 
     // Prepare character data and items.
@@ -68,9 +68,9 @@ export class valorActorSheet extends ActorSheet {
    */
   _prepareCharacterData(context) {
     // Handle ability scores.
-    for (let [k, v] of Object.entries(context.data.abilities)) {
-      v.label = game.i18n.localize(CONFIG.VALOR.abilities[k]) ?? k;
-    }
+    // for (let [k, v] of Object.entries(context.data.abilities)) {
+    //   v.label = game.i18n.localize(CONFIG.VALOR.abilities[k]) ?? k;
+    // }
   }
 
   /**
@@ -110,8 +110,8 @@ export class valorActorSheet extends ActorSheet {
       }
       // Append to spells.
       else if (i.type === 'spell') {
-        if (i.data.spellLevel != undefined) {
-          spells[i.data.spellLevel].push(i);
+        if (i.spellLevel != undefined) {
+          spells[i.spellLevel].push(i);
         }
       }
     }
