@@ -48,8 +48,8 @@ export class valorActor extends Actor {
     const data = actorData.system;
 
     this.calculateActiveAttributes(data);
-    this.calculateHealth();
-    this.calculateStamina();
+    this.calculateHealth(data);
+    this.calculateStamina(data);
     this.calculateAttack(data);
     this.calculateDamageIncrement(data);
     this.calculateDefense(data);
@@ -71,25 +71,28 @@ export class valorActor extends Actor {
   }
 
   calculateHealth(data) {
-    data.statistic.health.max = 50 + (5 * data.attribute.base.strength.value) + (10 * data.attribute.base.guts.value)  + (10 * data.misc.level.value);
-    data.statistic.health.increment = Math.ceil(data.statistic.health.max / 5);
-    data.statistic.health.critical = (data.statistic.health.increment * 2) - 1;
+    let health = 50 + (5 * data.attribute.base.strength.value) + (10 * data.attribute.base.guts.value)  + (10 * data.misc.level.value);
+    let healthIncrement = Math.ceil(health / 5);
+    data.statistic.health.max = health;
+    data.statistic.health.increment = healthIncrement
+    data.statistic.health.critical = (healthIncrement * 2) - 1;
   }
 
   calculateStamina(data) {
-    data.statistic.stamina.max = 8 + (2 * data.attribute.base.spirit.value) + (2 * data.attribute.base.mind.value)  + (4 * data.misc.level.value);
-    data.statistic.stamina.increment = Math.ceil(data.statistic.stamina.max / 5);
+    let stamina = 8 + (2 * data.attribute.base.spirit.value) + (2 * data.attribute.base.mind.value)  + (4 * data.misc.level.value);
+    data.statistic.stamina.max = stamina
+    data.statistic.stamina.increment = Math.ceil(stamina / 5);
   }
 
   calculateAttack(data) {
-    data.statistic.attack.strength.value = Math.ceil((data.attribute.base.strength.value + data.misc.level.value)*2);
-    data.statistic.attack.agility.value = Math.ceil((data.attribute.base.agility.value + data.misc.level.value)*2);
-    data.statistic.attack.mind.value = Math.ceil((data.attribute.base.mind.value + data.misc.level.value)*2);
-    data.statistic.attack.spirit.value = Math.ceil((data.attribute.base.spirit.value + data.misc.level.value)*2);
+    data.statistic.attack.strength.value = Math.ceil((data.attribute.base.strength.value + data.misc.level.value) * 2);
+    data.statistic.attack.agility.value = Math.ceil((data.attribute.base.agility.value + data.misc.level.value) * 2);
+    data.statistic.attack.mind.value = Math.ceil((data.attribute.base.mind.value + data.misc.level.value) * 2);
+    data.statistic.attack.spirit.value = Math.ceil((data.attribute.base.spirit.value + data.misc.level.value) * 2);
   }
 
   calculateDamageIncrement(data) {
-    data.statistic.DamageIncrement.value = 5 + data.misc.level.value;
+    data.statistic.damageIncrement.value = 5 + data.misc.level.value;
   }
 
   calculateDefense(data) {
