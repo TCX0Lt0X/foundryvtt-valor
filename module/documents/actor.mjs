@@ -28,7 +28,7 @@ export class valorActor extends Actor {
    * available both inside and outside of character sheets (such as if an actor
    * is queried and has a roll executed directly from it).
    */
-  prepareDerivedData() {
+  prepareDerivedData() {module
     const actorData = this.data;
     const data = actorData.data;
     const flags = actorData.flags.valor || {};
@@ -36,7 +36,6 @@ export class valorActor extends Actor {
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
     this._prepareCharacterData(actorData);
-    this._prepareNpcData(actorData);
   }
 
   /**
@@ -48,23 +47,14 @@ export class valorActor extends Actor {
     // Make modifications to data here. For example:
     const data = actorData.data;
 
-    // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key, ability] of Object.entries(data.abilities)) {
-      // Calculate the modifier using d20 rules.
-      ability.mod = Math.floor((ability.value - 10) / 2);
-    }
+    this.calculateActiveAttributes(data);
   }
 
-  /**
-   * Prepare NPC type specific data.
-   */
-  _prepareNpcData(actorData) {
-    if (actorData.type !== 'npc') return;
-
-    // Make modifications to data here. For example:
-    const data = actorData.data;
-    data.xp = (data.cr * data.cr) * 100;
+  calculateActiveAttributes(data) {
+    data.attribute.active.muscle.value = Math.ceil((data.attribute.base.strength.value + data.misc.level.value)/2);
   }
+
+
 
   /**
    * Override getRollData() that's supplied to rolls.
@@ -74,7 +64,6 @@ export class valorActor extends Actor {
 
     // Prepare character roll data.
     this._getCharacterRollData(data);
-    this._getNpcRollData(data);
 
     return data;
   }
@@ -87,25 +76,17 @@ export class valorActor extends Actor {
 
     // Copy the ability scores to the top level, so that rolls can use
     // formulas like `@str.mod + 4`.
-    if (data.abilities) {
-      for (let [k, v] of Object.entries(data.abilities)) {
-        data[k] = foundry.utils.deepClone(v);
-      }
-    }
-
-    // Add level for easier access, or fall back to 0.
-    if (data.attributes.level) {
-      data.lvl = data.attributes.level.value ?? 0;
-    }
+  //   if (data.abilities) {
+  //     for (let [k, v] of Object.entries(data.abilities)) {
+  //       data[k] = foundry.utils.deepClone(v);
+  //     }
+  //   }
+  //
+  //   // Add level for easier access, or fall back to 0.
+  //   if (data.attributes.level) {
+  //     data.lvl = data.attributes.level.value ?? 0;
+  //   }
   }
 
-  /**
-   * Prepare NPC roll data.
-   */
-  _getNpcRollData(data) {
-    if (this.data.type !== 'npc') return;
-
-    // Process additional NPC data here.
-  }
 
 }

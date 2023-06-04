@@ -1,17 +1,27 @@
 {
-  "id": "valor",
   "name": "valor",
   "title": "Valor",
   "description": "The Valor system for FoundryVTT!",
   "version": "1.0.0",
+  "manifestPlusVersion": "1.2.0",
   "compatibility": {
     "minimum": 11,
     "verified": "11.299"
   },
-  "authors": "Daniel Letterman",
+  "author": "Daniel Letterman",
   "authors": [
-    {"name": "Daniel Letterman"},
-    {"name": "Gabe Williams"}
+    {
+      "name": "Daniel Letterman",
+      "url": "",
+      "discord": "TC X0 Lt 0X\n#5293",
+      "flags": {}
+    },
+    {
+      "name": "Gabe Williams",
+      "url": "",
+      "discord": "TheRedWizard\n#0365",
+      "flags": {}
+    }
   ],
   "esmodules": ["module/valor.mjs"],
   "styles": ["css/valor.css"],
@@ -28,8 +38,8 @@
   "gridUnits": "sq",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
-  "url": "",
-  "manifest": "",
+  "url": "https://tcx0lt0x.github.io/valor/",
+  "manifest": "https://raw.githubusercontent.com/TCX0Lt0X/valor/master/system.json",
   "download": "",
   "changelog": "",
   "license": "https://github.com/TCX0Lt0X/valor/blob/master/LICENSE.txt"
