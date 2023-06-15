@@ -10,20 +10,31 @@ VALOR.foobar = {
  * The set of Ability Scores used within the sytem.
  * @type {Object}
  */
- VALOR.abilities = {
+VALOR.abilities = {
   "str": "VALOR.AbilityStr",
+  "agi": "VALOR.AbilityAgi",
+  "mnd": "VALOR.AbilityMnd",
+  "spt": "VALOR.AbilitySpt",
+  "gut": "VALOR.AbilityGut"
+};
+
+VALOR.activeAbilities = {
+  "mus": "VALOR.AbilityMus",
   "dex": "VALOR.AbilityDex",
-  "con": "VALOR.AbilityCon",
   "int": "VALOR.AbilityInt",
-  "wis": "VALOR.AbilityWis",
-  "cha": "VALOR.AbilityCha"
+  "aura": "VALOR.AbilityAura",
+  "res": "VALOR.AbilityRes"
 };
 
 VALOR.abilityAbbreviations = {
   "str": "VALOR.AbilityStrAbbr",
+  "agi": "VALOR.AbilityAgiAbbr",
+  "mnd": "VALOR.AbilityMndAbbr",
+  "spt": "VALOR.AbilitySptAbbr",
+  "gut": "VALOR.AbilityGutAbbr",
+  "mus": "VALOR.AbilityMusAbbr",
   "dex": "VALOR.AbilityDexAbbr",
-  "con": "VALOR.AbilityConAbbr",
   "int": "VALOR.AbilityIntAbbr",
-  "wis": "VALOR.AbilityWisAbbr",
-  "cha": "VALOR.AbilityChaAbbr"
+  "aura": "VALOR.AbilityAuraAbbr",
+  "res": "VALOR.AbilityResAbbr"
 };

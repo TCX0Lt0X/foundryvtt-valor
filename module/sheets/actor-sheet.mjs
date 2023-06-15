@@ -68,9 +68,13 @@ export class valorActorSheet extends ActorSheet {
    */
   _prepareCharacterData(context) {
     // Handle ability scores.
-    // for (let [k, v] of Object.entries(context.data.abilities)) {
-    //   v.label = game.i18n.localize(CONFIG.VALOR.abilities[k]) ?? k;
-    // }
+    for (let [k, v] of Object.entries(context.data.abilities)) {
+      v.label = game.i18n.localize(CONFIG.VALOR.abilities[k]) ?? k;
+    }
+    //Handle active ability scores.
+    for (let [k, v] of Object.entries(context.data.activeAbilities)) {
+      v.label = game.i18n.localize(CONFIG.VALOR.activeAbilities[k]) ?? k;
+    }
   }
 
   /**
