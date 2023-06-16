@@ -45,7 +45,7 @@ export class valorActor extends Actor {
     if (actorData.type !== 'character') return;
 
     // Make modifications to data here. For example:
-    const data = actorData.system;
+    const data = actorData.data;
 
     this.calculateActiveAttributes(data);
     this.calculateHealth(data);

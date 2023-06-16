@@ -11,19 +11,19 @@ VALOR.foobar = {
  * @type {Object}
  */
 VALOR.abilities = {
-  "str": "VALOR.AbilityStr",
-  "agi": "VALOR.AbilityAgi",
-  "mnd": "VALOR.AbilityMnd",
-  "spt": "VALOR.AbilitySpt",
-  "gut": "VALOR.AbilityGut"
+  "strength": "VALOR.AbilityStr",
+  "agility": "VALOR.AbilityAgi",
+  "mind": "VALOR.AbilityMnd",
+  "spirit": "VALOR.AbilitySpt",
+  "guts": "VALOR.AbilityGut"
 };
 
 VALOR.activeAbilities = {
-  "mus": "VALOR.AbilityMus",
-  "dex": "VALOR.AbilityDex",
-  "int": "VALOR.AbilityInt",
+  "muscle": "VALOR.AbilityMus",
+  "dexterity": "VALOR.AbilityDex",
+  "intuition": "VALOR.AbilityInt",
   "aura": "VALOR.AbilityAura",
-  "res": "VALOR.AbilityRes"
+  "resolve": "VALOR.AbilityRes"
 };
 
 VALOR.abilityAbbreviations = {
