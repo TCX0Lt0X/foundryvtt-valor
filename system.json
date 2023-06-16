@@ -37,7 +37,7 @@
   "gridDistance": 1,
   "gridUnits": "sq",
   "primaryTokenAttribute": "health",
-  "secondaryTokenAttribute": "power",
+  "secondaryTokenAttribute": "stamina",
   "url": "https://tcx0lt0x.github.io/valor/",
   "manifest": "https://raw.githubusercontent.com/TCX0Lt0X/valor/master/system.json",
   "download": "",
