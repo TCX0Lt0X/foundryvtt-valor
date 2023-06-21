@@ -9,34 +9,26 @@
     "character": {
       "templates": ["base"],
       "attribute": {
-        "base": {
           "strength": {
-            "min": 1,
             "max": 8,
             "value": 1
           },
           "agility": {
-            "min": 1,
             "max": 8,
             "value": 1
           },
           "spirit": {
-            "min": 1,
             "max": 8,
             "value": 1
           },
           "mind": {
-            "min": 1,
             "max": 8,
             "value": 1
           },
           "guts": {
-            "min": 1,
             "max": 8,
             "value": 1
-          }
-        },
-        "active": {
+          },
           "muscle": {
             "value": 1
           },
@@ -52,7 +44,6 @@
           "resolve": {
             "value": 1
           }
-        }
       },
       "statistic": {
         "health": {
