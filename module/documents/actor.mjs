@@ -45,8 +45,9 @@ export class valorActor extends Actor {
     if (actorData.type !== 'character') return;
 
     // Make modifications to data here. For example:
-    const data = actorData.data;
+    const data = actorData.system;
 
+    
     this.calculateActiveAttributes(data);
     this.calculateHealth(data);
     this.calculateStamina(data);
@@ -63,15 +64,15 @@ export class valorActor extends Actor {
    * Calculate character statistics
    */
   calculateActiveAttributes(data) {
-    data.attribute.active.muscle.value = Math.max(Math.ceil((data.attribute.base.strength.value + data.misc.level.value)/2), 0);
-    data.attribute.active.dexterity.value = Math.max(Math.ceil((data.attribute.base.agility.value + data.misc.level.value)/2), 0);
-    data.attribute.active.aura.value = Math.max(Math.ceil((data.attribute.base.spirit.value + data.misc.level.value)/2), 0);
-    data.attribute.active.intuition.value = Math.max(Math.ceil((data.attribute.base.mind.value + data.misc.level.value)/2), 0);
-    data.attribute.active.resolve.value = Math.max(Math.ceil((data.attribute.base.guts.value + data.misc.level.value)/2), 0);
+    data.attribute.muscle.value = Math.ceil((data.attribute.strength.value + data.misc.level.value)/2);
+    data.attribute.dexterity.value = Math.ceil((data.attribute.agility.value + data.misc.level.value)/2);
+    data.attribute.aura.value = Math.ceil((data.attribute.spirit.value + data.misc.level.value)/2);
+    data.attribute.intuition.value = Math.ceil((data.attribute.mind.value + data.misc.level.value)/2);
+    data.attribute.resolve.value = Math.ceil((data.attribute.guts.value + data.misc.level.value)/2);
   }
 
   calculateHealth(data) {
-    let health = 50 + (5 * data.attribute.base.strength.value) + (10 * data.attribute.base.guts.value)  + (10 * data.misc.level.value);
+    let health = 50 + (5 * data.attribute.strength.value) + (10 * data.attribute.guts.value)  + (10 * data.misc.level.value);
     let healthIncrement = Math.ceil(health / 5);
     data.statistic.health.max = health;
     data.statistic.health.increment = healthIncrement
@@ -79,16 +80,16 @@ export class valorActor extends Actor {
   }
 
   calculateStamina(data) {
-    let stamina = 8 + (2 * data.attribute.base.spirit.value) + (2 * data.attribute.base.mind.value)  + (4 * data.misc.level.value);
+    let stamina = 8 + (2 * data.attribute.spirit.value) + (2 * data.attribute.mind.value)  + (4 * data.misc.level.value);
     data.statistic.stamina.max = stamina
     data.statistic.stamina.increment = Math.ceil(stamina / 5);
   }
 
   calculateAttack(data) {
-    data.statistic.attack.strength.value = Math.ceil((data.attribute.base.strength.value + data.misc.level.value) * 2);
-    data.statistic.attack.agility.value = Math.ceil((data.attribute.base.agility.value + data.misc.level.value) * 2);
-    data.statistic.attack.mind.value = Math.ceil((data.attribute.base.mind.value + data.misc.level.value) * 2);
-    data.statistic.attack.spirit.value = Math.ceil((data.attribute.base.spirit.value + data.misc.level.value) * 2);
+    data.statistic.attack.strength.value = Math.ceil((data.attribute.strength.value + data.misc.level.value) * 2);
+    data.statistic.attack.agility.value = Math.ceil((data.attribute.agility.value + data.misc.level.value) * 2);
+    data.statistic.attack.mind.value = Math.ceil((data.attribute.mind.value + data.misc.level.value) * 2);
+    data.statistic.attack.spirit.value = Math.ceil((data.attribute.spirit.value + data.misc.level.value) * 2);
   }
 
   calculateDamageIncrement(data) {
@@ -96,19 +97,19 @@ export class valorActor extends Actor {
   }
 
   calculateDefense(data) {
-    data.statistic.defense.value = data.attribute.base.strength.value + data.attribute.base.guts.value + (2 * data.misc.level.value);
+    data.statistic.defense.value = data.attribute.strength.value + data.attribute.guts.value + (2 * data.misc.level.value);
   }
 
   calculateResistance(data) {
-    data.statistic.resistance.value = data.attribute.base.spirit.value + data.attribute.base.mind.value + (2 * data.misc.level.value);
+    data.statistic.resistance.value = data.attribute.spirit.value + data.attribute.mind.value + (2 * data.misc.level.value);
   }
 
   calculateMove(data) {
-    data.statistic.move.value = 3 + Math.floor((data.attribute.base.agility.value - 1) / 4);
+    data.statistic.move.value = 3 + Math.floor((data.attribute.agility.value - 1) / 4);
   }
 
   calculateInitiative(data) {
-    data.statistic.initiative.value = data.attribute.active.dexterity.value;
+    data.statistic.initiative.value = data.attribute.dexterity.value;
   }
 
 

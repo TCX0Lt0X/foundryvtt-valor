@@ -14,41 +14,41 @@
         and it will add a small amount of padding, a border, and will
         center all of its child elements content and text. --}}
         <div class="resource flex-group-center">
-          <label for="data.statistic.health.value" class="resource-label">Health</label>
+          <label for="system.statistic.health.value" class="resource-label">Health</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.statistic.health.value" value="{{data.statistic.health.value}}" data-dtype="Number"/>
+          <input type="text" name="system.statistic.health.value" value="{{system.statistic.health.value}}" data-dtype="Number"/>
           <span> / </span>
-          <input type="text" name="data.statistic.health.max" value="{{data.statistic.health.max}}" data-dtype="Number"/>
+          <input type="text" name="system.statistic.health.max" value="{{system.statistic.health.max}}" data-dtype="Number"/>
           </div>
         </div>
 
         <div class="resource flex-group-center">
-          <label for="data.statistic.stamina.value" class="resource-label">Stamina</label>
+          <label for="system.statistic.stamina.value" class="resource-label">Stamina</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.statistic.stamina.value" value="{{data.statistic.stamina.value}}" data-dtype="Number"/>
+          <input type="text" name="system.statistic.stamina.value" value="{{system.statistic.stamina.value}}" data-dtype="Number"/>
           <span> / </span>
-          <input type="text" name="data.statistic.stamina.max" value="{{data.statistic.stamina.max}}" data-dtype="Number"/>
+          <input type="text" name="system.statistic.stamina.max" value="{{system.statistic.stamina.max}}" data-dtype="Number"/>
           </div>
         </div>
 
         <div class="resource flex-group-center">
-          <label for="data.misc.valor.value" class="resource-label">Valor</label>
+          <label for="system.misc.valor.value" class="resource-label">Valor</label>
           <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="data.misc.valor.value" value="{{data.misc.valor.value}}" data-dtype="Number"/>
+            <input type="text" name="system.misc.valor.value" value="{{system.misc.valor.value}}" data-dtype="Number"/>
           </div>
         </div>
 
         <div class="resource flex-group-center">
-          <label for="data.misc.level.value" class="resource-label">Level</label>
+          <label for="system.misc.level.value" class="resource-label">Level</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.misc.level.value" value="{{data.misc.level.value}}" data-dtype="Number"/>
+          <input type="text" name="system.misc.level.value" value="{{system.misc.level.value}}" data-dtype="Number"/>
           </div>
         </div>
 
         <div class="resource flex-group-center">
-          <label for="data.misc.experience.value" class="resource-label">Experience</label>
+          <label for="system.misc.experience.value" class="resource-label">Experience</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.misc.experience.value" value="{{data.misc.experience.value}}" data-dtype="Number"/>
+          <input type="text" name="system.misc.experience.value" value="{{system.misc.experience.value}}" data-dtype="Number"/>
           </div>
         </div>
 
@@ -59,30 +59,30 @@
         and it will add a small amount of padding, a border, and will
         center all of its child elements content and text. --}}
         <div class="resource flex-group-center">
-          <label for="data.statistic.health.increment" class="resource-label">Health Increment</label>
+          <label for="system.statistic.health.increment" class="resource-label">Health Increment</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.statistic.health.increment" value="{{data.statistic.health.increment}}" data-dtype="Number"/>
+          <input type="text" name="system.statistic.health.increment" value="{{system.statistic.health.increment}}" data-dtype="Number"/>
           </div>
         </div>
 
         <div class="resource flex-group-center">
-          <label for="data.statistic.stamina.value" class="resource-label">Stamina Increment</label>
+          <label for="system.statistic.stamina.value" class="resource-label">Stamina Increment</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.statistic.stamina.increment" value="{{data.statistic.stamina.increment}}" data-dtype="Number"/>
+          <input type="text" name="system.statistic.stamina.increment" value="{{system.statistic.stamina.increment}}" data-dtype="Number"/>
           </div>
         </div>
 
         <div class="resource flex-group-center">
-          <label for="data.misc.sp.value" class="resource-label">Skill Points</label>
+          <label for="system.misc.sp.value" class="resource-label">Skill Points</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="data.misc.sp.value" value="{{data.misc.sp.value}}" data-dtype="Number"/>
+          <input type="text" name="system.misc.sp.value" value="{{system.misc.sp.value}}" data-dtype="Number"/>
           </div>
         </div>
 
         <div class="resource flex-group-center">
-          <label for="data.misc.tp.value" class="resource-label">Tech. Points</label>
+          <label for="system.misc.tp.value" class="resource-label">Tech. Points</label>
           <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="data.misc.tp.value" value="{{data.misc.tp.value}}" data-dtype="Number"/>
+            <input type="text" name="system.misc.tp.value" value="{{system.misc.tp.value}}" data-dtype="Number"/>
           </div>
         </div>
       </div>
@@ -114,48 +114,48 @@
           <div class="attributes flexcol">
 
             <div class="attribute flexrow flex-group-center">
-              <label for="data.attribute.base.strength.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.base.strength.value" data-label="strength">Strength</label>
-              <input type="text" name="data.attribute.base.strength.value" value="{{data.attribute.base.strength.value}}" data-dtype="Number"/>
+              <label for="system.attribute.strength.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.strength.value" data-label="strength">Strength</label>
+              <input type="text" name="system.attribute.strength.value" value="{{system.attribute.strength.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="data.attribute.base.agility.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.base.agility.value" data-label="agility">Agility</label>
-              <input type="text" name="data.attribute.base.agility.value" value="{{data.attribute.base.agility.value}}" data-dtype="Number"/>
+              <label for="system.attribute.agility.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.agility.value" data-label="agility">Agility</label>
+              <input type="text" name="system.attribute.agility.value" value="{{system.attribute.agility.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="data.attribute.base.mind.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.base.mind.value" data-label="mind">Mind</label>
-              <input type="text" name="data.attribute.base.mind.value" value="{{data.attribute.base.mind.value}}" data-dtype="Number"/>
+              <label for="system.attribute.mind.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.mind.value" data-label="mind">Mind</label>
+              <input type="text" name="system.attribute.mind.value" value="{{system.attribute.mind.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="data.attribute.base.spirit.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.base.spirit.value" data-label="spirit">Spirit</label>
-              <input type="text" name="data.attribute.base.spirit.value" value="{{data.attribute.base.spirit.value}}" data-dtype="Number"/>
+              <label for="system.attribute.spirit.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.spirit.value" data-label="spirit">Spirit</label>
+              <input type="text" name="system.attribute.spirit.value" value="{{system.attribute.spirit.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="data.attribute.base.guts.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.base.guts.value" data-label="guts">Guts</label>
-              <input type="text" name="data.attribute.base.guts.value" value="{{data.attribute.base.guts.value}}" data-dtype="Number"/>
+              <label for="system.attribute.guts.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.guts.value" data-label="guts">Guts</label>
+              <input type="text" name="system.attribute.guts.value" value="{{system.attribute.guts.value}}" data-dtype="Number"/>
             </div>
           </div>
           <br>
           <span class = "">Active Attributes</span>
           <div class="attributes flexcol">
             <div class="attribute flexrow flex-group-center">
-              <label for="data.attribute.active.muscle.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.active.muscle.value" data-label="muscle">Muscle</label>
-              <input type="text" name="data.attribute.active.muscle.value" value="{{data.attribute.active.muscle.value}}" data-dtype="Number"/>
+              <label for="system.attribute.muscle.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.muscle.value" data-label="muscle">Muscle</label>
+              <input type="text" name="system.attribute.muscle.value" value="{{system.attribute.muscle.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="data.attribute.active.dexterity.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.active.dexterity.value" data-label="dexterity">Dexterity</label>
-              <input type="text" name="data.attribute.active.muscle.value" value="{{data.attribute.active.muscle.value}}" data-dtype="Number"/>
+              <label for="system.attribute.dexterity.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.dexterity.value" data-label="dexterity">Dexterity</label>
+              <input type="text" name="system.attribute.dexterity.value" value="{{system.attribute.dexterity.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="data.attribute.active.aura.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.active.aura.value" data-label="aura">Aura</label>
-              <input type="text" name="data.attribute.active.aura.value" value="{{data.attribute.active.aura.value}}" data-dtype="Number"/>
+              <label for="system.attribute.aura.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.aura.value" data-label="aura">Aura</label>
+              <input type="text" name="system.attribute.aura.value" value="{{system.attribute.aura.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="data.attribute.active.intuition.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.active.intuition.value" data-label="intuition">Intuition</label>
-              <input type="text" name="data.attribute.active.intuition.value" value="{{data.attribute.active.intuition.value}}" data-dtype="Number"/>
+              <label for="system.attribute.intuition.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.intuition.value" data-label="intuition">Intuition</label>
+              <input type="text" name="system.attribute.intuition.value" value="{{system.attribute.intuition.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="data.attribute.active.resolve.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.active.resolve.value" data-label="resolve">Resolve</label>
-              <input type="text" name="data.attribute.active.resolve.value" value="{{data.attribute.active.resolve.value}}" data-dtype="Number"/>
+              <label for="system.attribute.resolve.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.resolve.value" data-label="resolve">Resolve</label>
+              <input type="text" name="system.attribute.resolve.value" value="{{system.attribute.resolve.value}}" data-dtype="Number"/>
             </div>
           </div>
         </aside>
@@ -163,21 +163,21 @@
         {{!-- For the main features list, span the right two columns --}}
         <section class="main grid grid-3col">
             <div class="resource flex-group-center">
-              <label for="data.statistic.defense.value" class="resource-label">Defense</label>
+              <label for="system.statistic.defense.value" class="resource-label">Defense</label>
               <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="data.statistic.defense.value" value="{{data.statistic.defense.value}}" data-dtype="Number"/>
+                <input type="text" name="system.statistic.defense.value" value="{{system.statistic.defense.value}}" data-dtype="Number"/>
               </div>
             </div>
             <div class="resource flex-group-center">
-              <label for="data.statistic.resistance.value" class="resource-label">Resistance</label>
+              <label for="system.statistic.resistance.value" class="resource-label">Resistance</label>
               <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="data.statistic.resistance.value" value="{{data.statistic.resistance.value}}" data-dtype="Number"/>
+                <input type="text" name="system.statistic.resistance.value" value="{{system.statistic.resistance.value}}" data-dtype="Number"/>
               </div>
             </div>
             <div class="resource flex-group-center">
-              <label for="data.statistic.move.value" class="resource-label">Move</label>
+              <label for="system.statistic.move.value" class="resource-label">Move</label>
               <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="data.statistic.move.value" value="{{data.statistic.move.valuee}}" data-dtype="Number"/>
+                <input type="text" name="system.statistic.move.value" value="{{system.statistic.move.value}}" data-dtype="Number"/>
               </div>
             </div>
         </section>
