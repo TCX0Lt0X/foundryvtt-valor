@@ -47,7 +47,11 @@ export class valorActor extends Actor {
     // Make modifications to data here. For example:
     const data = actorData.system;
 
-    
+    this.calculateExperience(data);
+    this.calculateSeason(data);
+    this.calculateAttributePoints(data);
+    this.calculateSkillPoints(data);
+    this.calculatetechniquePoints(data);
     this.calculateActiveAttributes(data);
     this.calculateHealth(data);
     this.calculateStamina(data);
@@ -63,12 +67,63 @@ export class valorActor extends Actor {
   /**
    * Calculate character statistics
    */
+  calculateExperience(data) {
+    let curLevel = data.misc.level.value;
+    data.misc.experience.value = curLevel * 50;
+    data.misc.experience.nextLevel = ((curLevel * (curLevel+1)) / 2) * 100;
+  }
+
+  calculateSeason(data) {
+    data.misc.season.value = Math.ceil(data.misc.level.value / 5);
+  }
+
+  calculateAttributePoints(data) {
+    let level = data.misc.level.value;
+    let maxBaseAttribute =  level + 7;
+
+    // set base attributes to max value if they exceed it
+    if (data.attribute.strength.value > maxBaseAttribute) data.attribute.strength.value  = maxBaseAttribute;
+    if (data.attribute.agility.value  > maxBaseAttribute) data.attribute.agility.value  = maxBaseAttribute;
+    if (data.attribute.spirit.value  > maxBaseAttribute) data.attribute.spirit.value  = maxBaseAttribute;
+    if (data.attribute.mind.value  > maxBaseAttribute) data.attribute.mind.value  = maxBaseAttribute;
+    if (data.attribute.guts.value  > maxBaseAttribute) data.attribute.guts.value  = maxBaseAttribute;
+
+    data.misc.attributePoints.total = 22 + (level * 3);
+    data.misc.attributePoints.spent = data.attribute.strength.value +
+        data.attribute.agility.value +
+        data.attribute.spirit.value +
+        data.attribute.mind.value +
+        data.attribute.guts.value;
+  }
+
+  calculateSkillPoints(data) {
+    data.misc.skillPoints.total = 14 + (6 * data.misc.level.value);
+  }
+
+  calculatetechniquePoints(data) {
+    let level = data.misc.level.value;
+    let season = data.misc.season.value;
+    let currentSeasonLevels =  (level % 5);
+    let techniquePoints =  8 + (3 * level);
+
+    if (currentSeasonLevels > 0) {
+      techniquePoints += season * currentSeasonLevels;
+      --season;
+    }
+    if (season > 0) {
+      techniquePoints += ((season * (season + 1)) / 2) * 5;
+    }
+
+    data.misc.techniquePoints.total = techniquePoints;
+  }
+
   calculateActiveAttributes(data) {
-    data.attribute.muscle.value = Math.ceil((data.attribute.strength.value + data.misc.level.value)/2);
-    data.attribute.dexterity.value = Math.ceil((data.attribute.agility.value + data.misc.level.value)/2);
-    data.attribute.aura.value = Math.ceil((data.attribute.spirit.value + data.misc.level.value)/2);
-    data.attribute.intuition.value = Math.ceil((data.attribute.mind.value + data.misc.level.value)/2);
-    data.attribute.resolve.value = Math.ceil((data.attribute.guts.value + data.misc.level.value)/2);
+    let level = data.misc.level.value;
+    data.attribute.muscle.value = Math.ceil((data.attribute.strength.value + level) / 2);
+    data.attribute.dexterity.value = Math.ceil((data.attribute.agility.value + level) / 2);
+    data.attribute.aura.value = Math.ceil((data.attribute.spirit.value + level) / 2);
+    data.attribute.intuition.value = Math.ceil((data.attribute.mind.value + level) / 2);
+    data.attribute.resolve.value = Math.ceil((data.attribute.guts.value + level) / 2);
   }
 
   calculateHealth(data) {

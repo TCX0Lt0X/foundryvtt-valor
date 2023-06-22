@@ -96,17 +96,29 @@
         "level": {
           "value": 1
         },
+        "season": {
+          "value": 1
+        },
         "experience": {
-          "value": 0,
-          "reward": 0
+          "total": 0,
+          "value": null,
+          "nextLevel": null
         },
-        "tp": {
-          "value": 0,
-          "max": 1
+        "attributePoints": {
+          "spent": 0,
+          "bonus": 0,
+          "total": 25
         },
-        "sp": {
-          "value": 0,
-          "max": 1
+        "skillPoints": {
+          "spent": 0,
+          "bonus": 0,
+          "total": 20,
+          "maxFlawSP": 8
+        },
+        "techniquePoints": {
+          "spent": 0,
+          "bonus": 0,
+          "total": 12
         },
         "type": {
           "value": "Elite"
@@ -115,11 +127,57 @@
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell"],
+    "types": ["flaw", "skill", "technique","item", "feature", "spell"],
     "templates": {
       "base": {
         "description": ""
       }
+    },
+    "flaw": {
+      "templates": ["base"],
+      "progression": "fixed",
+      "level": {
+        "value" : 1,
+        "max" : 1
+      },
+      "bonusSP": {
+        "base": 1,
+        "level": 1
+      },
+      "action": "passive"
+    },
+    "skill": {
+      "templates": ["base"],
+      "subtype": "Permanent",
+      "progression": "fixed",
+      "season": 1,
+      "level": {
+        "value" : null,
+        "max" : null
+      },
+      "spCost": {
+        "base": null,
+        "level": null
+      },
+      "action": "passive"
+    },
+    "technique": {
+      "templates": ["base"],
+      "subtype": "Damage",
+      "level": {
+        "core" : 1,
+        "mods" : null,
+        "total" : 1,
+        "max" : 4
+      },
+      "mods": [],
+      "limits": [],
+      "stCost": {
+        "base": null,
+        "level": null,
+        "reduction": null
+      },
+      "action": "attack"
     },
     "item": {
       "templates": ["base"],
