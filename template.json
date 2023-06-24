@@ -10,39 +10,44 @@
       "templates": ["base"],
       "attribute": {
           "strength": {
-            "max": 8,
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "agility": {
-            "max": 8,
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "spirit": {
-            "max": 8,
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "mind": {
-            "max": 8,
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "guts": {
-            "max": 8,
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "muscle": {
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "dexterity": {
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "aura": {
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "intuition": {
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "resolve": {
-            "value": 1
+            "value": 1,
+            "bonus": 0
           }
       },
       "statistic": {
@@ -50,46 +55,71 @@
           "value": 0,
           "max": 0,
           "increment": 0,
-          "critical": 0
+          "critical": 0,
+          "bonus": 0
         },
         "stamina": {
           "value": 0,
           "max": 0,
-          "increment": 0
+          "increment": 0,
+          "bonus": 0
         },
         "attack": {
           "strength": {
-            "value": 0
+            "value": 0,
+            "bonus": 0
           },
           "agility": {
-            "value": 0
+            "value": 0,
+            "bonus": 0
           },
           "spirit": {
-            "value": 0
+            "value": 0,
+            "bonus": 0
           },
           "mind": {
-            "value": 0
+            "value": 0,
+            "bonus": 0
           }
         },
         "damageIncrement": {
-          "value": 0
+          "value": 0,
+          "bonus": 0
         },
         "defense": {
-          "value": 0
+          "value": 0,
+          "bonus": 0
         },
         "resistance": {
-          "value": 0
+          "value": 0,
+          "bonus": 0
         },
         "move": {
-          "value": 0
+          "value": 0,
+          "bonus": 0
         },
         "valor": {
           "value": 0,
-          "max": 10,
-          "min": -20
+          "min": {
+            "value": -20,
+            "bonus": 0
+          },
+          "max": {
+            "value": 10,
+            "bonus": 0
+          },
+          "initial": {
+            "value": 0,
+            "bonus": 0
+          },
+          "perTurn": {
+            "value": 1,
+            "bonus": 0
+          }
         },
         "initiative": {
-          "value": 0
+          "value": 0,
+          "bonus": 0
         }
       },
       "misc": {
@@ -101,8 +131,8 @@
         },
         "experience": {
           "total": 0,
-          "value": null,
-          "nextLevel": null
+          "value": 0,
+          "nextLevel": 0
         },
         "attributePoints": {
           "spent": 0,
@@ -122,6 +152,18 @@
         },
         "type": {
           "value": "Elite"
+        },
+        "zoneOfControl": {
+          "value": 1,
+          "bonus": 0
+        },
+        "size": {
+          "value": 1,
+          "bonus": 0
+        },
+        "ultimateTechniques": {
+          "value": 1,
+          "bonus": 0
         }
       }
     }
