@@ -53,7 +53,7 @@
         </div>
 
       </div>
-      <div class="resources grid grid-4col">
+      <div class="resources grid grid-6col">
 
         {{!-- "flex-group-center" is also defined in the _grid.scss file
         and it will add a small amount of padding, a border, and will
@@ -66,9 +66,23 @@
         </div>
 
         <div class="resource flex-group-center">
+          <label for="system.statistic.health.critical" class="resource-label">Critical Health</label>
+          <div class="resource-content flexrow flex-center flex-between">
+          <input type="text" name="system.statistic.health.critical" value="{{system.statistic.health.critical}}" data-dtype="Number"/>
+          </div>
+        </div>
+
+        <div class="resource flex-group-center">
           <label for="system.statistic.stamina.value" class="resource-label">Stamina Increment</label>
           <div class="resource-content flexrow flex-center flex-between">
           <input type="text" name="system.statistic.stamina.increment" value="{{system.statistic.stamina.increment}}" data-dtype="Number"/>
+          </div>
+        </div>
+
+        <div class="resource flex-group-center">
+          <label for="system.statistic.initiative.value" class="resource-label rollable flexlarge" data-roll="d10+@statistic.initiative.value" data-label="initiative">Initiative Modifier</label>
+          <div class="resource-content flexrow flex-center flex-between">
+          <input type="text" name="system.statistic.initiative.value" value="{{system.statistic.initiative.value}}" data-dtype="Number"/>
           </div>
         </div>
 
@@ -99,14 +113,13 @@
     <a class="item" data-tab="techniques">Techniques</a>
     <a class="item" data-tab="description">Biography</a>
     <a class="item" data-tab="items">Items</a>
+    <a class="item" data-tab="effects">Effects</a>
   </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
-
-    {{!-- Owned Features Tab --}}
     <div class="tab stats" data-group="primary" data-tab="stats">
-      <section class="grid grid-4col">
+      <section class="grid grid-5col">
         <aside class="sidebar">
           <span class = "">Base Attributes</span>
           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
@@ -160,29 +173,68 @@
             </div>
           </div>
         </aside>
-
-        {{!-- For the main features list, span the right two columns --}}
-        <section class="main grid grid-3col">
-            <div class="resource flex-group-center">
-              <label for="system.statistic.defense.value" class="resource-label">Defense</label>
-              <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="system.statistic.defense.value" value="{{system.statistic.defense.value}}" data-dtype="Number"/>
-              </div>
+        <div class="grid grid-4col">
+          <div class="resource flex-group-center">
+            <label for="system.statistic.damageIncrement.value" class="resource-label">Damage Incmt.</label>
+            <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.statistic.damageIncrement.value" value="{{system.statistic.damageIncrement.value}}" data-dtype="Number"/>
             </div>
-            <div class="resource flex-group-center">
-              <label for="system.statistic.resistance.value" class="resource-label">Resistance</label>
-              <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="system.statistic.resistance.value" value="{{system.statistic.resistance.value}}" data-dtype="Number"/>
-              </div>
+            <br style="line-height:0px;" />
+            <label for="system.statistic.attack.strength.value" class="resource-label">Strength Attack</label>
+            <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.statistic.attack.strength.value" value="{{system.statistic.attack.strength.value}}" data-dtype="Number"/>
             </div>
-            <div class="resource flex-group-center">
-              <label for="system.statistic.move.value" class="resource-label">Move</label>
-              <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="system.statistic.move.value" value="{{system.statistic.move.value}}" data-dtype="Number"/>
-              </div>
+          </div>
+          <div class="resource flex-group-center ">
+            <label for="system.statistic.defense.value" class="resource-label">Defense</label>
+            <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.statistic.defense.value" value="{{system.statistic.defense.value}}" data-dtype="Number"/>
             </div>
+            <br style="line-height:0px;" />
+            <label for="system.statistic.attack.agility.value" class="resource-label">Agility Attack</label>
+            <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.statistic.attack.agility.value" value="{{system.statistic.attack.agility.value}}" data-dtype="Number"/>
+            </div>
+          </div>
+          <div class="resource flex-group-center ">
+            <label for="system.statistic.resistance.value" class="resource-label">Resistance</label>
+            <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.statistic.resistance.value" value="{{system.statistic.resistance.value}}" data-dtype="Number"/>
+            </div>
+            <br style="line-height:0px;" />
+            <label for="system.statistic.attack.spirit.value" class="resource-label">Spirit Attack</label>
+            <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.statistic.attack.spirit.value" value="{{system.statistic.attack.spirit.value}}" data-dtype="Number"/>
+            </div>
+          </div>
+          <div class="resource flex-group-center ">
+            <label for="system.statistic.move.value" class="resource-label">Move</label>
+            <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.statistic.move.value" value="{{system.statistic.move.value}}" data-dtype="Number"/>
+            </div>
+            <br style="line-height:0px;" />
+            <label for="system.statistic.attack.mind.value" class="resource-label">Mind Attack</label>
+            <div class="resource-content flexrow flex-center flex-between">
+              <input type="text" name="system.statistic.attack.mind.value" value="{{system.statistic.attack.mind.value}}" data-dtype="Number"/>
+            </div>
+          </div>
+          </div>
         </section>
-      </section>
+      </div>
+
+    {{!-- Owned Flaws Tab --}}
+    <div class="tab flaws" data-group="primary" data-tab="flaws">
+      {{> "systems/valor/templates/actor/parts/actor-flaws.html"}}
+    </div>
+
+    {{!-- Owned Skills Tab --}}
+    <div class="tab skills" data-group="primary" data-tab="skills">
+      {{> "systems/valor/templates/actor/parts/actor-spells.html"}}
+    </div>
+
+    {{!-- Owned Techniques Tab --}}
+    <div class="tab techniques" data-group="primary" data-tab="techniques">
+      {{> "systems/valor/templates/actor/parts/actor-features.html"}}
     </div>
 
     {{!-- Biography Tab --}}
@@ -193,23 +245,15 @@
 
     {{!-- Owned Items Tab --}}
     <div class="tab items" data-group="primary" data-tab="items">
-       {{> "systems/valor/templates/actor/parts/actor-items.html"}}
+      {{> "systems/valor/templates/actor/parts/actor-items.html"}}
     </div>
-
-    {{!-- Owned Skills Tab --}}
-    <div class="tab skills" data-group="primary" data-tab="skills">
-      {{> "systems/valor/templates/actor/parts/actor-skills.html"}}
-    </div>
-
+    
     {{!-- Active Effects Tab --}}
-    <div class="tab techniques flexcol" data-group="primary" data-tab="effects">
+    <div class="tab effects flexcol" data-group="primary" data-tab="effects">
       {{> "systems/valor/templates/actor/parts/actor-effects.html"}}
     </div>
 
-    {{!-- Flaws Tab --}}
-    <div class="tab flaws" data-group="primary" data-tab="flaws">
-      {{> "systems/valor/templates/actor/parts/actor-effects.html"}}
-    </div>  
+     
 
   </section>
 </form>
