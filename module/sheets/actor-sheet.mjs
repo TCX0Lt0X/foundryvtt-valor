@@ -86,6 +86,9 @@ export class valorActorSheet extends ActorSheet {
    */
   _prepareItems(context) {
     // Initialize containers.
+    const flaws = [];
+    const skills = [];
+    const techniques = [];
     const gear = [];
     const features = [];
     const spells = {
@@ -104,8 +107,20 @@ export class valorActorSheet extends ActorSheet {
     // Iterate through items, allocating to containers
     for (let i of context.items) {
       i.img = i.img || DEFAULT_TOKEN;
+      // Append to flaws.
+      if (i.type === 'flaw') {
+        flaws.push(i);
+      }
+      // Append to skills.
+      else if (i.type === 'skill') {
+        skills.push(i);
+      }
+      // Append to techniques.
+      else if (i.type === 'technique') {
+        techniques.push(i);
+      }
       // Append to gear.
-      if (i.type === 'item') {
+      else if (i.type === 'item') {
         gear.push(i);
       }
       // Append to features.
@@ -121,6 +136,9 @@ export class valorActorSheet extends ActorSheet {
     }
 
     // Assign and return
+    context.flaws = flaws;
+    context.skills = skills;
+    context.techniques = techniques;
     context.gear = gear;
     context.features = features;
     context.spells = spells;

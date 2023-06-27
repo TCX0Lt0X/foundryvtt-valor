@@ -10,39 +10,44 @@
       "templates": ["base"],
       "attribute": {
           "strength": {
-            "max": 8,
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "agility": {
-            "max": 8,
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "spirit": {
-            "max": 8,
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "mind": {
-            "max": 8,
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "guts": {
-            "max": 8,
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "muscle": {
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "dexterity": {
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "aura": {
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "intuition": {
-            "value": 1
+            "value": 1,
+            "bonus": 0
           },
           "resolve": {
-            "value": 1
+            "value": 1,
+            "bonus": 0
           }
       },
       "statistic": {
@@ -50,76 +55,171 @@
           "value": 0,
           "max": 0,
           "increment": 0,
-          "critical": 0
+          "critical": 0,
+          "bonus": 0
         },
         "stamina": {
           "value": 0,
           "max": 0,
-          "increment": 0
+          "increment": 0,
+          "bonus": 0
         },
         "attack": {
           "strength": {
-            "value": 0
+            "value": 0,
+            "bonus": 0
           },
           "agility": {
-            "value": 0
+            "value": 0,
+            "bonus": 0
           },
           "spirit": {
-            "value": 0
+            "value": 0,
+            "bonus": 0
           },
           "mind": {
-            "value": 0
+            "value": 0,
+            "bonus": 0
           }
         },
         "damageIncrement": {
-          "value": 0
+          "value": 0,
+          "bonus": 0
         },
         "defense": {
-          "value": 0
+          "value": 0,
+          "bonus": 0
         },
         "resistance": {
-          "value": 0
+          "value": 0,
+          "bonus": 0
         },
         "move": {
-          "value": 0
+          "value": 0,
+          "bonus": 0
         },
         "valor": {
           "value": 0,
-          "max": 10,
-          "min": -20
+          "min": {
+            "value": -20,
+            "bonus": 0
+          },
+          "max": {
+            "value": 10,
+            "bonus": 0
+          },
+          "initial": {
+            "value": 0,
+            "bonus": 0
+          },
+          "perTurn": {
+            "value": 1,
+            "bonus": 0
+          }
         },
         "initiative": {
-          "value": 0
+          "value": 0,
+          "bonus": 0
         }
       },
       "misc": {
         "level": {
           "value": 1
         },
+        "season": {
+          "value": 1
+        },
         "experience": {
+          "total": 0,
           "value": 0,
-          "reward": 0
+          "nextLevel": 0
         },
-        "tp": {
-          "value": 0,
-          "max": 1
+        "attributePoints": {
+          "spent": 0,
+          "bonus": 0,
+          "total": 25
         },
-        "sp": {
-          "value": 0,
-          "max": 1
+        "skillPoints": {
+          "spent": 0,
+          "bonus": 0,
+          "total": 20,
+          "maxFlawSP": 8
+        },
+        "techniquePoints": {
+          "spent": 0,
+          "bonus": 0,
+          "total": 12
         },
         "type": {
           "value": "Elite"
+        },
+        "zoneOfControl": {
+          "value": 1,
+          "bonus": 0
+        },
+        "size": {
+          "value": 1,
+          "bonus": 0
+        },
+        "ultimateTechniques": {
+          "value": 1,
+          "bonus": 0
         }
       }
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell"],
+    "types": ["flaw", "skill", "technique","item", "feature", "spell"],
     "templates": {
       "base": {
         "description": ""
       }
+    },
+    "flaw": {
+      "templates": ["base"],
+      "progression": "fixed",
+      "level": {
+        "value" : 1,
+        "max" : 1
+      },
+      "bonusSP": {
+        "base": 1,
+        "level": 1
+      },
+      "action": "passive"
+    },
+    "skill": {
+      "templates": ["base"],
+      "subtype": "Permanent",
+      "progression": "fixed",
+      "season": 1,
+      "level": {
+        "value" : null,
+        "max" : null
+      },
+      "spCost": {
+        "base": null,
+        "level": null
+      },
+      "action": "passive"
+    },
+    "technique": {
+      "templates": ["base"],
+      "subtype": "Damage",
+      "level": {
+        "core" : 1,
+        "mods" : null,
+        "total" : 1,
+        "max" : 4
+      },
+      "mods": [],
+      "limits": [],
+      "stCost": {
+        "base": null,
+        "level": null,
+        "reduction": null
+      },
+      "action": "attack"
     },
     "item": {
       "templates": ["base"],

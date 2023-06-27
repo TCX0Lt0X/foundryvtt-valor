@@ -12,6 +12,27 @@ export class valorItem extends Item {
     super.prepareData();
   }
 
+  /** @override */
+  prepareBaseData() {
+    // Data modifications in this step occur before processing embedded
+    // documents or derived data.
+  }
+
+  /**
+   * @override
+   * Augment the basic item data with additional dynamic data. Typically,
+   * you'll want to handle most of your calculated/derived data in this step.
+   * Data calculated in this step should generally not exist in template.json
+   * (such as ability modifiers rather than ability scores) and should be
+   * available both inside and outside of character sheets (such as if an item
+   * is queried and has a roll executed directly from it).
+   */
+  prepareDerivedData() {
+    const itemData = this;
+    const data = itemData.system;
+    const flags = itemData.flags.valor || {};
+  }
+
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
