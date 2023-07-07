@@ -6,10 +6,6 @@ import {VALOR} from "../helpers/config.mjs";
  */
 export class valorItem extends Item {
 
-  _initialize() {
-    super._initialize();
-    this.setFlag('valor', 'modifiers', []);
-  }
 
 
   /**
@@ -21,7 +17,7 @@ export class valorItem extends Item {
 
     super.prepareData();
 
-  }
+      }
 
   /** @override */
   prepareBaseData() {
@@ -36,6 +32,8 @@ export class valorItem extends Item {
   }
 
   _prepareSkillFlawData(item) {
+    const newFlagValue = 'foo';
+    item.setFlag('valor', 'myFlagName', newFlagValue);
 
     //set max level based on actor level and progression speed
     item.system.level.max = Math.max(Math.ceil(item.parent.system.misc.level.value / VALOR.skills.progression[item.system.progression]), 1)

@@ -1,10 +1,10 @@
 <ol class="items-list effects-list">
     {{#each effects as |section sid|}}
     <li class="items-header flexrow" data-effect-type="{{section.type}}">
-        <h3 class="item-name modifier-name flexrow">{{localize section.label}}</h3>
-        <div class="modidier-source">Source</div>
-        <div class="modifier-source">Duration</div>
-        <div class="item-controls modifier-controls flexrow">
+        <h3 class="item-name effect-name flexrow">{{localize section.label}}</h3>
+        <div class="effect-source">Source</div>
+        <div class="effect-source">Duration</div>
+        <div class="item-controls effect-controls flexrow">
             <a class="modifier-control" data-action="create" title="{{localize 'VALOR.ModifierCreate'}}">
                 <i class="fas fa-plus"></i> {{localize "VALOR.Add"}}
             </a>
