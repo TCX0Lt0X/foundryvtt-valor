@@ -1,3 +1,5 @@
+import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
+
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
@@ -46,10 +48,23 @@ export class valorItemSheet extends ItemSheet {
     context.system = itemData.system;
     context.flags = itemData.flags;
 
+    // Prepare active effects
+    context.effects = prepareActiveEffectCategories(itemData.effects);
+
+    if (context.system.type == "flaw" || context.system.type == "skill" ) {
+      console.log("honkhonk");
+      //context.modifiers = prepareModifiers(itemData.flags.valor.modifiers);
+    }
+
     return context;
   }
 
   /* -------------------------------------------- */
+
+
+
+
+
 
   /** @override */
   activateListeners(html) {
@@ -59,5 +74,42 @@ export class valorItemSheet extends ItemSheet {
     if (!this.isEditable) return;
 
     // Roll handlers, click handlers, etc. would go here.
+
+    html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.item));
+
+    html.find(".modifier-control").click(ev => onManageModifier(ev, this.item));
+
+    function onManageModifier(event, owner) {
+      event.preventDefault();
+      const a = event.currentTarget;
+      console.log(a);
+      const li = a.closest("li");
+      const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null;
+      switch ( a.dataset.action ) {
+        case "create":
+          owner.setFlag('valor', 'modifiers', []);
+
+          let modifiers = owner.flags.valor.modifiers ?? [];
+          modifiers.push({
+            base:0,
+            levelUp:0,
+            targetData:"",
+            condition: {
+              x:"true",
+              y:"",
+              operator:"=="
+            }
+          });
+          console.log(modifiers);
+          return owner.setFlag('valor', 'modifiers', modifiers);
+        case "edit":
+          return effect.sheet.render(true);
+        case "delete":
+          return effect.delete();
+        case "toggle":
+          return effect.update({disabled: !effect.disabled});
+      }
+    }
+
   }
 }

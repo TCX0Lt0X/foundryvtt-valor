@@ -10,12 +10,20 @@ VALOR.foobar = {
  * The set of Ability Scores used within the sytem.
  * @type {Object}
  */
-VALOR.abilities = {
-  "strength": "VALOR.AbilityStr",
-  "agility": "VALOR.AbilityAgi",
-  "mind": "VALOR.AbilityMnd",
-  "spirit": "VALOR.AbilitySpt",
-  "guts": "VALOR.AbilityGut"
+VALOR.attributes = {
+  base: {
+  "strength": "VALOR.baseAttributeStr",
+    "agility": "VALOR.baseAttributeAgi",
+    "mind": "VALOR.baseAttributeMnd",
+    "spirit": "VALOR.baseAttributeSpt",
+    "guts": "VALOR.baseAttributeGut"
+  }, active: {
+    "muscle": "VALOR.activeAttributeMus",
+    "dexterity": "VALOR.activeAttributeDex",
+    "intuition": "VALOR.activeAttributeInt",
+    "aura": "VALOR.activeAttributeAra",
+    "resolve": "VALOR.activeAttributeRes"
+}
 };
 
 VALOR.activeAbilities = {
@@ -195,5 +203,13 @@ VALOR.characterTypes = {
       support: 1,
       move: 1
     }
+  }
+}
+
+VALOR.skills = {
+  progression: {
+    "fixed": Number.POSITIVE_INFINITY,
+    "fast": 3,
+    "slow": 5
   }
 }
