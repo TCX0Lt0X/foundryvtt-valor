@@ -7,7 +7,6 @@ import {VALOR} from "../helpers/config.mjs";
 export class valorItem extends Item {
 
 
-
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -32,13 +31,6 @@ export class valorItem extends Item {
   }
 
   _prepareSkillFlawData(item) {
-    try {
-      item.flags.valor.modifiers;
-    } catch (e) {
-      item.setFlag('valor', 'modifiers', []);
-    }
-
-
     //set max level based on actor level and progression speed
     item.system.level.max = Math.max(Math.ceil(item.parent.system.misc.level.value / VALOR.skills.progression[item.system.progression]), 1)
 
@@ -48,7 +40,6 @@ export class valorItem extends Item {
     } else if (item.system.level.value < 1) {
       item.system.level.value = 1;
     }
-
 
     //set sp value, and apply cost/bonus to actor if it is not a temporary effect (do to weaken/boost/transform core technique)
     item.system.sp.value = item.system.sp.base + (item.system.sp.levelUp * item.system.level.value);
@@ -163,7 +154,6 @@ export class valorItem extends Item {
   prepareDerivedData() {
     const itemData = this;
     const data = itemData.system;
-    const flags = itemData.flags.valor || {};
   }
 
 

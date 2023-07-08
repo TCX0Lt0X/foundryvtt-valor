@@ -207,7 +207,12 @@ export class valorActorSheet extends ActorSheet {
     const itemData = {
       name: name,
       type: type,
-      data: data
+      data: data,
+      flags: {
+        valor: {
+          modifiers: []
+        }
+      }
     };
     // Remove the type from the dataset since it's in the itemData.type prop.
     delete itemData.data["type"];

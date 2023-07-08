@@ -51,11 +51,6 @@ export class valorItemSheet extends ItemSheet {
     // Prepare active effects
     context.effects = prepareActiveEffectCategories(itemData.effects);
 
-    if (context.system.type == "flaw" || context.system.type == "skill" ) {
-      console.log("honkhonk");
-      //context.modifiers = prepareModifiers(itemData.flags.valor.modifiers);
-    }
-
     return context;
   }
 
@@ -86,7 +81,6 @@ export class valorItemSheet extends ItemSheet {
       const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null;
       switch ( a.dataset.action ) {
         case "create":
-
           let modifiers = owner.flags.valor.modifiers ?? [];
           modifiers.push({
             base:0,
@@ -98,7 +92,6 @@ export class valorItemSheet extends ItemSheet {
               operator:"=="
             }
           });
-          console.log(modifiers);
           return owner.setFlag('valor', 'modifiers', modifiers);
         case "edit":
           return effect.sheet.render(true);
