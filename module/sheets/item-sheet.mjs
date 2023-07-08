@@ -82,12 +82,10 @@ export class valorItemSheet extends ItemSheet {
     function onManageModifier(event, owner) {
       event.preventDefault();
       const a = event.currentTarget;
-      console.log(a);
       const li = a.closest("li");
       const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null;
       switch ( a.dataset.action ) {
         case "create":
-          owner.setFlag('valor', 'modifiers', []);
 
           let modifiers = owner.flags.valor.modifiers ?? [];
           modifiers.push({
