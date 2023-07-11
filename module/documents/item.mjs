@@ -7,6 +7,22 @@ import {VALOR} from "../helpers/config.mjs";
 export class valorItem extends Item {
 
 
+  static async create(data, options) {
+
+    if (data.type === "flaw" || data.type === "skill" ) {
+      const valorFlags = {
+        flags: {
+          valor: {
+            modifiers: []
+          }
+        }
+      }
+      Object.assign(data, valorFlags);
+    }
+
+    return await super.create(data, options);
+  }
+
   /**
    * Augment the basic Item data model with additional dynamic data.
    */

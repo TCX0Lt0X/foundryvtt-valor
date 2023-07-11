@@ -220,6 +220,12 @@
     },
     "flaw": {
       "templates": ["base"],
+      "text": {
+        "flavor": "",
+        "effect": "",
+        "levelUp": "",
+        "special": ""
+      },
       "progression": "fixed",
       "level": {
         "value" : 1,
@@ -237,6 +243,12 @@
     "skill": {
       "templates": ["base"],
       "subtype": "Permanent",
+      "text": {
+        "flavor": "",
+        "effect": "",
+        "levelUp": "",
+        "special": ""
+      },
       "progression": "fixed",
       "season": 1,
       "level": {

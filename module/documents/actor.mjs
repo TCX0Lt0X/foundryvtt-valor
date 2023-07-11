@@ -183,7 +183,7 @@ export class valorActor extends Actor {
   }
 
   calculateHealth(actor, characterType) {
-    let health = Math.ceil((50 +
+    actor.system.statistic.health.max.value = Math.ceil((50 +
             + (5 * actor.system.attribute.strength.value)
             + (10 * actor.system.attribute.guts.value)
             + (10 * actor.system.misc.level.value))
@@ -192,7 +192,7 @@ export class valorActor extends Actor {
 
 
   calculateStamina(actor, characterType) {
-    let stamina = Math.ceil((8
+    actor.system.statistic.stamina.max.value = Math.ceil((8
         + (2 * actor.system.attribute.spirit.value)
         + (2 * actor.system.attribute.mind.value)
         + (4 * actor.system.misc.level.value))
