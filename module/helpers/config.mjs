@@ -23,7 +23,7 @@ VALOR.attributes = {
     "intuition": "VALOR.activeAttributeInt",
     "aura": "VALOR.activeAttributeAra",
     "resolve": "VALOR.activeAttributeRes"
-}
+  }
 };
 
 VALOR.activeAbilities = {

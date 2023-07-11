@@ -24,15 +24,14 @@ export class valorItem extends Item {
     // documents or derived data.
     const item = this;
 
-    if (item.type === 'flaw' || item.type === 'skill') {
-      item._prepareSkillFlawData(item);
 
-    }
   }
 
   _prepareSkillFlawData(item) {
     //set max level based on actor level and progression speed
-    item.system.level.max = Math.max(Math.ceil(item.parent.system.misc.level.value / VALOR.skills.progression[item.system.progression]), 1)
+    if (item.isOwned) {
+      item.system.level.max = Math.max(Math.ceil(item.parent.system.misc.level.value / VALOR.skills.progression[item.system.progression]), 1)
+    }
 
     //check levels are in valid range
     if (item.system.level.value > item.system.level.max) {
@@ -43,7 +42,7 @@ export class valorItem extends Item {
 
     //set sp value, and apply cost/bonus to actor if it is not a temporary effect (do to weaken/boost/transform core technique)
     item.system.sp.value = item.system.sp.base + (item.system.sp.levelUp * item.system.level.value);
-    if (!item.system.isEffect) {
+    if (!item.system.isEffect && item.isOwned) {
       let updates;
       if (item.type === 'flaw') updates = {[item.parent.system.misc.skillPoints.flawBonus[item.name]]: {itemId: item.id, value: item.system.sp.value }};
       else updates = {[item.parent.system.misc.skillPoints.spent[item.name]]: {itemId: item.id, value: item.system.sp.value }};
@@ -52,7 +51,7 @@ export class valorItem extends Item {
 
 
     //apply each modifier bonus, based on if condition is true
-    if (item.system.isActive) {
+    if (item.system.isActive && item.isOwned) {
       for (const modifier of item.flags.valor.modifiers) {
         if (modifier.targetData !== "") {
           let updates;
@@ -105,37 +104,74 @@ export class valorItem extends Item {
             }
             //applies modifier if condition is true
             if (condition) {
-              let modifierTotal = modifier.base + (modifier.levelUp * item.system.level.value);
-              updates = {
-                [`${modifier.targetData}.${item.name}`]: {
-                  itemId: item.id,
+              const target = foundry.utils.getProperty(item.parent, `${modifier.targetData}`);
+              let effectiveLevel;
+              let baseLevel = 0;
+              let boostLevel = 0;
+              let itemId;
+              let modifierTotal;
+              let targetNewTotal;
+
+              if(!item.isEffect) {
+                baseLevel = item.system.level.value;
+              } else {
+                boostLevel = item.system.level.value;
+              }
+              Object.assign(target.modifiers, {peepee: "poopoo"})
+              console.log(target);
+              if ((Object.keys(target.modifiers ?? {} )).includes(item.name)) {
+                baseLevel = Math.max(baseLevel, target.modifiers[item.name].itemLvl.baseLevel);
+                boostLevel = Math.max(boostLevel, target.modifiers[item.name].itemLvl.boostLevel);
+                if(item.type === "flaw") {
+                  effectiveLevel = Math.max(baseLevel +1, boostLevel);
+                } else {
+                  effectiveLevel = baseLevel + boostLevel;
+                }
+                itemId = (target.modifiers[item.name].itemId);
+                itemId.push(item.id);
+                modifierTotal = modifier.base + (modifier.levelUp * effectiveLevel);
+                const levelDelta = effectiveLevel - target.modifiers[item.name].itemLvl.effectiveLevel;
+                targetNewTotal = (modifier.levelUp * levelDelta) + target.value
+              } else {
+                itemId = [item.id];
+                effectiveLevel = baseLevel + boostLevel;
+                modifierTotal = modifier.base + (modifier.levelUp * effectiveLevel);
+                targetNewTotal = modifierTotal + target.value;
+              }
+              const updateModifiers = { [item.name]: {
+                  itemId: itemId,
                   itemType: item.type,
-                  itemLvl: item.system.level.value,
+                  itemLvl: {
+                    effectiveLevel: effectiveLevel,
+                    baseLevel: baseLevel,
+                    boostLevel: boostLevel
+                  },
                   value: modifierTotal
                 }
-              };
-            } else {
-              updates = {
-                [`${modifier.targetData}.${item.name}`]: {
-                  itemId: item.id,
+              }
+              Object.assign(target.modifiers, updateModifiers)
+              Object.assign(target, {value: targetNewTotal})
+
+
+
+                  updates = { modifiers: {
+                [item.name]: {
+                  itemId: itemId,
                   itemType: item.type,
-                  itemLvl: item.system.level.value,
-                  value: 0
-                }
+                  itemLvl: {
+                    effectiveLevel: effectiveLevel,
+                    baseLevel: baseLevel,
+                    boostLevel: boostLevel
+                  },
+                  value: modifierTotal
+                  }
+                }, value: targetNewTotal
               };
+
+              foundry.utils.setProperty(item.parent, `${modifier.targetData}`, target);
             }
           } catch (error) {
             console.error(error);
-            updates = {
-              [`${modifier.targetData}.${item.name}`]: {
-                itemId: item.id,
-                itemType: item.type,
-                itemLvl: item.system.level.value,
-                value: 0
-              }
-            };
-          } finally {
-            item.parent.update(updates);
           }
         }
       }
