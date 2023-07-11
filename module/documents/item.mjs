@@ -24,7 +24,6 @@ export class valorItem extends Item {
     // documents or derived data.
     const item = this;
 
-
   }
 
   _prepareSkillFlawData(item) {
@@ -49,14 +48,12 @@ export class valorItem extends Item {
       item.parent.update(updates);
     }
 
-
     //apply each modifier bonus, based on if condition is true
     if (item.system.isActive && item.isOwned) {
       for (const modifier of item.flags.valor.modifiers) {
         if (modifier.targetData !== "") {
           let updates;
           try {
-
             let condition;
 
             //takes condition strings and splits each into substrings, to allow for basic arithmetic
@@ -99,7 +96,7 @@ export class valorItem extends Item {
                   condition = x > y;
                   break;
                 default:
-                  false;
+                  condition = false;
               }
             }
             //applies modifier if condition is true
@@ -117,8 +114,7 @@ export class valorItem extends Item {
               } else {
                 boostLevel = item.system.level.value;
               }
-              Object.assign(target.modifiers, {peepee: "poopoo"})
-              console.log(target);
+
               if ((Object.keys(target.modifiers ?? {} )).includes(item.name)) {
                 baseLevel = Math.max(baseLevel, target.modifiers[item.name].itemLvl.baseLevel);
                 boostLevel = Math.max(boostLevel, target.modifiers[item.name].itemLvl.boostLevel);
@@ -131,30 +127,15 @@ export class valorItem extends Item {
                 itemId.push(item.id);
                 modifierTotal = modifier.base + (modifier.levelUp * effectiveLevel);
                 const levelDelta = effectiveLevel - target.modifiers[item.name].itemLvl.effectiveLevel;
-                targetNewTotal = (modifier.levelUp * levelDelta) + target.value
+                targetNewTotal = (modifier.levelUp * levelDelta) + target.value;
               } else {
                 itemId = [item.id];
                 effectiveLevel = baseLevel + boostLevel;
                 modifierTotal = modifier.base + (modifier.levelUp * effectiveLevel);
                 targetNewTotal = modifierTotal + target.value;
               }
-              const updateModifiers = { [item.name]: {
-                  itemId: itemId,
-                  itemType: item.type,
-                  itemLvl: {
-                    effectiveLevel: effectiveLevel,
-                    baseLevel: baseLevel,
-                    boostLevel: boostLevel
-                  },
-                  value: modifierTotal
-                }
-              }
-              Object.assign(target.modifiers, updateModifiers)
-              Object.assign(target, {value: targetNewTotal})
 
-
-
-                  updates = { modifiers: {
+              const updateModifiers = {
                 [item.name]: {
                   itemId: itemId,
                   itemType: item.type,
@@ -164,10 +145,10 @@ export class valorItem extends Item {
                     boostLevel: boostLevel
                   },
                   value: modifierTotal
-                  }
-                }, value: targetNewTotal
+                }
               };
-
+              Object.assign(target.modifiers, updateModifiers);
+              Object.assign(target, {value: targetNewTotal});
               foundry.utils.setProperty(item.parent, `${modifier.targetData}`, target);
             }
           } catch (error) {
