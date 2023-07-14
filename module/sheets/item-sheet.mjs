@@ -1,4 +1,5 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
+import {valorItem as Item} from "../documents/item.mjs";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -35,7 +36,7 @@ export class valorItemSheet extends ItemSheet {
     const context = super.getData();
 
     // Use a safe clone of the item data for further operations.
-    const itemData = context.item;
+    const item = context.item;
 
     // Retrieve the roll data for TinyMCE editors.
     context.rollData = {};
@@ -45,11 +46,15 @@ export class valorItemSheet extends ItemSheet {
     }
 
     // Add the actor's data to context.data for easier access, as well as flags.
-    context.system = itemData.system;
-    context.flags = itemData.flags;
+    context.system = item.system;
+    context.flags = item.flags;
 
     // Prepare active effects
-    context.effects = prepareActiveEffectCategories(itemData.effects);
+    context.effects = prepareActiveEffectCategories(item.effects);
+
+    if(item.type === 'technique') {
+      this._prepareTechniqueData(context)
+    }
 
     return context;
   }
@@ -57,7 +62,27 @@ export class valorItemSheet extends ItemSheet {
   /* -------------------------------------------- */
 
 
+  async _prepareTechniqueData(context) {
+    const compendiumCores = [];
+    const compendiumMods = [];
+    const compendiumLimits = [];
 
+    const techCompendium = game.packs.get("world.techniques");
+
+    for (let techComponent of techCompendium.index) {
+      if (techComponent.type == "core") {
+        cores.push(techComponent);
+      } else if (techComponent.type == "modifier") {
+        mods.push(techComponent);
+      } else if (techComponent.type == "limit") {
+        limits.push(techComponent);
+      }
+    }
+
+    context.compendiumCores = compendiumCores;
+    context.compendiumMods = compendiumMods;
+    context.compendiumLimits = compendiumLimits;
+  }
 
 
 
@@ -81,7 +106,7 @@ export class valorItemSheet extends ItemSheet {
       const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null;
       switch ( a.dataset.action ) {
         case "create":
-          let modifiers = owner.flags.valor.modifiers ?? [];
+          let modifiers = owner.getFlag('valor', 'modifiers') ?? [];
           modifiers.push({
             base:0,
             levelUp:0,

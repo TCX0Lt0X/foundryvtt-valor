@@ -1,4 +1,5 @@
 import {VALOR} from "../helpers/config.mjs";
+import {technique} from "./items/technique.mjs";
 
 /**
  * Extend the basic Item with some very simple modifications.
@@ -8,17 +9,6 @@ export class valorItem extends Item {
 
 
   static async create(data, options) {
-
-    if (data.type === "flaw" || data.type === "skill" ) {
-      const valorFlags = {
-        flags: {
-          valor: {
-            modifiers: []
-          }
-        }
-      }
-      Object.assign(data, valorFlags);
-    }
 
     return await super.create(data, options);
   }
@@ -42,31 +32,120 @@ export class valorItem extends Item {
 
   }
 
-  _prepareSkillFlawData(item) {
-    //set max level based on actor level and progression speed
-    if (item.isOwned) {
-      item.system.level.max = Math.max(Math.ceil(item.parent.system.misc.level.value / VALOR.skills.progression[item.system.progression]), 1)
+  /*
+  Incomplete function do not consume
+   */
+  static async _prepareTechniqueData(technique) {
+    //Compendium.world.techniques.YO5QaSzNzZpDyg6q
+    //console.log(fromUuidSync(`Compendium.world.techniques.YO5QaSzNzZpDyg6q`));
+
+    if (technique.system.core.uuid === null) {
+      return;
     }
 
-    //check levels are in valid range
-    if (item.system.level.value > item.system.level.max) {
-      item.system.level.value = item.system.level.max;
-    } else if (item.system.level.value < 1) {
+    //mocks
+    const modd = [{name: "testMod", uuid: "Compendium.world.techniques.BqvtSWVmy5FX0c6W", level: 1}]
+    const limito = [{name: "testMod", uuid: "Compendium.world.techniques.2MZFUp6yvuHpxqjC", level: 1}]
+    technique.setFlag('valor', 'techMods', modd)
+    technique.setFlag('valor', 'techLimits', limito)
+
+    const core = await fromUuid(technique.system.core.uuid);
+    const mods = [];
+    const limits = [];
+    for (const mod of technique.getFlag('valor', 'techMods')) {
+      mods.push(await fromUuid(mod.uuid));
+    }
+    console.log(mods);
+
+    for (const limit of technique.getFlag('valor', 'techLimits') ?? [] ) {
+      limits.push(await fromUuid(limit.uuid));
+    }
+
+    if (core == null) {
+      console.error(`core with id '${technique.system.core.uuid}' cannot be found`);
+      return;
+    }
+
+    technique.system.core.name = core.name;
+    technique.system.action = core.system.action;
+    technique.system.cost.stamina.min = core.system.staminaCost.min;
+    technique.system.target = core.system.target;
+    technique.system.range= core.system.range;
+    technique.system.area = core.system.area;
+    technique.system.isUlt = core.system.isUlt;
+    if (technique.system.isUlt === true) {
+      technique.system.uses.max = 1
+    }
+
+    for (const mod of mods) {
+
+    }
+
+    for (const limit of limits) {
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+    technique.system.cost.stamina.value = Math.max(
+        core.system.staminaCost.base
+        + ( core.system.staminaCost.perLevel
+            * technique.system.level.techniqueLevel ),
+        technique.system.cost.stamina.min );
+
+
+  }
+
+
+  static _prepareSkillFlawData(item) {
+    //set max level based on actor level and progression speed
+    if (!item.system.isEffect && item.isOwned) {
+      item.system.level.max = Math.max(Math.ceil(item.parent.system.misc.level.value / VALOR.skills.progression[item.system.progression]), 1)
+
+      //check levels are in valid range
+      if (item.system.level.value > item.system.level.max) {
+        item.system.level.value = item.system.level.max;
+      }
+    }
+    if (item.system.level.value < 1) {
       item.system.level.value = 1;
     }
 
     //set sp value, and apply cost/bonus to actor if it is not a temporary effect (do to weaken/boost/transform core technique)
     item.system.sp.value = item.system.sp.base + (item.system.sp.levelUp * item.system.level.value);
     if (!item.system.isEffect && item.isOwned) {
-      let updates;
-      if (item.type === 'flaw') updates = {[item.parent.system.misc.skillPoints.flawBonus[item.name]]: {itemId: item.id, value: item.system.sp.value }};
-      else updates = {[item.parent.system.misc.skillPoints.spent[item.name]]: {itemId: item.id, value: item.system.sp.value }};
-      item.parent.update(updates);
+      let skillPointTarget;
+      if (item.type === 'flaw') {
+        skillPointTarget = "system.misc.skillPoints.flawBonus";
+      } else {
+        skillPointTarget = "system.misc.skillPoints.spent";
+      }
+      const skillPointData = foundry.utils.getProperty(item.parent, skillPointTarget);
+
+      const updateSkillPointData = {
+        [item.name]: {
+          itemId: item.id,
+          value: item.system.sp.value
+        }
+      };
+
+      Object.assign(skillPointData.modifiers, updateSkillPointData)
+      Object.assign(skillPointData, {value: item.system.sp.value + skillPointData.value})
+
+      foundry.utils.setProperty(item.parent, skillPointTarget, skillPointData);
     }
 
     //apply each modifier bonus, based on if condition is true
     if (item.system.isActive && item.isOwned) {
-      for (const modifier of item.flags.valor.modifiers) {
+      for (const modifier of item.getFlag('valor','modifiers')) {
         if (modifier.targetData !== "") {
           let updates;
           try {
@@ -125,7 +204,7 @@ export class valorItem extends Item {
               let modifierTotal;
               let targetNewTotal;
 
-              if(!item.isEffect) {
+              if(!item.system.isEffect) {
                 baseLevel = item.system.level.value;
               } else {
                 boostLevel = item.system.level.value;
@@ -134,7 +213,7 @@ export class valorItem extends Item {
               if ((Object.keys(target.modifiers ?? {} )).includes(item.name)) {
                 baseLevel = Math.max(baseLevel, target.modifiers[item.name].itemLvl.baseLevel);
                 boostLevel = Math.max(boostLevel, target.modifiers[item.name].itemLvl.boostLevel);
-                if(item.type === "flaw") {
+                if(item.type === "flaw" && boostLevel >= 1) {
                   effectiveLevel = Math.max(baseLevel +1, boostLevel);
                 } else {
                   effectiveLevel = baseLevel + boostLevel;
@@ -185,8 +264,11 @@ export class valorItem extends Item {
    * is queried and has a roll executed directly from it).
    */
   prepareDerivedData() {
-    const itemData = this;
-    const data = itemData.system;
+    const item = this;
+
+    if(item.type === "technique") {
+      valorItem._prepareTechniqueData(item);
+    }
   }
 
 

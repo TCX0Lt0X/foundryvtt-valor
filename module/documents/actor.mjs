@@ -1,4 +1,5 @@
 import { VALOR } from "../helpers/config.mjs"
+import {valorItem as Item} from "./item.mjs";
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -50,12 +51,16 @@ export class valorActor extends Actor {
     const items = actor.itemTypes;
 
     for (const item of items["flaw"]) {
-      item._prepareSkillFlawData(item);
+      Item._prepareSkillFlawData(item);
       actor.calculateIncrements(actor)
     }
     for (const item of items["skill"]) {
-      item._prepareSkillFlawData(item);
+      Item._prepareSkillFlawData(item);
       actor.calculateIncrements(actor)
+    }
+    for (const item of items["technique"]) {
+      Item._prepareTechniqueData(item);
+      actor.calculateIncrements(actor);
     }
 
     //this._prepareCharacterData(actor);
