@@ -1,4 +1,5 @@
 import { VALOR } from "../helpers/config.mjs"
+import {valorItem as Item} from "./item.mjs";
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -31,8 +32,6 @@ export class valorActor extends Actor {
     // documents or derived data.
     const actor = this;
 
-    // Make separate methods for each Actor type (character, npc, etc.) to keep
-    // things organized.
     actor._prepareCharacterData(actor);
   }
 
@@ -47,9 +46,23 @@ export class valorActor extends Actor {
    */
   prepareDerivedData() {
     const actor = this;
+    actor.calculateIncrements(actor)
 
-    // Make separate methods for each Actor type (character, npc, etc.) to keep
-    // things organized.
+    const items = actor.itemTypes;
+
+    for (const item of items["flaw"]) {
+      Item._prepareSkillFlawData(item);
+      actor.calculateIncrements(actor)
+    }
+    for (const item of items["skill"]) {
+      Item._prepareSkillFlawData(item);
+      actor.calculateIncrements(actor)
+    }
+    for (const item of items["technique"]) {
+      Item._prepareTechniqueData(item);
+      actor.calculateIncrements(actor);
+    }
+
     //this._prepareCharacterData(actor);
   }
 
@@ -62,7 +75,6 @@ export class valorActor extends Actor {
     // Make modifications to data here. For example:
     const characterType = actor.getCharacterType(actor)
 
-    actor.prepareSkillFlawModifiers(actor);
     actor.calculateExperience(actor, characterType);
     actor.calculateSeason(actor);
     actor.calculateAttributePoints(actor);
@@ -82,33 +94,6 @@ export class valorActor extends Actor {
     actor.calculateValor(actor, characterType);
     actor.calculateUltimateTechniques(actor, characterType);
   }
-
-
-
-
-
-
-
-
-
-  prepareSkillFlawModifiers(actor) {
-    // const flaws = actor.itemTypes.flaw;
-    // const skills = actor.itemTypes.skill;
-    //
-    // for (const item of flaws) {
-    //   if (item.system.action === "passive") {
-    //     console.log(item);
-    //     // item.system.modifiers.push([{base:20, levelUp:5, targeData:"str"}]);
-    //     for (const modifier of item.system.modifiers) {
-    //       console.log(modifier);
-    //       }
-    //     }
-    //     //[Object.keys(item.toObject().system.modifiers)] = item.toObject().system.modifiers;
-    // }
-  }
-
-
-
 
   getCharacterType(actor) {
     let characterType;
@@ -130,9 +115,8 @@ export class valorActor extends Actor {
 
   calculateExperience(actor, characterType) {
     let curLevel = actor.system.misc.level.value;
-    actor.system.misc.experience.value = curLevel * characterType.experienceValue;
+    actor.system.misc.experience.reward.value = curLevel * characterType.experienceValue;
     actor.system.misc.experience.nextLevel = ((curLevel * (curLevel+1)) / 2) * 100;
-
   }
 
   calculateSeason(actor) {
@@ -145,30 +129,12 @@ export class valorActor extends Actor {
     let minBaseAttribute =  1;
 
     //set base attributes to be in range of min and max attribute values
-    if (actor.system.attribute.strength.value > maxBaseAttribute) {
-      actor.system.attribute.strength.value  = maxBaseAttribute;
-    } else if (actor.system.attribute.strength.value < minBaseAttribute) {
-      actor.system.attribute.strength.value = minBaseAttribute;
-    }
-    if (actor.system.attribute.agility.value > maxBaseAttribute) {
-      actor.system.attribute.agility.value  = maxBaseAttribute;
-    } else if (actor.system.attribute.agility.value < minBaseAttribute) {
-      actor.system.attribute.agility.value = minBaseAttribute;
-    }
-    if (actor.system.attribute.spirit.value > maxBaseAttribute) {
-      actor.system.attribute.spirit.value  = maxBaseAttribute;
-    } else if (actor.system.attribute.spirit.value < minBaseAttribute) {
-      actor.system.attribute.spirit.value = minBaseAttribute;
-    }
-    if (actor.system.attribute.mind.value > maxBaseAttribute) {
-      actor.system.attribute.mind.value  = maxBaseAttribute;
-    } else if (actor.system.attribute.mind.value < minBaseAttribute) {
-      actor.system.attribute.mind.value = minBaseAttribute;
-    }
-    if (actor.system.attribute.guts.value > maxBaseAttribute) {
-      actor.system.attribute.guts.value  = maxBaseAttribute;
-    } else if (actor.system.attribute.guts.value < minBaseAttribute) {
-      actor.system.attribute.guts.value = minBaseAttribute;
+    for (const attribute of Object.keys(VALOR.attributes.base)) {
+      if (actor.system.attribute[attribute].value > maxBaseAttribute) {
+        actor.system.attribute[attribute].value  = maxBaseAttribute;
+      } else if (actor.system.attribute[attribute].value < minBaseAttribute) {
+        actor.system.attribute[attribute].value = minBaseAttribute;
+      }
     }
 
     actor.system.misc.attributePoints.total = 22 + (level * 3)
@@ -183,12 +149,12 @@ export class valorActor extends Actor {
 
   calculateSkillPoints(actor, characterType) {
     let level = actor.system.misc.level.value;
-    let flawMaxBonusSP = 7 + level
+    let flawMaxBonusSP = 7 + level;
 
-    actor.system.misc.skillPoints.total = Math.ceil((characterType.baseSkillPoints
+    actor.system.misc.skillPoints.flawBonus.maxFlawSP.value = flawMaxBonusSP;
+    actor.system.misc.skillPoints.total.value = Math.ceil((characterType.baseSkillPoints
         + (characterType.levelSkillPoints * level))
-        + Math.min(actor.system.misc.skillPoints.flawBonus ?? 0, flawMaxBonusSP)
-        + (actor.system.misc.skillPoints.bonus ?? 0)
+        + Math.min(actor.system.misc.skillPoints.flawBonus.value ?? 0, flawMaxBonusSP)
         * characterType.multiplierSkillPoints);
   }
 
@@ -211,105 +177,78 @@ export class valorActor extends Actor {
 
     techniquePoints = Math.ceil(characterType.multiplierTechniquePoints * techniquePoints);
 
-    actor.system.misc.techniquePoints.total = techniquePoints;
+    actor.system.misc.techniquePoints.total.value = techniquePoints;
   }
 
   calculateActiveAttributes(actor, characterType) {
-    let level = actor.system.misc.level.value;
-
-    let activeAttributes = [["strength", "muscle"], ["agility", "dexterity"], ["spirit", "aura"], ["mind", "intuition"], ["guts", "resolve"]];
-
-    for (const activeAttribute of activeAttributes) {
-      actor.system.attribute[activeAttribute[1]].value = Math.ceil((actor.system.attribute[activeAttribute[0]].value + level) / 2)
-          + characterType.modifierActiveAttribute
-          + (actor.system.attribute[activeAttribute[1]].bonus ?? 0);
+    for (let i = 0; i < VALOR.attributes.active.length; i++ ) {
+      actor.system.attribute[Object.keys(VALOR.attributes.active)[i]].value = Math.ceil((actor.system.attribute[Object.keys(VALOR.attributes.base)[i]].value + actor.system.misc.level.value) / 2)
+          + characterType.modifierActiveAttribute;
     }
   }
 
   calculateHealth(actor, characterType) {
-    let health = Math.ceil((50 +
-        + (5 * actor.system.attribute.strength.value)
-        + (10 * actor.system.attribute.guts.value)
-        + (10 * actor.system.misc.level.value)
-        + (actor.system.statistic.health.bonus ?? 0) )
+    actor.system.statistic.health.max.value = Math.ceil((50 +
+            + (5 * actor.system.attribute.strength.value)
+            + (10 * actor.system.attribute.guts.value)
+            + (10 * actor.system.misc.level.value))
         * characterType.healthMultiplier);
-
-    let healthIncrement = Math.ceil(health / 5);
-    actor.system.statistic.health.max = health;
-    actor.system.statistic.health.increment = healthIncrement
-    actor.system.statistic.health.critical = (healthIncrement * 2) - 1;
   }
 
+
   calculateStamina(actor, characterType) {
-    let stamina = Math.ceil((8
+    actor.system.statistic.stamina.max.value = Math.ceil((8
         + (2 * actor.system.attribute.spirit.value)
         + (2 * actor.system.attribute.mind.value)
-        + (4 * actor.system.misc.level.value)
-        + (actor.system.statistic.stamina.bonus ?? 0))
+        + (4 * actor.system.misc.level.value))
         * characterType.staminaMultiplier);
-
-    actor.system.statistic.stamina.max = stamina
-    actor.system.statistic.stamina.increment = Math.ceil(stamina / 5);
   }
 
   calculateAttack(actor, characterType) {
-    actor.system.statistic.attack.strength.value = Math.ceil((((actor.system.attribute.strength.value * characterType.multiplierAttackBaseAttribute) + actor.system.misc.level.value) * 2)
-        + (actor.system.statistic.attack.strength.bonus ?? 0)
-        * characterType.multiplierAttackTotal);
+    let baseAttributes = Object.keys(VALOR.attributes.base);
+    baseAttributes.pop("guts");
 
-    actor.system.statistic.attack.agility.value = Math.ceil((((actor.system.attribute.agility.value * characterType.multiplierAttackBaseAttribute) + actor.system.misc.level.value) * 2)
-        + (actor.system.statistic.attack.agility.bonus ?? 0)
-        * characterType.multiplierAttackTotal);
-
-    actor.system.statistic.attack.mind.value = Math.ceil((((actor.system.attribute.mind.value * characterType.multiplierAttackBaseAttribute) + actor.system.misc.level.value) * 2)
-        + (actor.system.statistic.attack.mind.bonus ?? 0)
-        * characterType.multiplierAttackTotal);
-
-    actor.system.statistic.attack.spirit.value = Math.ceil((((actor.system.attribute.spirit.value * characterType.multiplierAttackBaseAttribute) + actor.system.misc.level.value) * 2)
-        + (actor.system.statistic.attack.spirit.bonus ?? 0)
-        * characterType.multiplierAttackTotal);
+    for (const baseAttribute of baseAttributes) {
+      actor.system.statistic.attack[baseAttribute].value = Math.ceil((((actor.system.attribute[baseAttribute].value
+                  * characterType.multiplierAttackBaseAttribute)
+              + actor.system.misc.level.value) * 2)
+          * characterType.multiplierAttackTotal);
+    }
   }
 
   calculateDamageIncrement(actor, characterType) {
     actor.system.statistic.damageIncrement.value = Math.ceil((5
-        + actor.system.misc.level.value
-        + (actor.system.statistic.damageIncrement.bonus ?? 0))
+        + actor.system.misc.level.value)
         * characterType.multiplierDamageIncrement);
   }
 
   calculateDefense(actor) {
     actor.system.statistic.defense.value = actor.system.attribute.strength.value
         + actor.system.attribute.guts.value
-        + (2 * actor.system.misc.level.value)
-        + (actor.system.statistic.defense.bonus ?? 0);
+        + (2 * actor.system.misc.level.value);
   }
 
   calculateResistance(actor) {
     actor.system.statistic.resistance.value = actor.system.attribute.spirit.value
         + actor.system.attribute.mind.value
-        + (2 * actor.system.misc.level.value)
-        + (actor.system.statistic.resistance.bonus ?? 0);
+        + (2 * actor.system.misc.level.value);
   }
 
   calculateMove(actor) {
     actor.system.statistic.move.value = 3
-        + Math.floor((actor.system.attribute.agility.value - 1) / 4)
-        + (actor.system.statistic.move.bonus ?? 0);
+        + Math.floor((actor.system.attribute.agility.value - 1) / 4);
   }
 
   calculateInitiative(actor) {
-    actor.system.statistic.initiative.value = actor.system.attribute.dexterity.value
-        + (actor.system.statistic.initiative.bonus ?? 0);
+    actor.system.statistic.initiative.value = actor.system.attribute.dexterity.value;
   }
 
   calculateZoneOfControl(actor, characterType) {
-    actor.system.misc.zoneOfControl.value = characterType.baseZoneOfControl
-        + (actor.system.misc.zoneOfControl.bonus ?? 0);
+    actor.system.misc.zoneOfControl.value = characterType.baseZoneOfControl;
   }
 
   calculateSize(actor, characterType) {
-    actor.system.misc.size.value = characterType.baseSize
-        + (actor.system.misc.size.bonus ?? 0);
+    actor.system.misc.size.value = characterType.baseSize;
   }
 
   calculateValor(actor, characterType) {
@@ -320,10 +259,10 @@ export class valorActor extends Actor {
       actor.system.statistic.valor.initial.value = 0;
       actor.system.statistic.valor.perTurn.value = 0;
     } else {
-      actor.system.statistic.valor.min.value = -20 + (actor.system.statistic.valor.min.bonus ?? 0);
-      actor.system.statistic.valor.max.value = 10 + (actor.system.statistic.valor.max.bonus ?? 0);
-      actor.system.statistic.valor.initial.value = 0 + (actor.system.statistic.valor.initial.bonus ?? 0);
-      actor.system.statistic.valor.perTurn.value = characterType.valorPerTurn + (actor.system.statistic.valor.perTurn.bonus ?? 0);
+      actor.system.statistic.valor.min.value = -20;
+      actor.system.statistic.valor.max.value = 10;
+      actor.system.statistic.valor.initial.value = 0;
+      actor.system.statistic.valor.perTurn.value = characterType.valorPerTurn;
     }
 
     if (actor.system.statistic.valor.value > actor.system.statistic.valor.max.value) {
@@ -337,20 +276,15 @@ export class valorActor extends Actor {
     if (characterType.hasUltimateTechnique === false) {
       actor.system.misc.ultimateTechniques.value = 0;
     } else {
-      actor.system.misc.ultimateTechniques.value = Math.floor(actor.system.misc.level.value / 5)
-          + (actor.system.misc.ultimateTechniques.bonus ?? 0);
+      actor.system.misc.ultimateTechniques.value = Math.floor(actor.system.misc.level.value / 5);
     }
   }
 
-
-
-
-
-
-
-
-
-
+  calculateIncrements(actor) {
+    actor.system.statistic.health.increment.value = (actor.system.statistic.health.max.value / 5)
+    actor.system.statistic.health.critical.value = (actor.system.statistic.health.increment.value * 2) - 1;
+    actor.system.statistic.stamina.increment.value = Math.ceil(actor.system.statistic.stamina.max.value / 5);
+  }
 
 
 

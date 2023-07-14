@@ -27,7 +27,8 @@
   "esmodules": ["module/valor.mjs"],
   "styles": ["css/valor.css"],
   "scripts": [],
-  "packs": [],
+  "packs": [
+  ],
   "languages": [
     {
       "lang": "en",

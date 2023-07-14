@@ -9,7 +9,8 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="attributes">Attributes</a>
+    <a class="item" data-tab="modifiers">Modifiers</a>
+    <a class="item" data-tab="effects">Effects</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -20,9 +21,14 @@
       {{editor content=system.description target="system.description" rollData=rollData button=true owner=owner editable=editable}}
     </div>
 
-    {{!-- Attributes Tab --}}
-    <div class="tab attributes" data-group="primary" data-tab="attributes">
-      {{!-- As you add new fields, add them in here! --}}
+    {{!-- Modifiers Tab --}}
+    <div class="tab modifiers" data-group="primary" data-tab="modifiers">
+      {{> "systems/valor/templates/item/parts/item-modifiers.html"}}
+    </div>
+
+    {{!-- Active Effects Tab --}}
+    <div class="tab effects" data-group="primary" data-tab="effects">
+      {{> "systems/valor/templates/item/parts/item-effects.html"}}
     </div>
   </section>
 

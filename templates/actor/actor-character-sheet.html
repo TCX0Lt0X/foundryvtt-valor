@@ -18,7 +18,7 @@
           <div class="resource-content flexrow flex-center flex-between">
           <input type="text" name="system.statistic.health.value" value="{{system.statistic.health.value}}" data-dtype="Number"/>
           <span> / </span>
-          <input type="text" name="system.statistic.health.max" value="{{system.statistic.health.max}}" data-dtype="Number"/>
+          <input type="text" name="system.statistic.health.max.value" value="{{system.statistic.health.max.value}}" data-dtype="Number"/>
           </div>
         </div>
 
@@ -27,7 +27,7 @@
           <div class="resource-content flexrow flex-center flex-between">
           <input type="text" name="system.statistic.stamina.value" value="{{system.statistic.stamina.value}}" data-dtype="Number"/>
           <span> / </span>
-          <input type="text" name="system.statistic.stamina.max" value="{{system.statistic.stamina.max}}" data-dtype="Number"/>
+          <input type="text" name="system.statistic.stamina.max.value" value="{{system.statistic.stamina.max.value}}" data-dtype="Number"/>
           </div>
         </div>
 
@@ -61,21 +61,21 @@
         <div class="resource flex-group-center">
           <label for="system.statistic.health.increment" class="resource-label">Health Increment</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="system.statistic.health.increment" value="{{system.statistic.health.increment}}" data-dtype="Number"/>
+          <input type="text" name="system.statistic.health.increment.value" value="{{system.statistic.health.increment.value}}" data-dtype="Number"/>
           </div>
         </div>
 
         <div class="resource flex-group-center">
           <label for="system.statistic.health.critical" class="resource-label">Critical Health</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="system.statistic.health.critical" value="{{system.statistic.health.critical}}" data-dtype="Number"/>
+          <input type="text" name="system.statistic.health.critical.value" value="{{system.statistic.health.critical.value}}" data-dtype="Number"/>
           </div>
         </div>
 
         <div class="resource flex-group-center">
           <label for="system.statistic.stamina.value" class="resource-label">Stamina Increment</label>
           <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="system.statistic.stamina.increment" value="{{system.statistic.stamina.increment}}" data-dtype="Number"/>
+          <input type="text" name="system.statistic.stamina.increment.value" value="{{system.statistic.stamina.increment.value}}" data-dtype="Number"/>
           </div>
         </div>
 
@@ -108,7 +108,6 @@
     {{!-- Default tab is specified in actor-sheet.mjs --}}
     <a class="item" data-tab="stats">Stats</a>
     <a class="item" data-tab="flaws">Flaws</a>
-    <a class="item" data-tab="effects">effects</a>
     <a class="item" data-tab="skills">Skills</a>
     <a class="item" data-tab="techniques">Techniques</a>
     <a class="item" data-tab="description">Biography</a>
@@ -229,12 +228,12 @@
 
     {{!-- Owned Skills Tab --}}
     <div class="tab skills" data-group="primary" data-tab="skills">
-      {{> "systems/valor/templates/actor/parts/actor-spells.html"}}
+      {{> "systems/valor/templates/actor/parts/actor-skills.html"}}
     </div>
 
     {{!-- Owned Techniques Tab --}}
     <div class="tab techniques" data-group="primary" data-tab="techniques">
-      {{> "systems/valor/templates/actor/parts/actor-features.html"}}
+      {{> "systems/valor/templates/actor/parts/actor-techniques.html"}}
     </div>
 
     {{!-- Biography Tab --}}
