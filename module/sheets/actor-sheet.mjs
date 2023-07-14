@@ -89,20 +89,6 @@ export class valorActorSheet extends ActorSheet {
     const flaws = [];
     const skills = [];
     const techniques = [];
-    const gear = [];
-    const features = [];
-    const spells = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-      7: [],
-      8: [],
-      9: []
-    };
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
@@ -119,29 +105,12 @@ export class valorActorSheet extends ActorSheet {
       else if (i.type === 'technique') {
         techniques.push(i);
       }
-      // Append to gear.
-      else if (i.type === 'item') {
-        gear.push(i);
-      }
-      // Append to features.
-      else if (i.type === 'feature') {
-        features.push(i);
-      }
-      // Append to spells.
-      else if (i.type === 'spell') {
-        if (i.spellLevel != undefined) {
-          spells[i.spellLevel].push(i);
-        }
-      }
     }
 
     // Assign and return
     context.flaws = flaws;
     context.skills = skills;
     context.techniques = techniques;
-    context.gear = gear;
-    context.features = features;
-    context.spells = spells;
    }
 
   /* -------------------------------------------- */

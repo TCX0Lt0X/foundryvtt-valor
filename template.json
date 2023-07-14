@@ -208,11 +208,65 @@
           "value": 0,
           "modifiers": {}
         }
+      },
+      "rollModifiers": {
+        "attackRolls": {
+          "all": {
+            "value": 0,
+            "modifiers": {}
+          },
+          "muscle": {
+            "value": 0,
+            "modifiers": {}
+          },
+          "dexterity": {
+            "value": 0,
+            "modifiers": {}
+          },
+          "aura": {
+            "value": 0,
+            "modifiers": {}
+          },
+          "intuition": {
+            "value": 0,
+            "modifiers": {}
+          },
+          "resolve": {
+            "value": 0,
+            "modifiers": {}
+          }
+        },
+        "defenseRolls": {
+          "all": {
+            "value": 0,
+            "modifiers": {}
+          },
+          "muscle": {
+            "value": 0,
+            "modifiers": {}
+          },
+          "dexterity": {
+            "value": 0,
+            "modifiers": {}
+          },
+          "aura": {
+            "value": 0,
+            "modifiers": {}
+          },
+          "intuition": {
+            "value": 0,
+            "modifiers": {}
+          },
+          "resolve": {
+            "value": 0,
+            "modifiers": {}
+          }
+        }
       }
     }
   },
   "Item": {
-    "types": ["flaw", "skill", "technique","item", "feature", "spell"],
+    "types": ["flaw", "skill", "technique", "core", "modifier", "limit"],
     "templates": {
       "base": {
         "description": ""
@@ -266,33 +320,161 @@
     },
     "technique": {
       "templates": ["base"],
-      "subtype": "Damage",
+      "text": {
+        "flavor": "",
+        "crunch": ""
+      },
+      "attribute": {
+        "effect": "",
+        "opposedRoll": ""
+      },
       "level": {
-        "core" : 1,
-        "mods" : null,
-        "total" : 1,
-        "max" : 4
+        "techniqueLevel": 1,
+        "coreLevel": 1,
+        "effectiveModLevel": 0
+      },
+      "core": {
+        "name": "",
+        "uuid": null
       },
       "mods": [],
       "limits": [],
-      "stCost": {
-        "base": null,
-        "level": null,
-        "reduction": null
+      "cost": {
+        "stamina": {
+          "value": 0,
+          "min": 0,
+          "modifiers": []
+        },
+        "health": {
+          "value": 0,
+          "modifiers": []
+        },
+        "valor": {
+          "value": 0,
+          "modifiers": []
+        }
       },
-      "action": "attack"
+      "action": "attack",
+      "range": {
+        "min": 0,
+        "max": 1
+      },
+      "target": 1,
+      "area":{
+        "xAxis": null,
+        "yAxis": null
+      },
+      "uses": {
+        "value": 0,
+        "max": "Number.POSITIVE_INFINITY"
+      },
+      "cooldown": {
+        "value": 0,
+        "max": 0
+      },
+      "isUlt": false,
+      "isMimicked": false
+    },
+    "core": {
+      "action": "",
+      "staminaCost": {
+        "base": 0,
+        "perLevel": 0,
+        "min": 0
+      },
+      "target": 1,
+      "range": {
+        "min": 0,
+        "max": 1
+      },
+      "area":{
+        "xAxis": null,
+        "yAxis": null
+      },
+      "isUlt": false
+    },
+    "modifier": {
+      "text": {
+        "flavor": "",
+        "crunch": ""
+      },
+      "isLevelable": true,
+      "isUltMod": false,
+      "blacklist": {
+        "attributes": [],
+        "modifiers": []
+      },
+      "whitelist": {
+        "cores": [],
+        "attributes": [],
+        "modifiers": []
+      },
+      "techniqueLevelModifier": {
+        "strength": {
+          "base": 0,
+          "perLevel": 0
+        },
+        "agility": {
+          "base": 0,
+          "perLevel": 0
+        },
+        "spirit": {
+          "base": 0,
+          "perLevel": 0
+        },
+        "mind": {
+          "base": 0,
+          "perLevel": 0
+        },
+        "guts": {
+          "base": 0,
+          "perLevel": 0
+        }
+      }
+    },
+    "limit": {
+      "text": {
+        "flavor": "",
+        "crunch": ""
+      },
+      "isLevelable": true,
+      "isUltLimit": false,
+      "blacklist": {
+        "attributes": [],
+        "limits": []
+      },
+      "whitelist": {
+        "cores": [],
+        "attributes": [],
+        "limits": []
+      },
+      "costReduction": {
+        "strength": {
+          "base": 0,
+          "perLevel": 0
+        },
+        "agility": {
+          "base": 0,
+          "perLevel": 0
+        },
+        "spirit": {
+          "base": 0,
+          "perLevel": 0
+        },
+        "mind": {
+          "base": 0,
+          "perLevel": 0
+        },
+        "guts": {
+          "base": 0,
+          "perLevel": 0
+        }
+      }
     },
     "item": {
       "templates": ["base"],
       "quantity": 1,
       "weight": 0
-    },
-    "feature": {
-      "templates": ["base"]
-    },
-    "spell": {
-      "templates": ["base"],
-      "spellLevel": 1
     }
   }
 }
