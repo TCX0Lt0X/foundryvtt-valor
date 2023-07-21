@@ -8,15 +8,6 @@ import {valorItem as Item} from "./item.mjs";
 export class valorActor extends Actor {
 
 
-
-
-
-
-
-
-
-
-
   /** @override */
   prepareData() {
     // Prepare data for the actor. Calling the super version of this executes
@@ -281,7 +272,7 @@ export class valorActor extends Actor {
   }
 
   calculateIncrements(actor) {
-    actor.system.statistic.health.increment.value = (actor.system.statistic.health.max.value / 5)
+    actor.system.statistic.health.increment.value = Math.ceil(actor.system.statistic.health.max.value / 5);
     actor.system.statistic.health.critical.value = (actor.system.statistic.health.increment.value * 2) - 1;
     actor.system.statistic.stamina.increment.value = Math.ceil(actor.system.statistic.stamina.max.value / 5);
   }

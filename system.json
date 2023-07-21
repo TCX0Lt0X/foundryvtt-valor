@@ -14,7 +14,7 @@
     {
       "name": "Daniel Letterman",
       "url": "",
-      "discord": "TC X0 Lt 0X\n#5293",
+      "discord": "TC X0 Lt 0X",
       "flags": {}
     },
     {
@@ -28,6 +28,13 @@
   "styles": ["css/valor.css"],
   "scripts": [],
   "packs": [
+    {
+      "name": "techniques",
+      "label": "Techniques",
+      "path": "./packs/techniques",
+      "type": "Item",
+      "entity": "Item"
+    }
   ],
   "languages": [
     {
@@ -40,6 +47,7 @@
   "gridUnits": "sq",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "stamina",
+  "socket": true,
   "url": "https://tcx0lt0x.github.io/valor/",
   "manifest": "https://raw.githubusercontent.com/TCX0Lt0X/valor/master/system.json",
   "download": "",

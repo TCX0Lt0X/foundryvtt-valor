@@ -53,7 +53,7 @@ export class valorItemSheet extends ItemSheet {
     context.effects = prepareActiveEffectCategories(item.effects);
 
     if(item.type === 'technique') {
-      this._prepareTechniqueData(context)
+      this._prepareTechniqueData(context);
     }
 
     return context;
@@ -67,18 +67,17 @@ export class valorItemSheet extends ItemSheet {
     const compendiumMods = [];
     const compendiumLimits = [];
 
-    const techCompendium = game.packs.get("world.techniques");
+    let techCompendium = game.packs.get("valor.techniques");
 
     for (let techComponent of techCompendium.index) {
-      if (techComponent.type == "core") {
-        cores.push(techComponent);
-      } else if (techComponent.type == "modifier") {
-        mods.push(techComponent);
-      } else if (techComponent.type == "limit") {
-        limits.push(techComponent);
+      if (techComponent.type === "core") {
+        compendiumCores.push(techComponent);
+      } else if (techComponent.type === "modifier") {
+        compendiumMods.push(techComponent);
+      } else if (techComponent.type === "limit") {
+        compendiumLimits.push(techComponent);
       }
     }
-
     context.compendiumCores = compendiumCores;
     context.compendiumMods = compendiumMods;
     context.compendiumLimits = compendiumLimits;

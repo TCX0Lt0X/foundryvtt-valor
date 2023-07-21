@@ -7,6 +7,7 @@ import { valorItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { VALOR } from "./helpers/config.mjs";
+import {_runCompendiumTechScript} from "./documents/items/technique.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -43,6 +44,9 @@ Hooks.once('init', async function() {
   Actors.registerSheet("valor", valorActorSheet, { makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("valor", valorItemSheet, { makeDefault: true });
+
+  //enable sockets
+  game.socket.on('system.valor', await handleSocketEvent);
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
@@ -124,4 +128,18 @@ function rollItemMacro(itemName) {
 
   // Trigger the item roll
   return item.roll();
+}
+
+/* -------------------------------------------- */
+/*  Socket Functions                             */
+/* -------------------------------------------- */
+
+//handle Socket Events
+async function handleSocketEvent({type, ...args}) {
+  switch(type) {
+    case 'TECHCOMPENDIUMSCRIPT':
+      console.log(args)
+      await _runCompendiumTechScript(args.technique, args.item);
+      break;
+  }
 }
