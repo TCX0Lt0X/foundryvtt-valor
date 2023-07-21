@@ -7,7 +7,7 @@
       }
     },
     "character": {
-      "templates": ["base"],
+      "templates": [],
       "attribute": {
           "strength": {
             "value": 1,
@@ -273,7 +273,7 @@
       }
     },
     "flaw": {
-      "templates": ["base"],
+      "templates": [],
       "text": {
         "flavor": "",
         "effect": "",
@@ -295,7 +295,7 @@
       "isEffect": false
     },
     "skill": {
-      "templates": ["base"],
+      "templates": [],
       "subtype": "Permanent",
       "text": {
         "flavor": "",
@@ -319,10 +319,16 @@
       "isEffect": false
     },
     "technique": {
-      "templates": ["base"],
+      "templates": [],
       "text": {
-        "flavor": "",
-        "crunch": ""
+        "flavor": {
+          "user": "",
+          "default": ""
+        },
+        "crunch": {
+          "effect": "",
+          "special": ""
+        }
       },
       "attribute": {
         "effect": "",
@@ -337,13 +343,14 @@
         "name": "",
         "uuid": null
       },
-      "mods": [],
-      "limits": [],
+      "mods": {},
+      "limits": {},
       "cost": {
         "stamina": {
           "value": 0,
           "min": 0,
-          "modifiers": []
+          "modifiers": [],
+          "limitReduction": 0
         },
         "health": {
           "value": 0,
@@ -359,10 +366,10 @@
         "min": 0,
         "max": 1
       },
-      "target": 1,
+      "targets": 1,
       "area":{
-        "xAxis": null,
-        "yAxis": null
+        "xAxis": 1,
+        "yAxis": 1
       },
       "uses": {
         "value": 0,
@@ -376,22 +383,37 @@
       "isMimicked": false
     },
     "core": {
+      "text": {
+        "flavor": {
+          "user": "",
+          "default": ""
+        },
+        "crunch": {
+          "effect": "",
+          "special": ""
+        }
+      },
       "action": "",
+      "applicableAttributes": [],
       "staminaCost": {
         "base": 0,
         "perLevel": 0,
         "min": 0
       },
-      "target": 1,
+      "targets": 1,
       "range": {
         "min": 0,
         "max": 1
       },
-      "area":{
-        "xAxis": null,
-        "yAxis": null
+      "area": {
+        "xAxis": 1,
+        "yAxis": 1
       },
-      "isUlt": false
+      "isUlt": false,
+      "maxCoreLevelAdj": 0,
+      "scripts": {
+        "prepScript": ""
+      }
     },
     "modifier": {
       "text": {
@@ -401,7 +423,6 @@
       "isLevelable": true,
       "isUltMod": false,
       "blacklist": {
-        "attributes": [],
         "modifiers": []
       },
       "whitelist": {
@@ -410,26 +431,11 @@
         "modifiers": []
       },
       "techniqueLevelModifier": {
-        "strength": {
-          "base": 0,
-          "perLevel": 0
-        },
-        "agility": {
-          "base": 0,
-          "perLevel": 0
-        },
-        "spirit": {
-          "base": 0,
-          "perLevel": 0
-        },
-        "mind": {
-          "base": 0,
-          "perLevel": 0
-        },
-        "guts": {
-          "base": 0,
-          "perLevel": 0
-        }
+        "base": 0,
+        "perLevel": 0
+      },
+      "scripts": {
+        "prepScript": ""
       }
     },
     "limit": {
@@ -449,26 +455,11 @@
         "limits": []
       },
       "costReduction": {
-        "strength": {
-          "base": 0,
-          "perLevel": 0
-        },
-        "agility": {
-          "base": 0,
-          "perLevel": 0
-        },
-        "spirit": {
-          "base": 0,
-          "perLevel": 0
-        },
-        "mind": {
-          "base": 0,
-          "perLevel": 0
-        },
-        "guts": {
-          "base": 0,
-          "perLevel": 0
-        }
+        "base": 0,
+        "perLevel": 0
+      },
+      "scripts": {
+        "prepScript": ""
       }
     },
     "item": {

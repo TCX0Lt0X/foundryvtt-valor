@@ -1,5 +1,5 @@
 import {VALOR} from "../helpers/config.mjs";
-import {technique} from "./items/technique.mjs";
+import {AsyncFunction, getActiveAttribute, isLeastGM} from "../utils.mjs";
 
 /**
  * Extend the basic Item with some very simple modifications.
@@ -39,68 +39,113 @@ export class valorItem extends Item {
     //Compendium.world.techniques.YO5QaSzNzZpDyg6q
     //console.log(fromUuidSync(`Compendium.world.techniques.YO5QaSzNzZpDyg6q`));
 
+    //prevent running if no core is set
     if (technique.system.core.uuid === null) {
       return;
     }
 
-    //mocks
-    const modd = [{name: "testMod", uuid: "Compendium.world.techniques.BqvtSWVmy5FX0c6W", level: 1}]
-    const limito = [{name: "testMod", uuid: "Compendium.world.techniques.2MZFUp6yvuHpxqjC", level: 1}]
-    technique.setFlag('valor', 'techMods', modd)
-    technique.setFlag('valor', 'techLimits', limito)
+    const leastGM = isLeastGM();
 
-    const core = await fromUuid(technique.system.core.uuid);
-    const mods = [];
-    const limits = [];
-    for (const mod of technique.getFlag('valor', 'techMods')) {
-      mods.push(await fromUuid(mod.uuid));
-    }
-    console.log(mods);
+    //fetch core from Compendium
+    const core = (await fromUuid(technique.system.core.uuid)).toObject(false);
 
-    for (const limit of technique.getFlag('valor', 'techLimits') ?? [] ) {
-      limits.push(await fromUuid(limit.uuid));
+    //fetch mods from compendium
+    const mods = technique.getFlag('valor', 'techMods') ?? {}
+    for (const mod in mods) {
+      const retrievedMod = (await fromUuid(mods[mod].uuid)).toObject(false);
+      foundry.utils.setProperty(retrievedMod, "system.level", mods[mod].level);
+      foundry.utils.setProperty(technique, `system.mods.${mod}`, retrievedMod);
     }
 
+
+
+    //fetch limits from compendium
+    const limits = technique.getFlag('valor', 'techLimits') ?? {}
+    for (const limit in limits ) {
+      const retrievedLimit = (await fromUuid(limits[limit].uuid)).toObject(false);
+      foundry.utils.setProperty(retrievedLimit, "system.level", limits[limit].level);
+      foundry.utils.setProperty(technique, `system.limits.${limit}`, retrievedLimit);
+    }
+
+
+    //makes sure core was retrieved
     if (core == null) {
       console.error(`core with id '${technique.system.core.uuid}' cannot be found`);
       return;
     }
 
-    technique.system.core.name = core.name;
+    //confirms a selected base Attribute is valid and gets active Attribute
+    if (!core.system.applicableAttributes.includes(technique.system.attribute.effect)) {
+      technique.update({'system.attribute.effect': core.system.applicableAttributes[0]});
+      return;
+    }
+    technique.system.attribute.opposedRoll = getActiveAttribute(technique.system.attribute.effect);
+
+    //apply core data
+    technique.system.core = core;
     technique.system.action = core.system.action;
     technique.system.cost.stamina.min = core.system.staminaCost.min;
     technique.system.target = core.system.target;
-    technique.system.range= core.system.range;
+    technique.system.range = core.system.range;
     technique.system.area = core.system.area;
     technique.system.isUlt = core.system.isUlt;
     if (technique.system.isUlt === true) {
       technique.system.uses.max = 1
     }
 
-    for (const mod of mods) {
-
+    //run core prepScript
+    const coreFn = new AsyncFunction( "isLeastGM", "technique", "core", core.system.scripts.prepScript);
+    try {
+      coreFn.call(this, leastGM, technique, core);
+    } catch(err) {
+      ui.notifications.error("TECHNIQUE.CORESCRIPT.Error", { localize: false });
     }
 
-    for (const limit of limits) {
+    //process modifiers
+    for (const mod in technique.system.mods) {
 
+      //apply mod effective technique level cost
+      technique.system.level.effectiveModLevel +=
+          technique.system.mods[mod].system.techniqueLevelModifier.base +
+          (technique.system.mods[mod].system.level * technique.system.mods[mod].system.techniqueLevelModifier.perLevel);
+
+      //run modifier prep script
+      const modFn = new AsyncFunction("isLeastGM", "technique", "modifier", technique.system.mods[mod].system.scripts.prepScript);
+      try {
+        modFn.call(this, leastGM, technique, technique.system.mods[mod]);
+      } catch(err) {
+        ui.notifications.error("TECHNIQUE.MODSCRIPT.Error", { localize: false });
+      }
     }
 
+    //process limits
+    for (const limit in technique.system.limits) {
 
+      //apply limit stamina cost reduction
+      technique.system.cost.stamina.limitReduction +=
+          technique.system.limits[limit].system.costReduction[technique.system.attribute.effect].base +
+          (technique.system.limits[limit].system.level * technique.system.limits[limit].system.costReduction[technique.system.attribute.effect].perLevel);
 
+      //run limit prep script
+      const limitFn = new AsyncFunction("isLeastGM", "technique", "limit", technique.system.limits[limit].system.scripts.prepScript);
+      try {
+        limitFn.call(this, leastGM, technique, technique.system.limits[limit]);
+      } catch(err) {
+        ui.notifications.error("TECHNIQUE.LIMITSCRIPT.Error", { localize: false });
+      }
+    }
 
+    //calculate final Technique Level
+    technique.system.level.techniqueLevel =
+        technique.system.level.coreLevel +
+        technique.system.level.effectiveModLevel;
 
-
-
-
-
-
-
+    //calculate final stamina cost
     technique.system.cost.stamina.value = Math.max(
-        core.system.staminaCost.base
-        + ( core.system.staminaCost.perLevel
-            * technique.system.level.techniqueLevel ),
+        core.system.staminaCost.base +
+        ( core.system.staminaCost.perLevel * technique.system.level.techniqueLevel ) -
+        technique.system.cost.stamina.limitReduction,
         technique.system.cost.stamina.min );
-
 
   }
 
@@ -266,9 +311,6 @@ export class valorItem extends Item {
   prepareDerivedData() {
     const item = this;
 
-    if(item.type === "technique") {
-      valorItem._prepareTechniqueData(item);
-    }
   }
 
 
