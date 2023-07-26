@@ -37,24 +37,8 @@ export class valorActor extends Actor {
    */
   prepareDerivedData() {
     const actor = this;
-    actor.calculateIncrements(actor)
-
-    const items = actor.itemTypes;
-
-    for (const item of items["flaw"]) {
-      Item._prepareSkillFlawData(item);
-      actor.calculateIncrements(actor)
-    }
-    for (const item of items["skill"]) {
-      Item._prepareSkillFlawData(item);
-      actor.calculateIncrements(actor)
-    }
-    for (const item of items["technique"]) {
-      Item._prepareTechniqueData(item);
-      actor.calculateIncrements(actor);
-    }
-
-    //this._prepareCharacterData(actor);
+    
+    actor._prepareDerivedData(actor);
   }
 
   /**
@@ -70,20 +54,42 @@ export class valorActor extends Actor {
     actor.calculateSeason(actor);
     actor.calculateAttributePoints(actor);
     actor.calculateSkillPoints(actor, characterType);
-    actor.calculateTechniquePoints(actor, characterType);
-    actor.calculateActiveAttributes(actor, characterType);
-    actor.calculateHealth(actor, characterType);
-    actor.calculateStamina(actor, characterType);
-    actor.calculateAttack(actor, characterType);
+    
     actor.calculateDamageIncrement(actor, characterType);
-    actor.calculateDefense(actor, characterType);
-    actor.calculateResistance(actor, characterType);
-    actor.calculateMove(actor, characterType);
-    actor.calculateInitiative(actor, characterType);
     actor.calculateZoneOfControl(actor, characterType);
     actor.calculateSize(actor, characterType);
     actor.calculateValor(actor, characterType);
     actor.calculateUltimateTechniques(actor, characterType);
+  }
+
+  _prepareDerivedData(actor){
+    const characterType = actor.getCharacterType(actor);
+
+    const items = actor.itemTypes;
+
+    for (const item of items["flaw"]) {
+      Item._prepareSkillFlawData(item);
+      actor.calculateIncrements(actor)
+    }
+    for (const item of items["skill"]) {
+      Item._prepareSkillFlawData(item);
+      actor.calculateIncrements(actor)
+    }
+    for (const item of items["technique"]) {
+      Item._prepareTechniqueData(item);
+      actor.calculateIncrements(actor);
+    }
+    
+    actor.calculateActiveAttributes(actor, characterType);
+    actor.calculateHealth(actor, characterType);
+    actor.calculateStamina(actor, characterType);
+    actor.calculateIncrements(actor);
+    actor.calculateTechniquePoints(actor, characterType);
+    actor.calculateDefense(actor, characterType);
+    actor.calculateResistance(actor, characterType);
+    actor.calculateAttack(actor, characterType);
+    actor.calculateMove(actor, characterType);
+    actor.calculateInitiative(actor, characterType);
   }
 
   getCharacterType(actor) {
@@ -141,7 +147,7 @@ export class valorActor extends Actor {
   calculateSkillPoints(actor, characterType) {
     let level = actor.system.misc.level.value;
     let flawMaxBonusSP = 7 + level;
-
+    
     actor.system.misc.skillPoints.flawBonus.maxFlawSP.value = flawMaxBonusSP;
     actor.system.misc.skillPoints.total.value = Math.ceil((characterType.baseSkillPoints
         + (characterType.levelSkillPoints * level))
@@ -172,7 +178,7 @@ export class valorActor extends Actor {
   }
 
   calculateActiveAttributes(actor, characterType) {
-    for (let i = 0; i < VALOR.attributes.active.length; i++ ) {
+    for (let i = 0; i < Object.keys(VALOR.attributes.active).length; i++ ) {
       actor.system.attribute[Object.keys(VALOR.attributes.active)[i]].value = Math.ceil((actor.system.attribute[Object.keys(VALOR.attributes.base)[i]].value + actor.system.misc.level.value) / 2)
           + characterType.modifierActiveAttribute;
     }

@@ -1,22 +1,47 @@
 {
-  "VALOR.AbilityStr": "Strength",
-  "VALOR.AbilityCon": "Constitution",
-  "VALOR.AbilityDex": "Dexterity",
-  "VALOR.AbilityInt": "Intelligence",
-  "VALOR.AbilityWis": "Wisdom",
-  "VALOR.AbilityCha": "Charisma",
+  "VALOR.baseAttributeStr": "Strength",
+  "VALOR.baseAttributeAgi": "Agility",
+  "VALOR.baseAttributeMnd": "Mind",
+  "VALOR.baseAttributeSpt": "Spirit",
+  "VALOR.baseAttributeGut": "Guts",
+
+  "VALOR.activeAttributeMus": "Muscle",
+  "VALOR.activeAttributeDex": "Dexterity",
+  "VALOR.activeAttributeInt": "Intuition",
+  "VALOR.activeAttributeAra": "Aura",
+  "VALOR.activeAttributeRes": "Resolve",
+
+  "VALOR.healthMax": "Max Health",
+  "VALOR.staminaMax": "Max Stamina",
+  "VALOR.defenseStat": "Defense",
+  "VALOR.resistanceStat": "Resistance",
+  "VALOR.moveStat": "Move/Speed",
+  "VALOR.initiativeStat": "Initiative",
+  "VALOR.startingValorStat": "Starting Valor",
+  "VALOR.valorMax": "Max Valor",
+  "VALOR.techPoints": "Technique Points",
 
   "VALOR.AbilityStrAbbr": "str",
-  "VALOR.AbilityConAbbr": "con",
+  "VALOR.AbilityAgiAbbr": "agi",
+  "VALOR.AbilityMndAbbr": "mnd",
+  "VALOR.AbilitySptAbbr": "spt",
+  "VALOR.AbilityGutAbbr": "gut",
+  "VALOR.AbilityMusAbbr": "mus",
   "VALOR.AbilityDexAbbr": "dex",
   "VALOR.AbilityIntAbbr": "int",
-  "VALOR.AbilityWisAbbr": "wis",
-  "VALOR.AbilityChaAbbr": "cha",
+  "VALOR.AbilityAraAbbr": "aura",
+  "VALOR.AbilityResAbbr": "res",
 
   "VALOR.EffectCreate": "Create Effect",
   "VALOR.EffectToggle": "Toggle Effect",
   "VALOR.EffectEdit": "Edit Effect",
   "VALOR.EffectDelete": "Delete Effect",
+
+  "VALOR.ModifierCreate": "Create Modifier",
+  "VALOR.ModifierEdit": "Edit Modifier",
+  "VALOR.ModifierDelete": "Delete Modifier",
+
+
 
   "VALOR.Add": "Add"
 }
