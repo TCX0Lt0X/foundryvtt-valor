@@ -167,7 +167,6 @@ export class valorItem extends Item {
     }
     technique.system.text.crunch.effect = game.i18n.format(`${technique.system.text.crunch.effect}`, technique.system.text.crunch.formatStrings);
     technique.system.text.crunch.special = game.i18n.format(`${technique.system.text.crunch.special}`, technique.system.text.crunch.formatStrings);
-    ui.notifications.info(technique.system.text.crunch.effect);
   }
 
 
