@@ -120,36 +120,36 @@
     <div class="tab stats" data-group="primary" data-tab="stats">
       <section class="grid grid-5col">
         <aside class="sidebar">
-          <span class = "">Base Attributes</span>
           {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  --}}
-          <div class="attributes flexcol">
-
+          <div class="attributes orange-box flexcol">
+            <div class="flexrow resource-label flex-group-center">BASE</div>
             <div class="attribute flexrow flex-group-center">
-              <label for="system.attribute.strength.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.strength.value" data-label="strength">Strength</label>
+              <label for="system.attribute.strength.value" class="resource-label rollable flexlarge align-left" data-label="strength">Strength</label>
               <input type="text" name="system.attribute.strength.value" value="{{system.attribute.strength.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="system.attribute.agility.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.agility.value" data-label="agility">Agility</label>
+              <label for="system.attribute.agility.value" class="resource-label rollable flexlarge align-left" data-label="agility">Agility</label>
               <input type="text" name="system.attribute.agility.value" value="{{system.attribute.agility.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="system.attribute.mind.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.mind.value" data-label="mind">Mind</label>
+              <label for="system.attribute.mind.value" class="resource-label rollable flexlarge align-left" data-label="mind">Mind</label>
               <input type="text" name="system.attribute.mind.value" value="{{system.attribute.mind.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="system.attribute.spirit.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.spirit.value" data-label="spirit">Spirit</label>
+              <label for="system.attribute.spirit.value" class="resource-label rollable flexlarge align-left" data-label="spirit">Spirit</label>
               <input type="text" name="system.attribute.spirit.value" value="{{system.attribute.spirit.value}}" data-dtype="Number"/>
             </div>
             <div class="attribute flexrow flex-group-center">
-              <label for="system.attribute.guts.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.guts.value" data-label="guts">Guts</label>
+              <label for="system.attribute.guts.value" class="resource-label rollable flexlarge align-left" data-label="guts">Guts</label>
               <input type="text" name="system.attribute.guts.value" value="{{system.attribute.guts.value}}" data-dtype="Number"/>
             </div>
           </div>
           <br>
-          <span class = "">Active Attributes</span>
-          <div class="attributes flexcol">
+
+          <div class="attributes green-box flexcol">
+            <span class="flexrow resource-label flex-group-center">ACTIVE</span>
             <div class="attribute flexrow flex-group-center">
               <label for="system.attribute.muscle.value" class="resource-label rollable flexlarge align-left" data-roll="d10+@attribute.muscle.value" data-label="muscle">Muscle</label>
               <input type="text" name="system.attribute.muscle.value" value="{{system.attribute.muscle.value}}" data-dtype="Number"/>

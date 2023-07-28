@@ -53,8 +53,6 @@ export class valorActor extends Actor {
       Item._prepareTechniqueData(item);
       actor.calculateIncrements(actor);
     }
-
-    //this._prepareCharacterData(actor);
   }
 
   /**
