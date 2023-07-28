@@ -2,6 +2,12 @@
 /* Global styles */
 .window-app {
   font-family: "Roboto", sans-serif;
+  background-color: rgba(124, 24, 22, 0.6);
+}
+
+.window-app .window-content {
+  background: white;
+  color: #74151A
 }
 
 .rollable:hover, .rollable:focus {
@@ -275,10 +281,12 @@
   margin: 0;
 }
 
-.valor .sheet-tabs {
+.valor nav.sheet-tabs {
   -webkit-box-flex: 0;
   -ms-flex: 0;
   flex: 0;
+  border-top: 3px solid #4A151A;
+  border-bottom: 3px solid #4A151A;
 }
 
 .valor .sheet-body,
@@ -453,4 +461,30 @@
 
 .valor .effects .item .effect-controls {
   border: none;
+}
+
+.valor .orange-box{
+  background: #FEF2E2;
+  color: #74151A;
+  border: 4px solid #F8C07B;
+  padding: 5px
+}
+
+.valor .orange-box input {
+  border: 0;
+  margin: 3px;
+  color: #74151A;
+}
+
+.valor .green-box{
+  background: #EDEDD6;
+  color: #5C6021;
+  border: 4px solid #A8B055;
+  padding: 5px
+}
+
+.valor .green-box input {
+  border: 0;
+  margin: 3px;
+  color: #5C6021;
 }

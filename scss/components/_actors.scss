@@ -1,0 +1,120 @@
+// Section Header
+.actors-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  align-actors: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: $border-groove;
+  font-weight: bold;
+  > * {
+    font-size: 14px;
+    text-align: center;
+  }
+  .actor-name {
+    font-weight: bold;
+    padding-left: 5px;
+    text-align: left;
+    display: flex;
+    // font-size: 16px;
+  }
+}
+
+/* ----------------------------------------- */
+/*  actors Lists                              */
+/* ----------------------------------------- */
+
+.actors-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: $c-tan;
+
+  // Child lists
+  .actor-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  // actor Name
+  .actor-name {
+    flex: 2;
+    margin: 0;
+    overflow: hidden;
+    font-size: 13px;
+    text-align: left;
+    align-actors: center;
+    display: flex;
+    h3, h4 {
+      margin: 0;
+      white-space: nowrap;
+      overflow-x: hidden;
+    }
+  }
+
+  // Control Buttons
+  .actor-controls {
+    display: flex;
+    flex: 0 0 100px;
+    justify-content: flex-end;
+    a {
+      font-size: 12px;
+      text-align: center;
+      margin: 0 6px;
+    }
+  }
+
+  // Individual actor
+  .actor {
+    align-actors: center;
+    padding: 0 2px; // to align with the header border
+    border-bottom: 1px solid $c-white;
+    &:last-child { border-bottom: none; }
+    .actor-name {
+      color: $c-dark;
+      .actor-image {
+        flex: 0 0 30px;
+        height: 30px;
+        background-size: 30px;
+        border: none;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .actor-prop {
+    text-align: center;
+    border-left: 1px solid #c9c7b8;
+    border-right: 1px solid #c9c7b8;
+    font-size: 12px;
+  }
+
+  // Section Header
+  .actors-header {
+    height: 28px;
+    margin: 2px 0;
+    padding: 0;
+    align-actors: center;
+    background: rgba(0, 0, 0, 0.05);
+    border: $border-groove;
+    font-weight: bold;
+    > * {
+      font-size: 12px;
+      text-align: center;
+    }
+    .actor-name {
+      padding-left: 5px;
+      text-align: left;
+      // font-size: 16px;
+    }
+  }
+}
+
+/* Example style for valor (can be removed if not needed) */
+.actor-formula {
+  flex: 0 0 200px;
+  padding: 0 8px;
+}

@@ -36,8 +36,6 @@ export class valorItem extends Item {
   Incomplete function do not consume
    */
   static async _prepareTechniqueData(technique) {
-    //Compendium.world.techniques.YO5QaSzNzZpDyg6q
-    //console.log(fromUuidSync(`Compendium.world.techniques.YO5QaSzNzZpDyg6q`));
 
     //prevent running if no core is set
     if (technique.system.core.uuid === null) {
@@ -50,7 +48,7 @@ export class valorItem extends Item {
     const core = (await fromUuid(technique.system.core.uuid)).toObject(false);
 
     //fetch mods from compendium
-    const mods = technique.getFlag('valor', 'techMods') ?? {}
+    const mods = technique.getFlag('valor', 'techMods') ?? {};
     for (const mod in mods) {
       const retrievedMod = (await fromUuid(mods[mod].uuid)).toObject(false);
       foundry.utils.setProperty(retrievedMod, "system.level", mods[mod].level);
@@ -60,7 +58,7 @@ export class valorItem extends Item {
 
 
     //fetch limits from compendium
-    const limits = technique.getFlag('valor', 'techLimits') ?? {}
+    const limits = technique.getFlag('valor', 'techLimits') ?? {};
     for (const limit in limits ) {
       const retrievedLimit = (await fromUuid(limits[limit].uuid)).toObject(false);
       foundry.utils.setProperty(retrievedLimit, "system.level", limits[limit].level);
@@ -70,7 +68,7 @@ export class valorItem extends Item {
 
     //makes sure core was retrieved
     if (core == null) {
-      console.error(`core with id '${technique.system.core.uuid}' cannot be found`);
+      ui.notifications.error("TECHNIQUE.CORE.Error", { localize: false });
       return;
     }
 
@@ -85,10 +83,14 @@ export class valorItem extends Item {
     technique.system.core = core;
     technique.system.action = core.system.action;
     technique.system.cost.stamina.min = core.system.staminaCost.min;
-    technique.system.target = core.system.target;
+    technique.system.targets = core.system.targets;
     technique.system.range = core.system.range;
     technique.system.area = core.system.area;
     technique.system.isUlt = core.system.isUlt;
+    technique.system.text.crunch.effect = core.system.text.template.effect;
+    technique.system.text.crunch.special = core.system.text.template.special;
+    technique.system.text.crunch.formatStrings = core.flags.valor?.formatStrings ?? {};
+
     if (technique.system.isUlt === true) {
       technique.system.uses.max = 1
     }
@@ -96,7 +98,7 @@ export class valorItem extends Item {
     //run core prepScript
     const coreFn = new AsyncFunction( "isLeastGM", "technique", "core", core.system.scripts.prepScript);
     try {
-      coreFn.call(this, leastGM, technique, core);
+      await coreFn.call(this, leastGM, technique, core);
     } catch(err) {
       ui.notifications.error("TECHNIQUE.CORESCRIPT.Error", { localize: false });
     }
@@ -109,11 +111,16 @@ export class valorItem extends Item {
           technique.system.mods[mod].system.techniqueLevelModifier.base +
           (technique.system.mods[mod].system.level * technique.system.mods[mod].system.techniqueLevelModifier.perLevel);
 
+      //grab paths to relevant data for string formating
+      technique.system.text.crunch.effect += technique.system.mods[mod].system.text.template.effect;
+      technique.system.text.crunch.special += technique.system.mods[mod].system.text.template.special;
+      technique.system.text.crunch.formatStrings = Object.assign({}, technique.system.text.crunch.formatStrings, technique.system.mods[mod].flags.valor?.formatStrings ?? {});
+
       //run modifier prep script
       const modFn = new AsyncFunction("isLeastGM", "technique", "modifier", technique.system.mods[mod].system.scripts.prepScript);
       try {
-        modFn.call(this, leastGM, technique, technique.system.mods[mod]);
-      } catch(err) {
+        await modFn.call(this, leastGM, technique, technique.system.mods[mod]);
+        } catch(err) {
         ui.notifications.error("TECHNIQUE.MODSCRIPT.Error", { localize: false });
       }
     }
@@ -126,11 +133,17 @@ export class valorItem extends Item {
           technique.system.limits[limit].system.costReduction[technique.system.attribute.effect].base +
           (technique.system.limits[limit].system.level * technique.system.limits[limit].system.costReduction[technique.system.attribute.effect].perLevel);
 
+      //grab paths to relevant data for string formating
+      technique.system.text.crunch.effect += technique.system.limits[limit].system.text.template.effect;
+      technique.system.text.crunch.special += technique.system.limits[limit].system.text.template.special;
+      technique.system.text.crunch.formatStrings = Object.assign({}, technique.system.text.crunch.formatStrings, technique.system.limits[limit].flags.valor?.formatStrings ?? {});
+
+
       //run limit prep script
       const limitFn = new AsyncFunction("isLeastGM", "technique", "limit", technique.system.limits[limit].system.scripts.prepScript);
       try {
-        limitFn.call(this, leastGM, technique, technique.system.limits[limit]);
-      } catch(err) {
+        await limitFn.call(this, leastGM, technique, technique.system.limits[limit]);
+        } catch(err) {
         ui.notifications.error("TECHNIQUE.LIMITSCRIPT.Error", { localize: false });
       }
     }
@@ -147,6 +160,14 @@ export class valorItem extends Item {
         technique.system.cost.stamina.limitReduction,
         technique.system.cost.stamina.min );
 
+    //fetch values of properties for effect text formatting
+    for (const formatString in technique.system.text.crunch.formatStrings) {
+      technique.system.text.crunch.formatStrings[formatString] =
+          foundry.utils.getProperty(technique, technique.system.text.crunch.formatStrings[formatString]);
+    }
+    technique.system.text.crunch.effect = game.i18n.format(`${technique.system.text.crunch.effect}`, technique.system.text.crunch.formatStrings);
+    technique.system.text.crunch.special = game.i18n.format(`${technique.system.text.crunch.special}`, technique.system.text.crunch.formatStrings);
+    ui.notifications.info(technique.system.text.crunch.effect);
   }
 
 

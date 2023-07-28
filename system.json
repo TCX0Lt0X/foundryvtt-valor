@@ -27,6 +27,12 @@
   "esmodules": ["module/valor.mjs"],
   "styles": ["css/valor.css"],
   "scripts": [],
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "html", "mjs", "json", "scss"],
+      "paths": ["templates/", "styles/", "lang/", "css/", "module/"]
+    }
+  },
   "packs": [
     {
       "name": "techniques",

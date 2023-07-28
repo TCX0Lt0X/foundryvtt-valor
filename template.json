@@ -385,10 +385,13 @@
     "core": {
       "text": {
         "flavor": {
-          "user": "",
           "default": ""
         },
         "crunch": {
+          "effect": "",
+          "special": ""
+        },
+        "template": {
           "effect": "",
           "special": ""
         }
@@ -417,8 +420,17 @@
     },
     "modifier": {
       "text": {
-        "flavor": "",
-        "crunch": ""
+        "flavor": {
+          "default": ""
+        },
+        "crunch": {
+          "effect": "",
+          "special": ""
+        },
+        "template": {
+          "effect": "",
+          "special": ""
+        }
       },
       "isLevelable": true,
       "isUltMod": false,
@@ -440,8 +452,17 @@
     },
     "limit": {
       "text": {
-        "flavor": "",
-        "crunch": ""
+        "flavor": {
+          "default": ""
+        },
+        "crunch": {
+          "effect": "",
+          "special": ""
+        },
+        "template": {
+          "effect": "",
+          "special": ""
+        }
       },
       "isLevelable": true,
       "isUltLimit": false,
