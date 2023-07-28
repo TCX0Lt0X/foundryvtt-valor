@@ -1,4 +1,5 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
+import {onManageModifier, prepareModifiers} from "../helpers/modifiers.mjs";
 import {valorItem as Item} from "../documents/item.mjs";
 
 /**
@@ -50,7 +51,8 @@ export class valorItemSheet extends ItemSheet {
     context.flags = item.flags;
 
     // Prepare active effects
-    context.effects = prepareActiveEffectCategories(item.effects);
+    //context.effects = prepareActiveEffectCategories(item.effects);
+    context.effects = prepareModifiers(item.effects);
 
     if(item.type === 'technique') {
       this._prepareTechniqueData(context);
@@ -97,34 +99,6 @@ export class valorItemSheet extends ItemSheet {
     html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.item));
 
     html.find(".modifier-control").click(ev => onManageModifier(ev, this.item));
-
-    function onManageModifier(event, owner) {
-      event.preventDefault();
-      const a = event.currentTarget;
-      const li = a.closest("li");
-      const effect = li.dataset.effectId ? owner.effects.get(li.dataset.effectId) : null;
-      switch ( a.dataset.action ) {
-        case "create":
-          let modifiers = owner.getFlag('valor', 'modifiers') ?? [];
-          modifiers.push({
-            base:0,
-            levelUp:0,
-            targetData:"",
-            condition: {
-              x:"true",
-              y:"",
-              operator:"=="
-            }
-          });
-          return owner.setFlag('valor', 'modifiers', modifiers);
-        case "edit":
-          return effect.sheet.render(true);
-        case "delete":
-          return effect.delete();
-        case "toggle":
-          return effect.update({disabled: !effect.disabled});
-      }
-    }
 
   }
 }

@@ -12,7 +12,7 @@ VALOR.foobar = {
  */
 VALOR.attributes = {
   base: {
-  "strength": "VALOR.baseAttributeStr",
+    "strength": "VALOR.baseAttributeStr",
     "agility": "VALOR.baseAttributeAgi",
     "mind": "VALOR.baseAttributeMnd",
     "spirit": "VALOR.baseAttributeSpt",
@@ -45,6 +45,28 @@ VALOR.abilityAbbreviations = {
   "int": "VALOR.AbilityIntAbbr",
   "aura": "VALOR.AbilityAraAbbr",
   "res": "VALOR.AbilityResAbbr"
+};
+
+VALOR.activeEffectStats = {
+  "system.attribute.strength.value": "VALOR.baseAttributeStr",
+  "system.attribute.agility.value": "VALOR.baseAttributeAgi",
+  "system.attribute.mind.value": "VALOR.baseAttributeMnd",
+  "system.attribute.spirit.value": "VALOR.baseAttributeSpt",
+  "system.attribute.guts.value": "VALOR.baseAttributeGut",
+  "system.attribute.muscle.value": "VALOR.activeAttributeMus",
+  "system.attribute.dexerity.value": "VALOR.activeAttributeDex",
+  "system.attribute.aura.value": "VALOR.activeAttributeAra",
+  "system.attribute.intuition.value": "VALOR.activeAttributeInt",
+  "system.attribute.resolve.value": "VALOR.activeAttributeRes",
+  "system.statistic.health.max.value": "VALOR.healthMax",
+  "system.statistic.stamina.max.value": "VALOR.staminaMax",
+  "system.statistic.defense.value": "VALOR.defenseStat",
+  "system.statistic.resistance.value": "VALOR.resistanceStat",
+  "system.statistic.move.value": "VALOR.moveStat",
+  "system.statistic.initiative.value": "VALOR.initiativeStat",
+  "system.statistic.valor.value": "VALOR.startingValorStat",
+  "system.statistic.valor.max.value": "VALOR.valorMax",
+  "system.misc.techniquePoints.total.value": "VALOR.techPoints"
 };
 
 VALOR.characterTypes = {

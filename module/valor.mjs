@@ -4,6 +4,7 @@ import { valorItem } from "./documents/item.mjs";
 // Import sheet classes.
 import { valorActorSheet } from "./sheets/actor-sheet.mjs";
 import { valorItemSheet } from "./sheets/item-sheet.mjs";
+import { valorActiveEffectConfig } from "./sheets/valor-active-effect-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { VALOR } from "./helpers/config.mjs";
@@ -25,6 +26,7 @@ Hooks.once('init', async function() {
 
   // Add custom constants for configuration.
   CONFIG.VALOR = VALOR;
+  CONFIG.ActiveEffect.legacyTransferral = false;
 
   /**
    * Set an initiative formula for the system
@@ -38,12 +40,14 @@ Hooks.once('init', async function() {
   // Define custom Document classes
   CONFIG.Actor.documentClass = valorActor;
   CONFIG.Item.documentClass = valorItem;
+  
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("valor", valorActorSheet, { makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("valor", valorItemSheet, { makeDefault: true });
+  DocumentSheetConfig.registerSheet(ActiveEffect, 'valor', valorActiveEffectConfig, {makeDefault: true})
 
   //enable sockets
   game.socket.on('system.valor', await handleSocketEvent);

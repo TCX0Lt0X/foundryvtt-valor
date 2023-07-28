@@ -3,6 +3,20 @@
         <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
         <div class="header-fields">
             <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+            <div class="resources grid grid-2col">
+                <div class="resource flex-group-center">
+                    <label for="system.sp.base" class="resource-label">Base Bonus SP</label>
+                    <div class="resource-content flexrow flex-center flex-between">
+                    <input type="text" name="system.sp.base" value="{{system.sp.base}}" data-dtype="Number"/>
+                    </div>
+                </div>
+                <div class="resource flex-group-center">
+                    <label for="system.sp.levelUp" class="resource-label">Bonus SP on Lvl Up</label>
+                    <div class="resource-content flexrow flex-center flex-between">
+                    <input type="text" name="system.sp.levelUp" value="{{system.sp.levelUp}}" data-dtype="Number"/>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -10,7 +24,6 @@
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Description</a>
         <a class="item" data-tab="modifiers">Modifiers</a>
-        <a class="item" data-tab="effects">Effects</a>
     </nav>
 
     {{!-- Sheet Body --}}
@@ -24,11 +37,6 @@
         {{!-- Modifiers Tab --}}
         <div class="tab modifiers" data-group="primary" data-tab="modifiers">
             {{> "systems/valor/templates/item/parts/item-modifiers.html"}}
-        </div>
-
-        {{!-- Active Effects Tab --}}
-        <div class="tab effects" data-group="primary" data-tab="effects">
-            {{> "systems/valor/templates/item/parts/item-effects.html"}}
         </div>
     </section>
 
