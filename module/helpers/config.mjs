@@ -54,7 +54,7 @@ VALOR.activeEffectStats = {
   "system.attribute.spirit.value": "VALOR.baseAttributeSpt",
   "system.attribute.guts.value": "VALOR.baseAttributeGut",
   "system.attribute.muscle.value": "VALOR.activeAttributeMus",
-  "system.attribute.dexerity.value": "VALOR.activeAttributeDex",
+  "system.attribute.dexterity.value": "VALOR.activeAttributeDex",
   "system.attribute.aura.value": "VALOR.activeAttributeAra",
   "system.attribute.intuition.value": "VALOR.activeAttributeInt",
   "system.attribute.resolve.value": "VALOR.activeAttributeRes",
@@ -62,11 +62,34 @@ VALOR.activeEffectStats = {
   "system.statistic.stamina.max.value": "VALOR.staminaMax",
   "system.statistic.defense.value": "VALOR.defenseStat",
   "system.statistic.resistance.value": "VALOR.resistanceStat",
+  "system.statistic.damageIncrement.value": "VALOR.stat.damageInc",
   "system.statistic.move.value": "VALOR.moveStat",
   "system.statistic.initiative.value": "VALOR.initiativeStat",
   "system.statistic.valor.value": "VALOR.startingValorStat",
+  "system.statistic.valor.perTurn.value": "VALOR.perTurnValorStat",
   "system.statistic.valor.max.value": "VALOR.valorMax",
-  "system.misc.techniquePoints.total.value": "VALOR.techPoints"
+  "system.misc.techniquePoints.total.value": "VALOR.techPoints",
+
+  "system.statistic.attack.strength.value": "VALOR.stat.attack.str",
+  "system.statistic.attack.agility.value": "VALOR.stat.attack.agi",
+  "system.statistic.attack.spirit.value": "VALOR.stat.attack.spi",
+  "system.statistic.attack.mind.value": "VALOR.stat.attack.mnd",
+
+  "system.misc.size.value": "VALOR.misc.size",
+  "system.misc.zoneOfControl.value": "VALOR.misc.zoc",
+
+  "system.rollModifiers.attackRolls.all": "VALOR.rollMod.attack.all",
+  "system.rollModifiers.attackRolls.muscle": "VALOR.rollMod.attack.mus",
+  "system.rollModifiers.attackRolls.dexterity": "VALOR.rollMod.attack.dex",
+  "system.rollModifiers.attackRolls.aura": "VALOR.rollMod.attack.ara",
+  "system.rollModifiers.attackRolls.intuition": "VALOR.rollMod.attack.int",
+  "system.rollModifiers.attackRolls.resolve": "VALOR.rollMod.attack.res",
+  "system.rollModifiers.defenseRolls.all": "VALOR.rollMod.defense.all",
+  "system.rollModifiers.defenseRolls.muscle": "VALOR.rollMod.defense.mus",
+  "system.rollModifiers.defenseRolls.dexterity": "VALOR.rollMod.defense.dex",
+  "system.rollModifiers.defenseRolls.aura": "VALOR.rollMod.defense.ara",
+  "system.rollModifiers.defenseRolls.intuition": "VALOR.rollMod.defense.int",
+  "system.rollModifiers.defenseRolls.resolve": "VALOR.rollMod.defense.res"
 };
 
 VALOR.characterTypes = {
