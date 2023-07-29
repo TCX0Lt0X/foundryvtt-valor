@@ -292,7 +292,10 @@
 .valor .sheet-body,
 .valor .sheet-body .tab,
 .valor .sheet-body .tab .editor {
-  height: 100%;
+  height: max-content;
+  min-height: 5em;
+  padding: 0.5em;
+
 }
 
 .valor .tox .tox-editor-container {
@@ -467,7 +470,8 @@
   background: #FEF2E2;
   color: #74151A;
   border: 4px solid #F8C07B;
-  padding: 5px
+  padding: 1em;
+  margin: 1em;
 }
 
 .valor .orange-box input {
@@ -480,7 +484,8 @@
   background: #EDEDD6;
   color: #5C6021;
   border: 4px solid #A8B055;
-  padding: 5px
+  padding: 1em;
+  margin: 1em;
 }
 
 .valor .green-box input {

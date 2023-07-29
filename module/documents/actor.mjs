@@ -50,6 +50,8 @@ export class valorActor extends Actor {
     // Make modifications to data here. For example:
     const characterType = actor.getCharacterType(actor)
 
+    actor.initializeDerived(actor);
+
     actor.calculateExperience(actor, characterType);
     actor.calculateSeason(actor);
     actor.calculateAttributePoints(actor);
@@ -66,6 +68,17 @@ export class valorActor extends Actor {
     const characterType = actor.getCharacterType(actor);
 
     const items = actor.itemTypes;
+    
+    actor.calculateActiveAttributes(actor, characterType);
+    actor.calculateHealth(actor, characterType);
+    actor.calculateStamina(actor, characterType);
+    actor.calculateIncrements(actor);
+    actor.calculateTechniquePoints(actor, characterType);
+    actor.calculateDefense(actor, characterType);
+    actor.calculateResistance(actor, characterType);
+    actor.calculateAttack(actor, characterType);
+    actor.calculateMove(actor, characterType);
+    actor.calculateInitiative(actor, characterType);
 
     for (const item of items["flaw"]) {
       Item._prepareSkillFlawData(item);
@@ -79,17 +92,6 @@ export class valorActor extends Actor {
       Item._prepareTechniqueData(item);
       actor.calculateIncrements(actor);
     }
-    
-    actor.calculateActiveAttributes(actor, characterType);
-    actor.calculateHealth(actor, characterType);
-    actor.calculateStamina(actor, characterType);
-    actor.calculateIncrements(actor);
-    actor.calculateTechniquePoints(actor, characterType);
-    actor.calculateDefense(actor, characterType);
-    actor.calculateResistance(actor, characterType);
-    actor.calculateAttack(actor, characterType);
-    actor.calculateMove(actor, characterType);
-    actor.calculateInitiative(actor, characterType);
   }
 
   getCharacterType(actor) {
@@ -109,6 +111,26 @@ export class valorActor extends Actor {
   /**
    * Calculate character statistics
    */
+
+  initializeDerived(actor) {
+    for (const activeAttribute in VALOR.attributes.active) {
+       actor.system.attribute[activeAttribute].value = 0;
+    }
+
+    for (const baseAttribute in VALOR.attributes.base) {
+      if (baseAttribute !== "guts") actor.system.statistic.attack[baseAttribute].value = 0;
+    }
+
+    actor.system.statistic.health.max.value = 0;
+    actor.system.statistic.stamina.max.value = 0;
+    actor.system.misc.skillPoints.total.value = 0;
+    actor.system.misc.techniquePoints.total.value = 0;
+    actor.system.statistic.defense.value = 0;
+    actor.system.statistic.resistance.value = 0;
+    actor.system.statistic.move.value = 0;
+    actor.system.statistic.initiative.value = 0;
+    actor.system.statistic.damageIncrement.value = 0;
+  }
 
   calculateExperience(actor, characterType) {
     let curLevel = actor.system.misc.level.value;
@@ -149,7 +171,7 @@ export class valorActor extends Actor {
     let flawMaxBonusSP = 7 + level;
     
     actor.system.misc.skillPoints.flawBonus.maxFlawSP.value = flawMaxBonusSP;
-    actor.system.misc.skillPoints.total.value = Math.ceil((characterType.baseSkillPoints
+    actor.system.misc.skillPoints.total.value += Math.ceil((characterType.baseSkillPoints
         + (characterType.levelSkillPoints * level))
         + Math.min(actor.system.misc.skillPoints.flawBonus.value ?? 0, flawMaxBonusSP)
         * characterType.multiplierSkillPoints);
@@ -174,18 +196,19 @@ export class valorActor extends Actor {
 
     techniquePoints = Math.ceil(characterType.multiplierTechniquePoints * techniquePoints);
 
-    actor.system.misc.techniquePoints.total.value = techniquePoints;
+    actor.system.misc.techniquePoints.total.value += techniquePoints;
   }
 
   calculateActiveAttributes(actor, characterType) {
     for (let i = 0; i < Object.keys(VALOR.attributes.active).length; i++ ) {
-      actor.system.attribute[Object.keys(VALOR.attributes.active)[i]].value = Math.ceil((actor.system.attribute[Object.keys(VALOR.attributes.base)[i]].value + actor.system.misc.level.value) / 2)
+      actor.system.attribute[Object.keys(VALOR.attributes.active)[i]].value += Math.ceil((actor.system.attribute[Object.keys(VALOR.attributes.base)[i]].value + actor.system.misc.level.value) / 2)
           + characterType.modifierActiveAttribute;
     }
   }
 
   calculateHealth(actor, characterType) {
-    actor.system.statistic.health.max.value = Math.ceil((50 +
+
+    actor.system.statistic.health.max.value += Math.ceil((50 +
             + (5 * actor.system.attribute.strength.value)
             + (10 * actor.system.attribute.guts.value)
             + (10 * actor.system.misc.level.value))
@@ -194,7 +217,7 @@ export class valorActor extends Actor {
 
 
   calculateStamina(actor, characterType) {
-    actor.system.statistic.stamina.max.value = Math.ceil((8
+    actor.system.statistic.stamina.max.value += Math.ceil((8
         + (2 * actor.system.attribute.spirit.value)
         + (2 * actor.system.attribute.mind.value)
         + (4 * actor.system.misc.level.value))
@@ -206,7 +229,7 @@ export class valorActor extends Actor {
     baseAttributes.pop("guts");
 
     for (const baseAttribute of baseAttributes) {
-      actor.system.statistic.attack[baseAttribute].value = Math.ceil((((actor.system.attribute[baseAttribute].value
+      actor.system.statistic.attack[baseAttribute].value += Math.ceil((((actor.system.attribute[baseAttribute].value
                   * characterType.multiplierAttackBaseAttribute)
               + actor.system.misc.level.value) * 2)
           * characterType.multiplierAttackTotal);
@@ -214,38 +237,38 @@ export class valorActor extends Actor {
   }
 
   calculateDamageIncrement(actor, characterType) {
-    actor.system.statistic.damageIncrement.value = Math.ceil((5
+    actor.system.statistic.damageIncrement.value += Math.ceil((5
         + actor.system.misc.level.value)
         * characterType.multiplierDamageIncrement);
   }
 
   calculateDefense(actor) {
-    actor.system.statistic.defense.value = actor.system.attribute.strength.value
+    actor.system.statistic.defense.value += actor.system.attribute.strength.value
         + actor.system.attribute.guts.value
         + (2 * actor.system.misc.level.value);
   }
 
   calculateResistance(actor) {
-    actor.system.statistic.resistance.value = actor.system.attribute.spirit.value
+    actor.system.statistic.resistance.value += actor.system.attribute.spirit.value
         + actor.system.attribute.mind.value
         + (2 * actor.system.misc.level.value);
   }
 
   calculateMove(actor) {
-    actor.system.statistic.move.value = 3
+    actor.system.statistic.move.value += 3
         + Math.floor((actor.system.attribute.agility.value - 1) / 4);
   }
 
   calculateInitiative(actor) {
-    actor.system.statistic.initiative.value = actor.system.attribute.dexterity.value;
+    actor.system.statistic.initiative.value += actor.system.attribute.dexterity.value;
   }
 
   calculateZoneOfControl(actor, characterType) {
-    actor.system.misc.zoneOfControl.value = characterType.baseZoneOfControl;
+    actor.system.misc.zoneOfControl.value += characterType.baseZoneOfControl;
   }
 
   calculateSize(actor, characterType) {
-    actor.system.misc.size.value = characterType.baseSize;
+    actor.system.misc.size.value += characterType.baseSize;
   }
 
   calculateValor(actor, characterType) {
@@ -306,16 +329,28 @@ export class valorActor extends Actor {
 
     // Copy the ability scores to the top level, so that rolls can use
     // formulas like `@str.mod + 4`.
-  //   if (data.abilities) {
-  //     for (let [k, v] of Object.entries(data.abilities)) {
-  //       data[k] = foundry.utils.deepClone(v);
-  //     }
-  //   }
-  //
-  //   // Add level for easier access, or fall back to 0.
-  //   if (data.attributes.level) {
-  //     data.lvl = data.attributes.level.value ?? 0;
-  //   }
+    if (data.attribute) {
+      for (let [k, v] of Object.entries(data.attribute)) {
+        data[k] = foundry.utils.deepClone(v);
+      }
+    }
+
+    if(data.statistic.health) {
+      data.health = {};
+      data.health.value = foundry.utils.deepClone(data.statistic.health.value);
+      data.health.max = foundry.utils.deepClone(data.statistic.health.max.value);
+    }
+
+    if(data.statistic.stamina) {
+      data.stamina = {};
+      data.stamina.value = foundry.utils.deepClone(data.statistic.stamina.value);
+      data.stamina.max = foundry.utils.deepClone(data.statistic.stamina.max.value);
+    }
+
+    // Add level for easier access, or fall back to 0.
+    // if (data.attributes.level) {
+    //   data.lvl = data.attributes.level.value ?? 0;
+    // }
   }
 
 

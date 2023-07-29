@@ -1,6 +1,7 @@
 // Import document classes.
 import { valorActor } from "./documents/actor.mjs";
 import { valorItem } from "./documents/item.mjs";
+import { valorActiveEffect } from "./documents/activeEffect.mjs";
 // Import sheet classes.
 import { valorActorSheet } from "./sheets/actor-sheet.mjs";
 import { valorItemSheet } from "./sheets/item-sheet.mjs";
@@ -21,6 +22,7 @@ Hooks.once('init', async function() {
   game.valor = {
     valorActor,
     valorItem,
+    valorActiveEffect,
     rollItemMacro
   };
 
@@ -40,6 +42,7 @@ Hooks.once('init', async function() {
   // Define custom Document classes
   CONFIG.Actor.documentClass = valorActor;
   CONFIG.Item.documentClass = valorItem;
+  CONFIG.ActiveEffect.documentClass = valorActiveEffect;
   
 
   // Register sheet application classes

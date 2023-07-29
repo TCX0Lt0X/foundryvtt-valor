@@ -36,3 +36,10 @@ export function isLeastGM() {
         return true;
     }
 }
+
+//checks if parent of child has itself a parent
+export function updateGrandParent(child) {
+    if (child.parent?.parent !== null) {
+        (child.parent.parent).prepareData();
+    }
+}

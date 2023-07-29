@@ -110,9 +110,9 @@
     <a class="item" data-tab="flaws">Flaws</a>
     <a class="item" data-tab="skills">Skills</a>
     <a class="item" data-tab="techniques">Techniques</a>
-    <a class="item" data-tab="description">Biography</a>
-    <a class="item" data-tab="items">Items</a>
+<!--    <a class="item" data-tab="items">Items</a>-->
     <a class="item" data-tab="effects">Effects</a>
+    <a class="item" data-tab="description">Biography</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -236,20 +236,20 @@
       {{> "systems/valor/templates/actor/parts/actor-techniques.html"}}
     </div>
 
-    {{!-- Biography Tab --}}
-    <div class="tab biography" data-group="primary" data-tab="description">
-      {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to the rollData property. --}}
-      {{editor content=system.biography target="system.biography" rollData=rollData button=true owner=owner editable=editable}}
-    </div>
-
-    {{!-- Owned Items Tab --}}
-    <div class="tab items" data-group="primary" data-tab="items">
-      {{> "systems/valor/templates/actor/parts/actor-items.html"}}
-    </div>
+<!--    {{!&#45;&#45; Owned Items Tab &#45;&#45;}}-->
+<!--      <div class="tab items" data-group="primary" data-tab="items">-->
+<!--      {{> "systems/valor/templates/actor/parts/actor-items.html"}}-->
+<!--    </div>-->
     
     {{!-- Active Effects Tab --}}
     <div class="tab effects flexcol" data-group="primary" data-tab="effects">
       {{> "systems/valor/templates/actor/parts/actor-effects.html"}}
+    </div>
+
+    {{!-- Biography Tab --}}
+    <div class="tab biography" data-group="primary" data-tab="description">
+      {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to the rollData property. --}}
+      {{editor content=system.biography target="system.biography" rollData=rollData button=true owner=owner editable=editable}}
     </div>
 
      
