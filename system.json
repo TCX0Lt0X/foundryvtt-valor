@@ -40,6 +40,13 @@
       "path": "./packs/techniques",
       "type": "Item",
       "entity": "Item"
+    },
+    {
+      "name": "flaws-and-skills",
+      "label": "Flaws & Skills",
+      "path": "./packs/flaws-and-skills",
+      "type": "Item",
+      "entity": "Item"
     }
   ],
   "languages": [

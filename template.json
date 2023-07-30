@@ -286,7 +286,7 @@
         "max" : 1
       },
       "sp": {
-        "value": null,
+        "value": 0,
         "base": 0,
         "levelUp": 0
       },
@@ -310,7 +310,7 @@
         "max" : 1
       },
       "sp": {
-        "value": null,
+        "value": 0,
         "base": 0,
         "levelUp": 0
       },

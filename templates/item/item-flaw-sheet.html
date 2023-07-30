@@ -3,17 +3,23 @@
         <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
         <div class="header-fields">
             <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
-            <div class="resources grid grid-2col">
+            <div class="resources grid grid-3col">
                 <div class="resource flex-group-center">
-                    <label for="system.sp.base" class="resource-label">Base Bonus SP</label>
+                    <label for="system.level.value" class="resource-label">Level</label>
                     <div class="resource-content flexrow flex-center flex-between">
-                    <input type="text" name="system.sp.base" value="{{system.sp.base}}" data-dtype="Number"/>
+                        <input type="text" name="system.level.value" value="{{system.level.value}}" data-dtype="Number"/>
                     </div>
                 </div>
                 <div class="resource flex-group-center">
-                    <label for="system.sp.levelUp" class="resource-label">Bonus SP on Lvl Up</label>
+                    <label for="system.progression" class="resource-label">Progression</label>
                     <div class="resource-content flexrow flex-center flex-between">
-                    <input type="text" name="system.sp.levelUp" value="{{system.sp.levelUp}}" data-dtype="Number"/>
+                        <input type="text" name="system.progression" value="{{system.progression}}" data-dtype="String"/>
+                    </div>
+                </div>
+                <div class="resource flex-group-center">
+                    <label for="system.sp.value" class="resource-label">Bonus SP</label>
+                    <div class="resource-content flexrow flex-center flex-between">
+                        <input type="text" name="system.sp.value" value="{{system.sp.value}}" data-dtype="Number"/>
                     </div>
                 </div>
             </div>
@@ -23,16 +29,44 @@
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="statistics">Statistics</a>
         <a class="item" data-tab="modifiers">Modifiers</a>
     </nav>
 
     {{!-- Sheet Body --}}
     <section class="sheet-body">
-
         {{!-- Description Tab --}}
         <div class="tab" data-group="primary" data-tab="description">
-            {{editor content=system.description target="system.description" rollData=rollData button=true owner=owner editable=editable}}
+            <div class="valor orange-box">
+                <i>{{editor content=system.text.flavor target="system.text.flavor" rollData=rollData button=true owner=owner editable=editable}}</i>
+            </div>
+            <h2 for="system.text.effect" class="resource-label">Effect</h2>
+            {{editor content=system.text.effect target="system.text.effect" rollData=rollData button=true owner=owner editable=editable}}
+            <h2 for="system.text.levelUp" class="resource-label">Level Up</h2>
+            {{editor content=system.text.levelUp target="system.text.levelUp" rollData=rollData button=true owner=owner editable=editable}}
+            <h2 for="system.text.special" class="resource-label">Special</h2>
+            {{editor content=system.text.special target="system.text.special" rollData=rollData button=true owner=owner editable=editable}}
         </div>
+
+        {{!-- Statistics Tab --}}
+        <div class="tab" data-group="primary" data-tab="statistics">
+            <div class="resources grid grid-2col">
+                <div class="resource flex-group-center">
+                    <label for="system.sp.base" class="resource-label">Base Bonus SP</label>
+                    <div class="resource-content flexrow flex-center flex-between">
+                        <input type="text" name="system.sp.base" value={{system.sp.base}} data-dtype="Number"/>
+                    </div>
+                </div>
+                <div class="resource flex-group-center">
+                    <label for="system.sp.levelUp" class="resource-label">Bonus SP on Lvl Up</label>
+                    <div class="resource-content flexrow flex-center flex-between">
+                        <input type="text" name="system.sp.levelUp" value="{{system.sp.levelUp}}" data-dtype="Number"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         {{!-- Modifiers Tab --}}
         <div class="tab modifiers" data-group="primary" data-tab="modifiers">

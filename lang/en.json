@@ -13,13 +13,38 @@
 
   "VALOR.healthMax": "Max Health",
   "VALOR.staminaMax": "Max Stamina",
+
   "VALOR.defenseStat": "Defense",
   "VALOR.resistanceStat": "Resistance",
+  "VALOR.stat.damageInc": "Damage Increment",
   "VALOR.moveStat": "Move/Speed",
   "VALOR.initiativeStat": "Initiative",
   "VALOR.startingValorStat": "Starting Valor",
+  "VALOR.perTurnValorStat": "Valor Per Turn",
   "VALOR.valorMax": "Max Valor",
   "VALOR.techPoints": "Technique Points",
+
+  "VALOR.stat.attack.str": "Strength Attack",
+  "VALOR.stat.attack.agi": "Agility Attack",
+  "VALOR.stat.attack.spi": "Spirit Attack",
+  "VALOR.stat.attack.mnd": "Mind Attack",
+
+  "VALOR.misc.size": "Size",
+  "VALOR.misc.zoc": "Zone of Control",
+
+  "VALOR.rollMod.attack.all": "Attack Rolls (all)",
+  "VALOR.rollMod.attack.mus": "Muscle-based Attack Rolls",
+  "VALOR.rollMod.attack.dex": "Dexterity-based Attack Rolls",
+  "VALOR.rollMod.attack.ara": "Aura-based Attack Rolls",
+  "VALOR.rollMod.attack.int": "Intuition-based Attack Rolls",
+  "VALOR.rollMod.attack.res": "Resolve-based Attack Rolls",
+  "VALOR.rollMod.defense.all": "Defense Rolls (all)",
+  "VALOR.rollMod.defense.mus": "Muscle-based Defense Rolls",
+  "VALOR.rollMod.defense.dex": "Dexterity-based Defense Rolls",
+  "VALOR.rollMod.defense.ara": "Aura-based Defense Rolls",
+  "VALOR.rollMod.defense.int": "Intuition-based Defense Rolls",
+  "VALOR.rollMod.defense.res": "Resolve-based Defense Rolls",
+
 
   "VALOR.AbilityStrAbbr": "str",
   "VALOR.AbilityAgiAbbr": "agi",
