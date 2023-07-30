@@ -185,7 +185,7 @@ export class valorItem extends Item {
     }
 
     //set sp value, and apply cost/bonus to actor if it is not a temporary effect (do to weaken/boost/transform core technique)
-    item.system.sp.value = item.system.sp.base + (item.system.sp.levelUp * item.system.level.value);
+    item.system.sp.value = item.system.sp.base + (item.system.sp.levelUp * (item.system.level.value-1));
     if (!item.system.isEffect && item.isOwned) {
       let skillPointTarget;
       if (item.type === 'flaw') {

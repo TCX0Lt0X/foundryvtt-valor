@@ -12,7 +12,7 @@ export class valorItemSheet extends ItemSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["valor", "sheet", "item"],
-      width: 520,
+      width: 620,
       height: 480,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
