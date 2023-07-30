@@ -73,8 +73,8 @@ export class valorItem extends Item {
     }
 
     //confirms a selected base Attribute is valid and gets active Attribute
-    if (!core.system.applicableAttributes.includes(technique.system.attribute.effect)) {
-      technique.update({'system.attribute.effect': core.system.applicableAttributes[0]});
+    if (!core.system.applicableAttributes[technique.system.attribute.effect]) {
+      technique.update({'system.attribute.effect': Object.keys(core.system.applicableAttributes.find(key => core.system.applicableAttributes[key]))});
       return;
     }
     technique.system.attribute.opposedRoll = getActiveAttribute(technique.system.attribute.effect);

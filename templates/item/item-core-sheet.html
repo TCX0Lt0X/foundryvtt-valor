@@ -9,8 +9,7 @@
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="modifiers">Modifiers</a>
-        <a class="item" data-tab="effects">Effects</a>
+        <a class="item" data-tab="details">Details</a>
     </nav>
 
     {{!-- Sheet Body --}}
@@ -21,15 +20,68 @@
             {{editor content=system.description target="system.description" rollData=rollData button=true owner=owner editable=editable}}
         </div>
 
-        {{!-- Modifiers Tab --}}
-        <div class="tab modifiers" data-group="primary" data-tab="modifiers">
-            {{> "systems/valor/templates/item/parts/item-modifiers.html"}}
+        <div class="tab" data-group="primary" data-tab="details">
+            <div class="flex-group-right">
+                <label class="resource-label ">Applicable Attributes</label>
+                <div class="resources grid grid-5col flex-group-right">
+                    <div class="resource-content flexrow flex-group-right flex-between">
+                        <label class="resource-label">Strength</label>
+                        <input type="checkbox" name="system.applicableAttributes.strength" {{checked system.applicableAttributes.strength}}/>
+                    </div>
+                    <div class="resource-content flexrow flex-group-right flex-between">
+                        <label class="resource-label">Agility</label>
+                        <input type="checkbox" name="system.applicableAttributes.agility" {{checked system.applicableAttributes.agility}}/>
+                    </div>
+                    <div class="resource-content flexrow flex-group-right flex-between">
+                        <label class="resource-label">Mind</label>
+                        <input type="checkbox" name="system.applicableAttributes.mind" {{checked system.applicableAttributes.mind}}/>
+                    </div>
+                    <div class="resource-content flexrow flex-group-right flex-between">
+                        <label class="resource-label">Spirit</label>
+                        <input type="checkbox" name="system.applicableAttributes.spirit" {{checked system.applicableAttributes.spirit}}/>
+                    </div>
+                    <div class="resource-content flexrow flex-group-right flex-between">
+                        <label class="resource-label">Guts</label>
+                        <input type="checkbox" name="system.applicableAttributes.guts" {{checked system.applicableAttributes.guts}}/>
+                    </div>
+                </div>
+
+                <div class="resource-content flexrow flex-group-right flex-between">
+                    <label class="resource-label">Ultimate Core?</label>
+                    <input type="checkbox" name="system.isUlt" {{checked system.isUlt}}/>
+                </div>
+
+                <div class="resource-content flexrow flex-group-right flex-between">
+                    <label class="resource-label">Max Core Level Adjustment: </label>
+                    <input type="text" name="system.maxCoreLevelAdj" value="{{system.maxCoreLevelAdj}}" data-dtype="Number"/>
+                </div>
+
+                <div class="resource-content flexrow flex-group-right flex-between">
+                    <label class="resource-label">Base Range: </label>
+                    <input type="text" name="system.range.max" value="{{system.range.max}}" data-dtype="Number"/>
+                </div>
+                <div class="resource-content flexrow flex-group-right flex-between">
+                    <label class="resource-label">Stamina Cost</label>
+                    <div class="resource-content flexrow flex-group-right flex-between">
+                        <label class="resource-label">Base Range: </label>
+                        <input type="text" name="system.range.max" value="{{system.range.max}}" data-dtype="Number"/>
+                    </div>
+                    <div class="resource-content flexrow flex-group-right flex-between">
+                        <label class="resource-label">Base Range: </label>
+                        <input type="text" name="system.range.max" value="{{system.range.max}}" data-dtype="Number"/>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+
+
         </div>
 
-        {{!-- Active Effects Tab --}}
-        <div class="tab effects" data-group="primary" data-tab="effects">
-            {{> "systems/valor/templates/item/parts/item-effects.html"}}
-        </div>
     </section>
 
 </form>
