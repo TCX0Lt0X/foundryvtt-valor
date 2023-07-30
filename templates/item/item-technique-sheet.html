@@ -3,26 +3,49 @@
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <div class="resources grid grid-2col">
+        <div class="resource flex-group-center">
+            <label for="system.technique.cost.stamina.value" class="resource-label">Cost</label>
+            <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="system.technique.cost.stamina.value" value="{{system.technique.cost.stamina.value}}" data-dtype="Number"/>
+            </div>
+        </div>
+        <div class="resource flex-group-center">
+            <label for="system.technique.level.techniqueLevel" class="resource-label">Technique Level</label>
+            <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="system.technique.level.techniqueLevel" value="{{system.technique.level.techniqueLevel}}" data-dtype="Number"/>
+            </div>
+        </div>
+    </div>
     </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="description">Description</a>
     <a class="item" data-tab="attributes">Attributes</a>
+    <a class="item" data-tab="description">Description</a>
   </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
+    {{!-- Attributes Tab --}}
+    <div class="tab attributes" data-group="primary" data-tab="attributes">
+      <div class="attribute flexrow flex-group-center">
 
+      </div>  
+      <div class="attribute flexrow flex-group-center">
+        <label for="" class="resource-label rollable flexlarge align-left" data-label="Mods">Mods</label>
+        <input type="text" name="" value="{{system.attribute.strength.value}}" data-dtype="Number"/>
+      </div>
+      <div class="attribute flexrow flex-group-center">Limit</div>
+      <div class="attribute flexrow flex-group-center">Core</div>
+      <div class="attribute flexrow flex-group-center">Core Power</div>
+        
+    </div>
+    
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="description">
       {{editor content=system.description target="system.description" rollData=rollData button=true owner=owner editable=editable}}
-    </div>
-
-    {{!-- Attributes Tab --}}
-    <div class="tab attributes" data-group="primary" data-tab="attributes">
-      {{!-- As you add new fields, add them in here! --}}
     </div>
   </section>
 
