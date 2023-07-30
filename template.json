@@ -397,7 +397,13 @@
         }
       },
       "action": "",
-      "applicableAttributes": [],
+      "applicableAttributes": {
+        "strength": true,
+        "agility": true,
+        "spirit": true,
+        "mind": true,
+        "guts": true
+      },
       "staminaCost": {
         "base": 0,
         "perLevel": 0,
