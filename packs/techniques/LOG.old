@@ -1,5 +1,3 @@
-2023/07/30-17:14:26.878071 7fbc0effd6c0 Recovering log #295
-2023/07/30-17:14:26.878202 7fbc0effd6c0 Level-0 table #297: started
-2023/07/30-17:14:26.879395 7fbc0effd6c0 Level-0 table #297: 43145 bytes OK
-2023/07/30-17:14:26.882599 7fbc0effd6c0 Delete type=0 #295
-2023/07/30-17:14:26.882640 7fbc0effd6c0 Delete type=3 #294
+2023/07/31-13:48:00.859 29d4 Recovering log #302
+2023/07/31-13:48:00.867 29d4 Delete type=0 #302
+2023/07/31-13:48:00.871 29d4 Delete type=3 #301

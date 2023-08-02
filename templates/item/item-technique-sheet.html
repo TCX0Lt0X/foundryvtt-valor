@@ -30,17 +30,84 @@
   <section class="sheet-body">
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
-      <div class="attribute flexrow flex-group-center">
+      <section class="grid grid-3col">
+        <aside class="sidebar">
+          <div class="resources green-box flexcol">
+            <div class="resource flexrow flex-group-center">
+              <label for="system.action" class="resource-label rollable flexlarge align-left" data-label="Action">Action: </label>
+              <input type="text" name="system.action" value="{{system.action}}" data-dtype="String"/>
+            </div>
+            <div class="resource flexrow flex-group-center">
+              <label for="system.targets" class="resource-label rollable flexlarge align-left" data-label="Targets">Target(s): </label>
+              <input type="text" name="system.targets" value="{{system.targets}}" data-dtype="Number"/>
+            </div>
+            <div class="resource flexrow flex-group-center">
+              <label for="system.range" class="resource-label rollable flexlarge align-left" data-label="Range">Range: </label>
+                <input type="text" name="system.range.max" value="{{system.range.max}}" data-dtype="Number"/>
+            </div>
+            <div class="resource flexrow flex-group-center">
+              <label for="system.area" class="resource-label rollable flexlarge align-left" data-label="Area">Area: </label>
+              <input type="text" name="system.area.xAxis" value="{{system.area.xAxis}}" data-dtype="Number"/>
+                <span>x</span>
+                <input type="text" name="system.area.yAxis" value="{{system.area.yAxis}}" data-dtype="Number"/>
+            </div>
+            <div class="resource flexrow flex-group-center">
+              <label for="system.attribute.effect" class="resource-label rollable flexlarge align-left" data-label="Effect">Effect Roll: </label>
+              <input type="text" name="system.attribute.effect" value="{{system.attribute.effect}}" data-dtype="String"/>
+            </div>
+            <div class="resource flexrow flex-group-center">
+              <label for="system.attribute.opposedRoll" class="resource-label rollable flexlarge align-left" data-label="Opposed">Opposed Roll: </label>
+              <input type="text" name="system.attribute.opposedRoll" value="{{system.attribute.opposedRoll}}" data-dtype="String"/>
+            </div>
+          </div>
+        </aside>
+        <div class="grid grid-2col">
+          <div class="resource flex-group-center">
+            <label for="system.core.name" class="resource-label rollable flexlarge align-left" data-label="Core">Core</label>
+            <input type="text" name="system.core.name" value="{{system.core.name}}" data-dtype="String"/>
+            <label for="flags.valor.techMods" class="resource-label rollable flexlarge align-left" data-label="Mods">Mods</label>
+            {{#each techMods as |techMod techId|}}
+            <li>
+              <div class="item-name flexrow">{{techMod}}</div>
+              <div class="effect-duration">{{techMod.level}}</div>
+              <a class="modifier-control" data-action="delete" title="{{localize 'VALOR.ModifierDelete'}}">
+                <i class="fas fa-trash"></i>
+              </a>
+            </li>
+            {{/each}}
+            
+          </div>
+          <div class="resource flex-group-center ">
+            <label for="system.level.coreLevel" class="resource-label rollable flexlarge align-left" data-label="Core Power">Core Power</label>
+            <input type="text" name="system.level.coreLevel" value="{{system.level.coreLevel}}" data-dtype="Number"/>
 
-      </div>  
-      <div class="attribute flexrow flex-group-center">
-        <label for="" class="resource-label rollable flexlarge align-left" data-label="Mods">Mods</label>
-        <input type="text" name="" value="{{system.attribute.strength.value}}" data-dtype="Number"/>
-      </div>
-      <div class="attribute flexrow flex-group-center">Limit</div>
-      <div class="attribute flexrow flex-group-center">Core</div>
-      <div class="attribute flexrow flex-group-center">Core Power</div>
-        
+            <label for="flags.valor.techLimits" class="resource-label rollable flexlarge align-left" data-label="Limit">Limits</label>
+            {{#each techLimits as |techLimit techId|}}
+            <li>
+              <div class="item-name flexrow">{{techLimit}}</div>
+              <div class="effect-duration">{{techLimit.level}}</div>
+              <a class="modifier-control" data-action="delete" title="{{localize 'VALOR.ModifierDelete'}}">
+                <i class="fas fa-trash"></i>
+              </a>
+            </li>
+            {{/each}}
+          </div>
+          </div>
+         
+         
+        </section>
+        <div>
+          <div class="resource flex-group-center ">
+            <label for="system.text.crunch.effect" class="resource-label rollable flexlarge align-left" data-label="Effects">Effects</label>
+            <textarea name = "system.text.crunch.effect" value="{{system.text.crunch.effect}}" placeholder="What does the effect do mechanically?"></textarea>
+            <textarea name = "system.text.crunch.special" value="{{system.text.crunch.special}}" placeholder="What special properties does this effect have?"></textarea>
+          </div>
+          <div class="resource flex-group-center ">
+            <label for="system.text.flavor" class="resource-label rollable flexlarge align-left" data-label="Flavor">Flavor Text</label>
+            <textarea name = "system.text.flavor.default" value="{{system.text.flavor.default}}" placeholder="Default flavor text"></textarea>
+            <textarea name = "system.text.flavor.user" value="{{system.text.flavor.user}}" placeholder="Your flavor text"></textarea>
+          </div>
+          </div>
     </div>
     
     {{!-- Description Tab --}}
