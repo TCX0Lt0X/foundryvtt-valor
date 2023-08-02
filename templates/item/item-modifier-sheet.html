@@ -9,8 +9,7 @@
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="modifiers">Modifiers</a>
-        <a class="item" data-tab="effects">Effects</a>
+        <a class="item" data-tab="details">Details</a>
     </nav>
 
     {{!-- Sheet Body --}}
@@ -18,18 +17,60 @@
 
         {{!-- Description Tab --}}
         <div class="tab" data-group="primary" data-tab="description">
-            {{editor content=system.description target="system.description" rollData=rollData button=true owner=owner editable=editable}}
+            <div class="valor orange-box">
+                <i>{{editor content=system.text.flavor.default target="system.text.flavor.default" rollData=rollData button=true owner=owner editable=editable}}</i>
+            </div>
+            <h2 for="system.text.crunch.effect" class="resource-label">Effect</h2>
+            {{editor content=system.text.crunch.effect target="system.text.crunch.effect" rollData=rollData button=true owner=owner editable=editable}}
+            <h2 for="system.text.crunch.levelUp" class="resource-label">Level Up</h2>
+            {{editor content=system.text.crunch.levelUp target="system.text.crunch.levelUp" rollData=rollData button=true owner=owner editable=editable}}
+            <h2 for="system.text.crunch.special" class="resource-label">Special</h2>
+            {{editor content=system.text.crunch.special target="system.text.crunch.special" rollData=rollData button=true owner=owner editable=editable}}
         </div>
 
-        {{!-- Modifiers Tab --}}
-        <div class="tab modifiers" data-group="primary" data-tab="modifiers">
-            {{> "systems/valor/templates/item/parts/item-modifiers.html"}}
+        {{!-- Details Tab --}}
+        <div class="tab" data-group="primary" data-tab="details">
+            <div class="resource-content flexrow flex-group-right flex-between">
+                <label class="resource-label">Ultimate Mod?</label>
+                <input type="checkbox" name="system.isUltMod" {{checked system.isUltMod}}/>
+            </div>
+            <div class="resource-content flexrow flex-group-right flex-between">
+                <label class="resource-label">Levelabled?</label>
+                <input type="checkbox" name="system.isLevelable" {{checked system.isLevelable}}/>
+            </div>
+
+            <div class="resource-content flexrow flex-group-right flex-between">
+                <label class="resource-label">Level Cost: </label>
+                <div class="resources grid grid-5col flex-group-right">
+                    <div class="resource-content flex-group-center flex-between">
+                        <label class="resource-label">Base</label>
+                        <input type="text" name="system.techniqueLevelModifier.base" value="{{system.techniqueLevelModifier.base}}" data-dtype="Number"/>
+                    </div>
+                    <div class="resource-content flex-group-center flex-between">
+                        <label class="resource-label">Per Level</label>
+                        <input type="text" name="system.techniqueLevelModifier.perLevel" value="{{system.techniqueLevelModifier.perLevel}}" data-dtype="Number"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-content flexrow flex-group-right flex-between">
+                <label class="resource-label">Season: </label>
+                <div class="resources grid grid-5col flex-group-right">
+                    <div class="resource-content flex-group-center flex-between">
+                        <label class="resource-label">Per Level
+                            <input type="text" name="system.season" value="{{system.season}}" data-dtype="Number"/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-content flexrow flex-group flex-between stacked command">
+                <label class="resource-label">Prep Script: </label>
+                <textarea name="system.scripts.prepScript">{{system.scripts.prepScript}}</textarea>
+            </div>
+
         </div>
 
-        {{!-- Active Effects Tab --}}
-        <div class="tab effects" data-group="primary" data-tab="effects">
-            {{> "systems/valor/templates/item/parts/item-effects.html"}}
-        </div>
+
     </section>
-
 </form>

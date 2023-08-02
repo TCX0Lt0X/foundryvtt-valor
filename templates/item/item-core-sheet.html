@@ -17,32 +17,41 @@
 
         {{!-- Description Tab --}}
         <div class="tab" data-group="primary" data-tab="description">
-            {{editor content=system.description target="system.description" rollData=rollData button=true owner=owner editable=editable}}
+            <div class="valor orange-box">
+                <i>{{editor content=system.text.flavor.default target="system.text.flavor.default" rollData=rollData button=true owner=owner editable=editable}}</i>
+            </div>
+            <h2 for="system.text.effect" class="resource-label">Effect</h2>
+            {{editor content=system.text.crunch.effect target="system.text.crunch.effect" rollData=rollData button=true owner=owner editable=editable}}
+            <h2 for="system.text.special" class="resource-label">Special</h2>
+            {{editor content=system.text.crunch.special target="system.text.crunch.special" rollData=rollData button=true owner=owner editable=editable}}
         </div>
 
+        {{!-- Details Tab --}}
         <div class="tab" data-group="primary" data-tab="details">
-            <div class="flex-group-right">
-                <label class="resource-label ">Applicable Attributes</label>
-                <div class="resources grid grid-5col flex-group-right">
-                    <div class="resource-content flexrow flex-group-right flex-between">
-                        <label class="resource-label">Strength</label>
-                        <input type="checkbox" name="system.applicableAttributes.strength" {{checked system.applicableAttributes.strength}}/>
-                    </div>
-                    <div class="resource-content flexrow flex-group-right flex-between">
-                        <label class="resource-label">Agility</label>
-                        <input type="checkbox" name="system.applicableAttributes.agility" {{checked system.applicableAttributes.agility}}/>
-                    </div>
-                    <div class="resource-content flexrow flex-group-right flex-between">
-                        <label class="resource-label">Mind</label>
-                        <input type="checkbox" name="system.applicableAttributes.mind" {{checked system.applicableAttributes.mind}}/>
-                    </div>
-                    <div class="resource-content flexrow flex-group-right flex-between">
-                        <label class="resource-label">Spirit</label>
-                        <input type="checkbox" name="system.applicableAttributes.spirit" {{checked system.applicableAttributes.spirit}}/>
-                    </div>
-                    <div class="resource-content flexrow flex-group-right flex-between">
-                        <label class="resource-label">Guts</label>
-                        <input type="checkbox" name="system.applicableAttributes.guts" {{checked system.applicableAttributes.guts}}/>
+            <div class="flex-group-center">
+                <div class="resource-content flexrow flex-group-right">
+                    <label class="resource-label">Applicable Attribute: </label>
+                    <div class="resources grid grid-5col flex-group-center">
+                        <div class="resource-content flex-group-center ">
+                            <label class="resource-label">Strength</label>
+                            <input type="checkbox" name="system.applicableAttributes.strength" {{checked system.applicableAttributes.strength}}/>
+                        </div>
+                        <div class="resource-content flex-group-center ">
+                            <label class="resource-label">Agility</label>
+                            <input type="checkbox" name="system.applicableAttributes.agility" {{checked system.applicableAttributes.agility}}/>
+                        </div>
+                        <div class="resource-content flex-group-center ">
+                            <label class="resource-label">Mind</label>
+                            <input type="checkbox" name="system.applicableAttributes.mind" {{checked system.applicableAttributes.mind}}/>
+                        </div>
+                        <div class="resource-content flex-group-center">
+                            <label class="resource-label">Spirit</label>
+                            <input type="checkbox" name="system.applicableAttributes.spirit" {{checked system.applicableAttributes.spirit}}/>
+                        </div>
+                        <div class="resource-content flex-group-center">
+                            <label class="resource-label">Guts</label>
+                            <input type="checkbox" name="system.applicableAttributes.guts" {{checked system.applicableAttributes.guts}}/>
+                        </div>
                     </div>
                 </div>
 
@@ -62,20 +71,28 @@
                 </div>
                 <div class="resource-content flexrow flex-group-right flex-between">
                     <label class="resource-label">Stamina Cost: </label>
-
-
+                    <div class="resources grid grid-5col flex-group-right">
+                        <div class="resource-content flex-group-center flex-between">
+                            <label class="resource-label">Base</label>
+                            <input type="text" name="system.staminaCost.base" value="{{system.staminaCost.base}}" data-dtype="Number"/>
+                        </div>
+                        <div class="resource-content flex-group-center flex-between">
+                            <label class="resource-label">Per Level</label>
+                            <input type="text" name="system.staminaCost.perLevel" value="{{system.staminaCost.perLevel}}" data-dtype="Number"/>
+                        </div>
+                        <div class="resource-content flex-group-center flex-between">
+                            <label class="resource-label">Min</label>
+                            <input type="text" name="system.staminaCost.min" value="{{system.staminaCost.min}}" data-dtype="Number"/>
+                        </div>
+                    </div>
                 </div>
-                'valor', 'techLimits'
-
-
+                <div class="resource-content flexrow flex-group-right flex-between">
+                    <label class="resource-label">Action: </label>
+                    <div class="resources grid grid-3col flex-group-right">
+                        <input type="text" name="system.action" value="{{system.action}}" data-dtype="String"/>
+                    </div>
+                </div>
             </div>
-
-
-
-
-
         </div>
-
     </section>
-
 </form>
