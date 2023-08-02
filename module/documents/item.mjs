@@ -109,7 +109,7 @@ export class valorItem extends Item {
       //apply mod effective technique level cost
       technique.system.level.effectiveModLevel +=
           technique.system.mods[mod].system.techniqueLevelModifier.base +
-          (technique.system.mods[mod].system.level * technique.system.mods[mod].system.techniqueLevelModifier.perLevel);
+          ((technique.system.mods[mod].system.level-1) * technique.system.mods[mod].system.techniqueLevelModifier.perLevel);
 
       //grab paths to relevant data for string formating
       technique.system.text.crunch.effect += technique.system.mods[mod].system.text.template.effect;
@@ -131,7 +131,7 @@ export class valorItem extends Item {
       //apply limit stamina cost reduction
       technique.system.cost.stamina.limitReduction +=
           technique.system.limits[limit].system.costReduction[technique.system.attribute.effect].base +
-          (technique.system.limits[limit].system.level * technique.system.limits[limit].system.costReduction[technique.system.attribute.effect].perLevel);
+          ((technique.system.limits[limit].system.level-1) * technique.system.limits[limit].system.costReduction[technique.system.attribute.effect].perLevel);
 
       //grab paths to relevant data for string formating
       technique.system.text.crunch.effect += technique.system.limits[limit].system.text.template.effect;

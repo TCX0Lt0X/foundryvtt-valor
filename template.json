@@ -341,7 +341,7 @@
       },
       "core": {
         "name": "",
-        "uuid": null
+        "uuid": ""
       },
       "mods": {},
       "limits": {},
@@ -425,12 +425,14 @@
       }
     },
     "modifier": {
+      "season": 1,
       "text": {
         "flavor": {
           "default": ""
         },
         "crunch": {
           "effect": "",
+          "levelUp": "",
           "special": ""
         },
         "template": {
@@ -457,12 +459,14 @@
       }
     },
     "limit": {
+      "season": 1,
       "text": {
         "flavor": {
           "default": ""
         },
         "crunch": {
           "effect": "",
+          "levelUp": "",
           "special": ""
         },
         "template": {
