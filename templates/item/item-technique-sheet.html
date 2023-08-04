@@ -1,22 +1,22 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    <img class="item-image" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+      <span class="valor titlebox season4dark"><input class="valor charname season4dark" name="name" type="text" value="{{item.name}}" placeholder="Name"/></span>
       <div class="resources grid grid-2col">
         <div class="resource flex-group-center">
-            <label for="system.technique.cost.stamina.value" class="resource-label">Cost</label>
-            <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.technique.cost.stamina.value" value="{{system.technique.cost.stamina.value}}" data-dtype="Number"/>
-            </div>
+          <label for="system.technique.cost.stamina.value" class="resource-label">Stamina Cost</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="system.cost.stamina.value" value="{{system.cost.stamina.value}}" data-dtype="Number"/>
+          </div>
         </div>
         <div class="resource flex-group-center">
-            <label for="system.technique.level.techniqueLevel" class="resource-label">Technique Level</label>
-            <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.technique.level.techniqueLevel" value="{{system.technique.level.techniqueLevel}}" data-dtype="Number"/>
-            </div>
+          <label for="system.technique.level.techniqueLevel" class="resource-label">Technique Level</label>
+          <div class="resource-content flexrow flex-center flex-between">
+            <input type="text" name="system.level.techniqueLevel" value="{{system.level.techniqueLevel}}" data-dtype="Number"/>
+          </div>
         </div>
-    </div>
+      </div>
     </div>
   </header>
 
@@ -43,13 +43,13 @@
             </div>
             <div class="resource flexrow flex-group-center">
               <label for="system.range" class="resource-label rollable flexlarge align-left" data-label="Range">Range: </label>
-                <input type="text" name="system.range.max" value="{{system.range.max}}" data-dtype="Number"/>
+              <input type="text" name="system.range.max" value="{{system.range.max}}" data-dtype="Number"/>
             </div>
             <div class="resource flexrow flex-group-center">
               <label for="system.area" class="resource-label rollable flexlarge align-left" data-label="Area">Area: </label>
               <input type="text" name="system.area.xAxis" value="{{system.area.xAxis}}" data-dtype="Number"/>
-                <span>x</span>
-                <input type="text" name="system.area.yAxis" value="{{system.area.yAxis}}" data-dtype="Number"/>
+              <span>x</span>
+              <input type="text" name="system.area.yAxis" value="{{system.area.yAxis}}" data-dtype="Number"/>
             </div>
             <div class="resource flexrow flex-group-center">
               <label for="system.attribute.effect" class="resource-label rollable flexlarge align-left" data-label="Effect">Effect Roll: </label>
@@ -63,57 +63,93 @@
         </aside>
         <div class="grid grid-2col">
           <div class="resource flex-group-center">
-            <label for="system.core.name" class="resource-label rollable flexlarge align-left" data-label="Core">Core</label>
-            <input type="text" name="system.core.name" value="{{system.core.name}}" data-dtype="String"/>
-            <label for="flags.valor.techMods" class="resource-label rollable flexlarge align-left" data-label="Mods">Mods</label>
-            {{#each techMods as |techMod techId|}}
-            <li>
-              <div class="item-name flexrow">{{techMod}}</div>
-              <div class="effect-duration">{{techMod.level}}</div>
-              <a class="modifier-control" data-action="delete" title="{{localize 'VALOR.ModifierDelete'}}">
-                <i class="fas fa-trash"></i>
-              </a>
-            </li>
+            <label for="system.core.name" class="resource-label" data-label="Core">Core
+              <div>
+              <select id="coreSelect" name="system.core._id">
+                {{#select system.core._id}}
+                <option value='{{system.core._id}}'>{{ system.core.name }}</option>
+                {{#each compendiumCores}}
+                <option value='{{this._id}}'>{{ this.name }}</option>
+                {{/each}}
+                {{/select}}
+              </select>
+              </div>
+            </label>
+            <label for="flags.valor.technique.modifier" class="resource-label rollable flexlarge align-left" data-label="Mods">Mods</label>
+            {{#each flags.valor.technique.modifier as |techMod techId|}}
+              <li class="item-name flexrow grid grid-3col">
+                <span class="item-name flexrow">{{techMod.name}}</span>
+                <input type="text" name="flags.valor.technique.modifier.{{techId}}.level" value="{{techMod.level}}" data-dtype="Number"/>
+                <a class="techOpt" data-action="delete" title="{{localize 'VALOR.ModifierDelete'}}" value="{{techId}}">
+                  <i class="fas fa-trash"value="{{techId}}"></i>
+                </a>
+              </li>
             {{/each}}
-            
+            <select class="techOptSelect">
+              <option value=-1>- Add Modifier -</option>
+              <option value=-1>-</option>
+              {{#each compendiumMods}}
+              <option value='{{this._id}}'>{{ this.name }}</option>
+              {{/each}}
+            </select>
+
+<!--            <div>-->
+<!--              <select name="system.core._id" onChange="testOnCVhange(this)">-->
+<!--                {{#select system.core._id}}-->
+<!--                {{#each compendiumCores}}-->
+<!--                <option value='{{this._id}}'>{{ this.name }}</option>-->
+<!--                {{/each}}-->
+<!--                {{/select}}-->
+<!--              </select>-->
+<!--            </div>-->
+
+
+
           </div>
           <div class="resource flex-group-center ">
             <label for="system.level.coreLevel" class="resource-label rollable flexlarge align-left" data-label="Core Power">Core Power</label>
             <input type="text" name="system.level.coreLevel" value="{{system.level.coreLevel}}" data-dtype="Number"/>
 
-            <label for="flags.valor.techLimits" class="resource-label rollable flexlarge align-left" data-label="Limit">Limits</label>
-            {{#each techLimits as |techLimit techId|}}
-            <li>
-              <div class="item-name flexrow">{{techLimit}}</div>
-              <div class="effect-duration">{{techLimit.level}}</div>
-              <a class="modifier-control" data-action="delete" title="{{localize 'VALOR.ModifierDelete'}}">
-                <i class="fas fa-trash"></i>
+            <label for="flags.valor.technique.limit" class="resource-label rollable flexlarge align-left" data-label="Limit">Limits</label>
+            {{#each flags.valor.technique.limit as |techLimit techId|}}
+            <li class="item-name flexrow grid grid-3col">
+              <span class="item-name flexrow">{{techLimit.name}}</span>
+              <input type="text" name="flags.valor.technique.limit.{{techId}}.level" value="{{techLimit.level}}" data-dtype="Number"/>
+              <a class="techOpt" data-action="delete" title="{{localize 'VALOR.ModifierDelete'}}" value="{{techId}}">
+                <i class="fas fa-trash"value="{{techId}}"></i>
               </a>
             </li>
             {{/each}}
+            <select class="techOptSelect">
+              <option value='-1'>- Add Limit -</option>
+              <option value='-1'>-</option>
+              {{#each compendiumLimits}}
+              <option value='{{this._id}}'>{{ this.name }}</option>
+              {{/each}}
+            </select>
           </div>
-          </div>
-         
-         
-        </section>
-        <div>
-          <div class="resource flex-group-center ">
-            <label for="system.text.crunch.effect" class="resource-label rollable flexlarge align-left" data-label="Effects">Effects</label>
-            <textarea name = "system.text.crunch.effect" value="{{system.text.crunch.effect}}" placeholder="What does the effect do mechanically?"></textarea>
-            <textarea name = "system.text.crunch.special" value="{{system.text.crunch.special}}" placeholder="What special properties does this effect have?"></textarea>
-          </div>
-          <div class="resource flex-group-center ">
-            <label for="system.text.flavor" class="resource-label rollable flexlarge align-left" data-label="Flavor">Flavor Text</label>
-            <textarea name = "system.text.flavor.default" value="{{system.text.flavor.default}}" placeholder="Default flavor text"></textarea>
-            <textarea name = "system.text.flavor.user" value="{{system.text.flavor.user}}" placeholder="Your flavor text"></textarea>
-          </div>
-          </div>
+        </div>
+
+
+      </section>
+      <div>
+        <div class="resource flex-group-center ">
+          <label for="system.text.crunch.effect" class="resource-label rollable flexlarge align-left" data-label="Effects">Effects</label>
+          <textarea name = "system.text.crunch.effect" placeholder="What does the effect do mechanically?">{{system.text.crunch.effect}}</textarea>
+          <textarea name = "system.text.crunch.special" value="{{system.text.crunch.special}}" placeholder="What special properties does this effect have?"></textarea>
+        </div>
+        <div class="resource flex-group-center ">
+          <label for="system.text.flavor" class="resource-label rollable flexlarge align-left" data-label="Flavor">Flavor Text</label>
+          <textarea name = "system.text.flavor.user" placeholder="{{system.text.flavor.default}}">{{system.text.flavor.user}}</textarea>
+        </div>
+      </div>
     </div>
-    
+
     {{!-- Description Tab --}}
     <div class="tab" data-group="primary" data-tab="description">
       {{editor content=system.description target="system.description" rollData=rollData button=true owner=owner editable=editable}}
     </div>
+
   </section>
 
 </form>

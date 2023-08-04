@@ -19,6 +19,36 @@ export function getBaseAttribute(activeAttribute) {
     return baseAttributes[index];
 }
 
+export async function onTechOptChange(_id, technique) {
+
+    if (_id == -1) return;
+
+    const techComp = game.packs.get("valor.techniques");
+    const techOpt = (techComp.index).get(_id);
+
+    technique.setFlag('valor',`technique.${techOpt.type}.${_id}`,
+        {
+            "name": techOpt.name,
+            "_id": techOpt._id,
+            "uuid": techOpt.uuid,
+            "level": 1
+        });
+}
+
+export function onTechOptDelete(_id, technique) {
+
+    if (_id == -1) return;
+
+    const techComp = game.packs.get("valor.techniques");
+    const techOpt = (techComp.index).get(_id);
+
+    technique.unsetFlag('valor',`technique.${techOpt.type}.${_id}`);
+}
+
+
+
+
+
 //checks if a user is the GM with the least value id, for scenerios where
 //code should fire only once from a single GM
 export function isLeastGM() {
@@ -40,6 +70,6 @@ export function isLeastGM() {
 //checks if parent of child has itself a parent
 export function updateGrandParent(child) {
     if (child.parent?.parent !== null) {
-        (child.parent.parent).prepareData();
+        (child.parent.parent).reset();
     }
 }

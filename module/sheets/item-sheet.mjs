@@ -1,6 +1,7 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
 import {onManageModifier, prepareModifiers} from "../helpers/modifiers.mjs";
 import {valorItem as Item} from "../documents/item.mjs";
+import {onTechOptChange, onTechOptDelete} from "../utils.mjs";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -64,7 +65,7 @@ export class valorItemSheet extends ItemSheet {
   /* -------------------------------------------- */
 
 
-  async _prepareTechniqueData(context) {
+   _prepareTechniqueData(context) {
     const compendiumCores = [];
     const compendiumMods = [];
     const compendiumLimits = [];
@@ -83,7 +84,7 @@ export class valorItemSheet extends ItemSheet {
     context.compendiumCores = compendiumCores;
     context.compendiumMods = compendiumMods;
     context.compendiumLimits = compendiumLimits;
-  }
+   }
 
 
 
@@ -100,5 +101,8 @@ export class valorItemSheet extends ItemSheet {
 
     html.find(".modifier-control").click(ev => onManageModifier(ev, this.item));
 
+    html.find(".techOpt").click(ev => onTechOptDelete(ev.target.getAttribute('value'), this.item));
+
+    html.find(".techOptSelect").on('change', ev => onTechOptChange(ev.target.value, this.item));
   }
 }

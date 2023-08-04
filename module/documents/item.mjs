@@ -36,43 +36,56 @@ export class valorItem extends Item {
   Incomplete function do not consume
    */
   static async _prepareTechniqueData(technique) {
-
     //prevent running if no core is set
     if (technique.system.core.uuid === null) {
       return;
     }
 
+    const techComp = game.packs.get("valor.techniques");
     const leastGM = isLeastGM();
 
     //fetch core from Compendium
-    const core = (await fromUuid(technique.system.core.uuid)).toObject(false);
+    let core = techComp.get(technique.system.core._id);
+    if (core == null) {
+      const uuid = ((techComp.index).get(technique.system.core._id)).uuid;
+      core = await fromUuid(uuid);
+
+      if (core == null) {
+        ui.notifications.error("TECHNIQUE.CORE.Error", { localize: false });
+        return;
+      }
+    }
+    core = core.toObject(false);
 
     //fetch mods from compendium
-    const mods = technique.getFlag('valor', 'techMods') ?? {};
+    const mods = technique.getFlag('valor', 'technique.modifier') ?? {};
     for (const mod in mods) {
-      const retrievedMod = (await fromUuid(mods[mod].uuid)).toObject(false);
+
+      let retrievedMod = techComp.get(mods[mod]._id);
+      if (retrievedMod == null) {
+        retrievedMod = await fromUuid(mods[mod].uuid);
+      }
+      retrievedMod = retrievedMod.toObject(false);
       foundry.utils.setProperty(retrievedMod, "system.level", mods[mod].level);
       foundry.utils.setProperty(technique, `system.mods.${mod}`, retrievedMod);
     }
 
-
-
     //fetch limits from compendium
-    const limits = technique.getFlag('valor', 'techLimits') ?? {};
+    const limits = technique.getFlag('valor', 'technique.limit') ?? {};
     for (const limit in limits ) {
-      const retrievedLimit = (await fromUuid(limits[limit].uuid)).toObject(false);
+
+      let retrievedLimit = techComp.get(limits[limit]._id);
+      if (retrievedLimit == null) {
+        retrievedLimit = await fromUuid(limits[limit].uuid);
+      }
+      retrievedLimit = retrievedLimit.toObject(false);
       foundry.utils.setProperty(retrievedLimit, "system.level", limits[limit].level);
       foundry.utils.setProperty(technique, `system.limits.${limit}`, retrievedLimit);
     }
 
-
     //makes sure core was retrieved
-    if (core == null) {
-      ui.notifications.error("TECHNIQUE.CORE.Error", { localize: false });
-      return;
-    }
 
-    //confirms a selected base Attribute is valid and gets active Attribute
+      //confirms a selected base Attribute is valid and gets active Attribute
     if (!core.system.applicableAttributes[technique.system.attribute.effect]) {
       technique.update({'system.attribute.effect': Object.keys(core.system.applicableAttributes).find(key => core.system.applicableAttributes[key])});
       return;
@@ -87,12 +100,13 @@ export class valorItem extends Item {
     technique.system.range = core.system.range;
     technique.system.area = core.system.area;
     technique.system.isUlt = core.system.isUlt;
+    technique.system.text.flavor.default = core.system.text.flavor.default;
     technique.system.text.crunch.effect = core.system.text.template.effect;
     technique.system.text.crunch.special = core.system.text.template.special;
     technique.system.text.crunch.formatStrings = core.flags.valor?.formatStrings ?? {};
 
     if (technique.system.isUlt === true) {
-      technique.system.uses.max = 1
+      technique.system.uses.max = 1;
     }
 
     //run core prepScript
@@ -104,10 +118,11 @@ export class valorItem extends Item {
     }
 
     //process modifiers
+    let effectiveModLevel = 0;
     for (const mod in technique.system.mods) {
 
       //apply mod effective technique level cost
-      technique.system.level.effectiveModLevel +=
+      effectiveModLevel +=
           technique.system.mods[mod].system.techniqueLevelModifier.base +
           ((technique.system.mods[mod].system.level-1) * technique.system.mods[mod].system.techniqueLevelModifier.perLevel);
 
@@ -124,14 +139,16 @@ export class valorItem extends Item {
         ui.notifications.error("TECHNIQUE.MODSCRIPT.Error", { localize: false });
       }
     }
+    technique.system.level.effectiveModLevel = effectiveModLevel;
 
     //process limits
+    let costReduction = 0;
     for (const limit in technique.system.limits) {
 
       //apply limit stamina cost reduction
-      technique.system.cost.stamina.limitReduction +=
-          technique.system.limits[limit].system.costReduction[technique.system.attribute.effect].base +
-          ((technique.system.limits[limit].system.level-1) * technique.system.limits[limit].system.costReduction[technique.system.attribute.effect].perLevel);
+      costReduction +=
+          technique.system.limits[limit].system.costReduction.base +
+          ((technique.system.limits[limit].system.level-1) * technique.system.limits[limit].system.costReduction.perLevel);
 
       //grab paths to relevant data for string formating
       technique.system.text.crunch.effect += technique.system.limits[limit].system.text.template.effect;
@@ -147,6 +164,7 @@ export class valorItem extends Item {
         ui.notifications.error("TECHNIQUE.LIMITSCRIPT.Error", { localize: false });
       }
     }
+    technique.system.cost.stamina.limitReduction = costReduction;
 
     //calculate final Technique Level
     technique.system.level.techniqueLevel =
@@ -166,9 +184,12 @@ export class valorItem extends Item {
           foundry.utils.getProperty(technique, technique.system.text.crunch.formatStrings[formatString]);
     }
     technique.system.text.crunch.effect = game.i18n.format(`${technique.system.text.crunch.effect}`, technique.system.text.crunch.formatStrings);
-    technique.system.text.crunch.special = game.i18n.format(`${technique.system.text.crunch.special}`, technique.system.text.crunch.formatStrings);
-  }
+    //technique.system.text.crunch.special = game.i18n.format(`${technique.system.text.crunch.special}`, technique.system.text.crunch.formatStrings);
 
+    if (technique?._sheet?._state !== null && technique?._sheet?._state >= 0 ) {
+      technique.sheet.render(true);
+    }
+  }
 
   static _prepareSkillFlawData(item) {
     //set max level based on actor level and progression speed

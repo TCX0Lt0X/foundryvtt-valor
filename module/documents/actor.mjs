@@ -90,7 +90,6 @@ export class valorActor extends Actor {
     }
     for (const item of items["technique"]) {
       Item._prepareTechniqueData(item);
-      actor.calculateIncrements(actor);
     }
   }
 

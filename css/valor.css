@@ -7,8 +7,13 @@
 
 .window-app .window-content {
   background: white;
-  color: #74151A
+  color: #74151A;
 }
+
+.window-app .window-content input{
+  color: #74151A;
+}
+
 
 .rollable:hover, .rollable:focus {
   color: #000;
@@ -230,6 +235,19 @@
 }
 
 /* Styles limited to valor sheets */
+
+.valor input {
+  width: 8%;
+  min-width: 25px;
+  border: none;
+}
+
+.valor.sheet.actor {
+  min-width: 700px;
+  flex-wrap: nowrap;
+  display: flex;
+}
+
 .valor .item-form {
   font-family: "Roboto", sans-serif;
 }
@@ -258,27 +276,36 @@
   -webkit-box-flex: 0;
   -ms-flex: 0 0 100px;
   flex: 0 0 100px;
-  height: 100px;
-  margin-right: 10px;
+  height: auto;
+  width: 5vw;
+  margin: 5px 8px 5px 0px;
+  aspect-ratio: 2 / 3;
 }
 
-.valor .sheet-header .header-fields {
+.valor.sheet-header.header-fields {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
 }
 
-.valor .sheet-header h1.charname {
-  height: 50px;
-  padding: 0px;
-  margin: 5px 0;
-  border-bottom: 0;
+.valor .sheet-header .charname {
+  width: 98%;
+  border:none;
+  background: none;
+  font-size: 24px;
+  margin: 5px 8px 8px 8px;
+  position: absolute;
 }
 
-.valor .sheet-header h1.charname input {
-  width: 100%;
-  height: 100%;
-  margin: 0;
+.valor .sheet-header .level{
+
+  vertical-align: top;
+  margin-left: 10%;
+}
+
+.valor .sheet-header .level input {
+  width: 10%;
+  border: none;
 }
 
 .valor nav.sheet-tabs {
@@ -466,30 +493,87 @@
   border: none;
 }
 
-.valor .orange-box{
+.valor .attribute-box{
+  border: 4px solid;
+  padding: 0.5em;
+  margin: 5px 10px 5px 10px;
+  min-width: 135px
+}
+
+.valor .attribute-box.orange{
   background: #FEF2E2;
   color: #74151A;
-  border: 4px solid #F8C07B;
-  padding: 1em;
-  margin: 1em;
+  border-color: #F8C07B;
 }
-
-.valor .orange-box input {
-  border: 0;
-  margin: 3px;
+.valor .attribute-box.orange input{
   color: #74151A;
 }
 
-.valor .green-box{
+.valor .attribute-box.green {
   background: #EDEDD6;
   color: #5C6021;
-  border: 4px solid #A8B055;
-  padding: 1em;
-  margin: 1em;
+  border-color: #A8B055;
 }
 
-.valor .green-box input {
-  border: 0;
-  margin: 3px;
+.valor .attribute-box.green input{
   color: #5C6021;
 }
+
+.valor .titlebox {
+  position: relative;
+  display: inline-block;
+  width: calc(70% - 30px);
+  height: 50px;
+  background-color: white;
+  border-radius: 2px 0px 2px 0px;
+  border: 6px solid;
+  margin-left: 15px;
+}
+
+.valor .titlebox:before {
+  content: "";
+  background-color: white;
+  width: 15px;
+  height: 19px;
+  display: block;
+  position: absolute;
+  left: 100%;
+  bottom: 13px;
+  border: 6px solid;
+  border-left: none;
+  border-radius: 0px 2px 2px 0px;
+}
+
+/* Makes the circle */
+.valor .titlebox:after {
+  content: "";
+  background-color: white;
+  width: 15px;
+  height: 19px;
+  display: block;
+  position: absolute;
+  left: -21px;
+  top: 13px;
+  border: 6px solid;
+  border-right: none;
+  border-radius: 2px 0px 0px 2px;
+}
+
+.valor .season1dark {
+  color: #A8B055;
+}
+
+.valor .season2dark{
+  color: #F6A446;
+}
+
+.valor .season3dark{
+  color: #6B7028;
+}
+
+.valor .season4dark{
+  color: #74151A;
+}
+
+
+
