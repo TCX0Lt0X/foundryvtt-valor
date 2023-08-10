@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: documents/item.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: documents/item.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {VALOR} from "../helpers/config.mjs";
+import {AsyncFunction, getActiveAttribute, isLeastGM} from "../utils.mjs";
+import * as Technique from "./items/technique.mjs";
+
+/**
+ * Extend the basic Item with some very simple modifications.
+ * @extends {Item}
+ */
+export class valorItem extends Item {
+
+
+  /**
+   * @override
+   * Augment the basic Item data model with additional dynamic data.
+   */
+  prepareData() {
+    // As with the actor class, items are documents that can have their data
+    // preparation methods overridden (such as prepareBaseData()).
+    super.prepareData();
+      }
+
+  /**
+   * @override
+   * */
+  prepareBaseData() {
+    // Data modifications in this step occur before processing embedded
+    // documents or derived data.
+    super.prepareBaseData();
+  }
+
+
+  /**
+   * @override
+   * Augment the basic item data with additional dynamic data. Typically,
+   * you'll want to handle most of your calculated/derived data in this step.
+   * Data calculated in this step should generally not exist in template.json
+   * (such as ability modifiers rather than ability scores) and should be
+   * available both inside and outside of character sheets (such as if an item
+   * is queried and has a roll executed directly from it).
+   */
+  prepareDerivedData() {
+    super.prepareDerivedData();
+  }
+
+
+  /**
+   * Prepare a data object which is passed to any Roll formulas which are created related to this Item
+   * @private
+   */
+   getRollData() {
+    // If present, return the actor's roll data.
+    if ( !this.actor ) return null;
+    const rollData = this.actor.getRollData();
+    rollData.item = foundry.utils.deepClone(this.system);
+
+    return rollData;
+  }
+
+  /**
+   * Handle clickable rolls.
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  async roll() {
+    const item = this;
+
+    // Initialize chat data.
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    const rollMode = game.settings.get('core', 'rollMode');
+    const label = `[${item.type}] ${item.name}`;
+
+    // If there's no roll data, send a chat message.
+    if (!this.system.formula) {
+      ChatMessage.create({
+        speaker: speaker,
+        rollMode: rollMode,
+        flavor: label,
+        content: item.system.description ?? ''
+      });
+    }
+    // Otherwise, create a roll and send a chat message from it.
+    else {
+      // Retrieve roll data.
+      const rollData = this.getRollData();
+
+      // Invoke the roll and submit it to chat.
+      const roll = new Roll(rollData.item.formula, rollData);
+      // If you need to store the value first, uncomment the next line.
+      // let result = await roll.roll({async: true});
+      roll.toMessage({
+        speaker: speaker,
+        rollMode: rollMode,
+        flavor: label,
+      });
+      return roll;
+    }
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="valorActiveEffect.html">valorActiveEffect</a></li><li><a href="valorActiveEffectConfig.html">valorActiveEffectConfig</a></li><li><a href="valorActor.html">valorActor</a></li><li><a href="valorActorSheet.html">valorActorSheet</a></li><li><a href="valorItem.html">valorItem</a></li><li><a href="valorItemSheet.html">valorItemSheet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createItemMacro">createItemMacro</a></li><li><a href="global.html#getActiveAttribute">getActiveAttribute</a></li><li><a href="global.html#getBaseAttribute">getBaseAttribute</a></li><li><a href="global.html#isLeastGM">isLeastGM</a></li><li><a href="global.html#onManageActiveEffect">onManageActiveEffect</a></li><li><a href="global.html#onManageModifier">onManageModifier</a></li><li><a href="global.html#onTechOptChange">onTechOptChange</a></li><li><a href="global.html#onTechOptDelete">onTechOptDelete</a></li><li><a href="global.html#preloadHandlebarsTemplates">preloadHandlebarsTemplates</a></li><li><a href="global.html#prepareActiveEffectCategories">prepareActiveEffectCategories</a></li><li><a href="global.html#prepareModifiers">prepareModifiers</a></li><li><a href="global.html#rollItemMacro">rollItemMacro</a></li><li><a href="global.html#updateGrandParent">updateGrandParent</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Aug 10 2023 15:04:44 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 import { VALOR } from "../helpers/config.mjs"
-import {valorItem as Item} from "./item.mjs";
+import * as Technique from "./items/technique.mjs";
+import * as skillFlaw from "./items/skillFlaw.mjs";
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -47,16 +48,13 @@ export class valorActor extends Actor {
   _prepareCharacterData(actor) {
     if (actor.type !== 'character') return;
 
-    // Make modifications to data here. For example:
     const characterType = actor.getCharacterType(actor)
 
     actor.initializeDerived(actor);
-
     actor.calculateExperience(actor, characterType);
     actor.calculateSeason(actor);
     actor.calculateAttributePoints(actor);
     actor.calculateSkillPoints(actor, characterType);
-    
     actor.calculateDamageIncrement(actor, characterType);
     actor.calculateZoneOfControl(actor, characterType);
     actor.calculateSize(actor, characterType);
@@ -66,7 +64,6 @@ export class valorActor extends Actor {
 
   _prepareDerivedData(actor){
     const characterType = actor.getCharacterType(actor);
-
     const items = actor.itemTypes;
     
     actor.calculateActiveAttributes(actor, characterType);
@@ -81,18 +78,24 @@ export class valorActor extends Actor {
     actor.calculateInitiative(actor, characterType);
 
     for (const item of items["flaw"]) {
-      Item._prepareSkillFlawData(item);
+      skillFlaw._prepareSkillFlawData(item);
       actor.calculateIncrements(actor)
     }
     for (const item of items["skill"]) {
-      Item._prepareSkillFlawData(item);
+      skillFlaw._prepareSkillFlawData(item);
       actor.calculateIncrements(actor)
     }
     for (const item of items["technique"]) {
-      Item._prepareTechniqueData(item);
+      Technique._prepareTechniqueData(item);
     }
   }
 
+  /**
+   * gets actors valor character type and grabs modifiders
+   * associated with it
+   * @param {valorActor} actor
+   * @returns {{levelSkillPoints: number, valorPerTurn: number, levelTechniquePoints: number, hasUltimateTechnique: boolean, baseSize: number, baseZoneOfControl: number, multiplierSkillPoints: number, modifierAttackRoll: number, experienceValue: number, multiplierTechniquePoints: number, multiplierAttackBaseAttribute: number, baseSkillPoints: number, multiplierDamageIncrement: number, hasValor: boolean, baseTechniquePoints: number, healthMultiplier: number, staminaMultiplier: number, multiplierAttackTotal: number, actions: {move: number, attack: number, support: number}, modifierActiveAttribute: number}}
+   */
   getCharacterType(actor) {
     let characterType;
 
@@ -109,8 +112,8 @@ export class valorActor extends Actor {
 
   /**
    * Calculate character statistics
+   * @param {valorActor} actor
    */
-
   initializeDerived(actor) {
     for (const activeAttribute in VALOR.attributes.active) {
        actor.system.attribute[activeAttribute].value = 0;
@@ -123,7 +126,10 @@ export class valorActor extends Actor {
     actor.system.statistic.health.max.value = 0;
     actor.system.statistic.stamina.max.value = 0;
     actor.system.misc.skillPoints.total.value = 0;
+    actor.system.misc.skillPoints.spent.value = 0;
+    actor.system.misc.skillPoints.flawBonus.value = 0;
     actor.system.misc.techniquePoints.total.value = 0;
+    actor.system.misc.techniquePoints.spent.value = 0;
     actor.system.statistic.defense.value = 0;
     actor.system.statistic.resistance.value = 0;
     actor.system.statistic.move.value = 0;
@@ -131,16 +137,31 @@ export class valorActor extends Actor {
     actor.system.statistic.damageIncrement.value = 0;
   }
 
+  /**
+   * calculates experience needed for next level
+   * as well as experience earned if actor is defeated
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateExperience(actor, characterType) {
     let curLevel = actor.system.misc.level.value;
     actor.system.misc.experience.reward.value = curLevel * characterType.experienceValue;
     actor.system.misc.experience.nextLevel = ((curLevel * (curLevel+1)) / 2) * 100;
   }
 
+  /**
+   * calculates current season of actor
+   * @param {valorActor} actor
+   */
   calculateSeason(actor) {
     actor.system.misc.season.value = Math.ceil(actor.system.misc.level.value / 5);
   }
 
+  /**
+   * calculates base attribute data
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateAttributePoints(actor, characterType) {
     let level = actor.system.misc.level.value;
     let maxBaseAttribute =  level + 7;
@@ -165,6 +186,11 @@ export class valorActor extends Actor {
         actor.system.attribute.guts.value;
   }
 
+  /**
+   * calculates skill point data of actor
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateSkillPoints(actor, characterType) {
     let level = actor.system.misc.level.value;
     let flawMaxBonusSP = 7 + level;
@@ -172,10 +198,15 @@ export class valorActor extends Actor {
     actor.system.misc.skillPoints.flawBonus.maxFlawSP.value = flawMaxBonusSP;
     actor.system.misc.skillPoints.total.value += Math.ceil((characterType.baseSkillPoints
         + (characterType.levelSkillPoints * level))
-        + Math.min(actor.system.misc.skillPoints.flawBonus.value ?? 0, flawMaxBonusSP)
+        - Math.min(actor.system.misc.skillPoints.flawBonus.value, flawMaxBonusSP)
         * characterType.multiplierSkillPoints);
   }
 
+  /**
+   * calculated technique point data of actor
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateTechniquePoints(actor, characterType) {
     let level = actor.system.misc.level.value;
     let season = actor.system.misc.season.value;
@@ -198,6 +229,11 @@ export class valorActor extends Actor {
     actor.system.misc.techniquePoints.total.value += techniquePoints;
   }
 
+  /**
+   * calculates actor active attribute data
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateActiveAttributes(actor, characterType) {
     for (let i = 0; i < Object.keys(VALOR.attributes.active).length; i++ ) {
       actor.system.attribute[Object.keys(VALOR.attributes.active)[i]].value += Math.ceil((actor.system.attribute[Object.keys(VALOR.attributes.base)[i]].value + actor.system.misc.level.value) / 2)
@@ -205,6 +241,11 @@ export class valorActor extends Actor {
     }
   }
 
+  /**
+   * calculates actor health data
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateHealth(actor, characterType) {
 
     actor.system.statistic.health.max.value += Math.ceil((50 +
@@ -214,7 +255,11 @@ export class valorActor extends Actor {
         * characterType.healthMultiplier);
   }
 
-
+  /**
+   * calculates actor stamina data
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateStamina(actor, characterType) {
     actor.system.statistic.stamina.max.value += Math.ceil((8
         + (2 * actor.system.attribute.spirit.value)
@@ -223,6 +268,11 @@ export class valorActor extends Actor {
         * characterType.staminaMultiplier);
   }
 
+  /**
+   * calculates actor attack attribute data
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateAttack(actor, characterType) {
     let baseAttributes = Object.keys(VALOR.attributes.base);
     baseAttributes.pop("guts");
@@ -235,41 +285,77 @@ export class valorActor extends Actor {
     }
   }
 
+  /**
+   * calculates actor damage increment
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateDamageIncrement(actor, characterType) {
     actor.system.statistic.damageIncrement.value += Math.ceil((5
         + actor.system.misc.level.value)
         * characterType.multiplierDamageIncrement);
   }
 
+  /**
+   * calculates actor defense
+   * @param {valorActor} actor
+   */
   calculateDefense(actor) {
     actor.system.statistic.defense.value += actor.system.attribute.strength.value
         + actor.system.attribute.guts.value
         + (2 * actor.system.misc.level.value);
   }
 
+  /**
+   * calculates actor resistance
+   * @param {valorActor} actor
+   */
   calculateResistance(actor) {
     actor.system.statistic.resistance.value += actor.system.attribute.spirit.value
         + actor.system.attribute.mind.value
         + (2 * actor.system.misc.level.value);
   }
 
+  /**
+   * calculates actor move speed
+   * @param {valorActor} actor
+   */
   calculateMove(actor) {
     actor.system.statistic.move.value += 3
         + Math.floor((actor.system.attribute.agility.value - 1) / 4);
   }
 
+  /**
+   * calculates actor initiative bonus
+   * @param {valorActor} actor
+   */
   calculateInitiative(actor) {
     actor.system.statistic.initiative.value += actor.system.attribute.dexterity.value;
   }
 
+  /**
+   * sets actors base Zone of Control
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateZoneOfControl(actor, characterType) {
     actor.system.misc.zoneOfControl.value += characterType.baseZoneOfControl;
   }
 
+  /**
+   * sets actors base size
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateSize(actor, characterType) {
     actor.system.misc.size.value += characterType.baseSize;
   }
 
+  /**
+   * calculates actor valor point data
+   * @param {valorActor} actor
+   * @param characterType
+   */
   calculateValor(actor, characterType) {
     if (characterType.hasValor === false) {
       actor.system.statistic.valor.value = 0;
@@ -291,6 +377,11 @@ export class valorActor extends Actor {
     }
   }
 
+  /**
+   * calculates number of ultimate techniques an actor has
+   * @param {valorActor} actor
+   * @param {object} characterType
+   */
   calculateUltimateTechniques(actor, characterType) {
     if (characterType.hasUltimateTechnique === false) {
       actor.system.misc.ultimateTechniques.value = 0;
@@ -299,14 +390,15 @@ export class valorActor extends Actor {
     }
   }
 
+  /**
+   * calculate actor increment values
+   * @param {valorActor} actor
+   */
   calculateIncrements(actor) {
     actor.system.statistic.health.increment.value = Math.ceil(actor.system.statistic.health.max.value / 5);
     actor.system.statistic.health.critical.value = (actor.system.statistic.health.increment.value * 2) - 1;
     actor.system.statistic.stamina.increment.value = Math.ceil(actor.system.statistic.stamina.max.value / 5);
   }
-
-
-
 
   /**
    * Override getRollData() that's supplied to rolls.
@@ -333,23 +425,6 @@ export class valorActor extends Actor {
         data[k] = foundry.utils.deepClone(v);
       }
     }
-
-    if(data.statistic.health) {
-      data.health = {};
-      data.health.value = foundry.utils.deepClone(data.statistic.health.value);
-      data.health.max = foundry.utils.deepClone(data.statistic.health.max.value);
-    }
-
-    if(data.statistic.stamina) {
-      data.stamina = {};
-      data.stamina.value = foundry.utils.deepClone(data.statistic.stamina.value);
-      data.stamina.max = foundry.utils.deepClone(data.statistic.stamina.max.value);
-    }
-
-    // Add level for easier access, or fall back to 0.
-    // if (data.attributes.level) {
-    //   data.lvl = data.attributes.level.value ?? 0;
-    // }
   }
 
 

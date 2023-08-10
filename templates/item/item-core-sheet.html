@@ -2,7 +2,11 @@
     <header class="sheet-header">
         <img class="item-image" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
         <div class="header-fields">
-            <span class="valor titlebox season4dark"><input class="valor charname season4dark" name="name" type="text" value="{{item.name}}" placeholder="Name"/></span>
+
+            <div class="titlebox season4 text-border1">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+            </div>
+
         </div>
     </header>
 
@@ -17,12 +21,13 @@
 
         {{!-- Description Tab --}}
         <div class="tab" data-group="primary" data-tab="description">
-            <div class="valor orange-box">
+            <div class="valor season4 background">
                 <i>{{editor content=system.text.flavor.default target="system.text.flavor.default" rollData=rollData button=true owner=owner editable=editable}}</i>
             </div>
-            <h2 for="system.text.effect" class="resource-label">Effect</h2>
+            <br>
+            <h2 for="system.text.effect" class="resource-label season4 text-border1">Effect</h2>
             {{editor content=system.text.crunch.effect target="system.text.crunch.effect" rollData=rollData button=true owner=owner editable=editable}}
-            <h2 for="system.text.special" class="resource-label">Special</h2>
+            <h2 for="system.text.special" class="resource-label season4 text-border1">Special</h2>
             {{editor content=system.text.crunch.special target="system.text.crunch.special" rollData=rollData button=true owner=owner editable=editable}}
         </div>
 

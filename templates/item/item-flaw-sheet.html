@@ -2,67 +2,76 @@
     <header class="sheet-header">
         <img class="item-image" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
         <div class="header-fields">
-            <span class="valor titlebox season4dark"><input class="valor charname season4dark" name="name" type="text" value="{{item.name}}" placeholder="Name"/></span>
-            <div class="resources grid grid-3col">
-                <div class="resource flex-group-center">
-                    <label for="system.level.value" class="resource-label">Level</label>
-                    <div class="resource-content flexrow flex-center flex-between">
+            <div class="titlebox season2 text-border1">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+
+                <div class="grid grid-3col titlebox-right season2 text-border2">
+
+                    <span></span>
+
+                    <div class="flex-group-center level">
                         <input type="text" name="system.level.value" value="{{system.level.value}}" data-dtype="Number"/>
+                        <label for="system.misc.level.value" class="resource-label">Level</label>
                     </div>
-                </div>
-                <div class="resource flex-group-center">
-                    <label for="system.progression" class="resource-label">Progression</label>
-                    <div class="resource-content flexrow flex-center flex-between">
-                        <input type="text" name="system.progression" value="{{system.progression}}" data-dtype="String"/>
-                    </div>
-                </div>
-                <div class="resource flex-group-center">
-                    <label for="system.sp.value" class="resource-label">Bonus SP</label>
-                    <div class="resource-content flexrow flex-center flex-between">
+
+                    <div class="flex-group-center level">
                         <input type="text" name="system.sp.value" value="{{system.sp.value}}" data-dtype="Number"/>
+                        <label for="system.sp.value" class="resource-label">SP</label>
                     </div>
                 </div>
+            </div>
+
             </div>
         </div>
     </header>
 
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="details">Details</a>
-        <a class="item" data-tab="modifiers">Modifiers</a>
+        <a class="item season2 text-border1" data-tab="description">Description</a>
+        <a class="item season2 text-border1" data-tab="details">Details</a>
+        <a class="item season2 text-border1" data-tab="modifiers">Modifiers</a>
     </nav>
 
     {{!-- Sheet Body --}}
     <section class="sheet-body">
         {{!-- Description Tab --}}
         <div class="tab" data-group="primary" data-tab="description">
-            <div class="valor orange-box">
+            <div class="valor season2 background">
                 <i>{{editor content=system.text.flavor target="system.text.flavor" rollData=rollData button=true owner=owner editable=editable}}</i>
             </div>
-            <h2 for="system.text.effect" class="resource-label">Effect</h2>
+            <br>
+            <h2 for="system.text.effect" class="resource-label season2 text-border1">Effect</h2>
             {{editor content=system.text.effect target="system.text.effect" rollData=rollData button=true owner=owner editable=editable}}
-            <h2 for="system.text.levelUp" class="resource-label">Level Up</h2>
+            <h2 for="system.text.levelUp" class="resource-label season2 text-border1">Level Up</h2>
             {{editor content=system.text.levelUp target="system.text.levelUp" rollData=rollData button=true owner=owner editable=editable}}
-            <h2 for="system.text.special" class="resource-label">Special</h2>
+            <h2 for="system.text.special" class="resource-label season2 text-border1">Special</h2>
             {{editor content=system.text.special target="system.text.special" rollData=rollData button=true owner=owner editable=editable}}
         </div>
 
         {{!-- Details Tab --}}
         <div class="tab" data-group="primary" data-tab="details">
-            <div class="resources grid grid-2col">
+            <div class="resources grid grid-3col">
                 <div class="resource flex-group-center">
                     <label for="system.sp.base" class="resource-label">Base Bonus SP</label>
                     <div class="resource-content flexrow flex-center flex-between">
                         <input type="text" name="system.sp.base" value={{system.sp.base}} data-dtype="Number"/>
                     </div>
                 </div>
+
                 <div class="resource flex-group-center">
                     <label for="system.sp.levelUp" class="resource-label">Bonus SP on Lvl Up</label>
                     <div class="resource-content flexrow flex-center flex-between">
                         <input type="text" name="system.sp.levelUp" value="{{system.sp.levelUp}}" data-dtype="Number"/>
                     </div>
                 </div>
+
+                <div class="resources grid grid-3col">
+                    <div class="resource flex-group-center">
+                        <label for="system.progression" class="resource-label">Progression</label>
+                        <div class="resource-content flexrow flex-center flex-between">
+                            <input type="text" name="system.progression" value="{{system.progression}}" data-dtype="String"/>
+                        </div>
+                    </div>
             </div>
         </div>
 

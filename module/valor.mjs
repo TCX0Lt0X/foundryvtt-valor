@@ -59,6 +59,16 @@ Hooks.once('init', async function() {
   return preloadHandlebarsTemplates();
 });
 
+//preload Technique Compendium
+Hooks.once('ready', async function() {
+  const techCompendium = game.packs.get("valor.techniques");
+
+  for (let techComponent of techCompendium.index) {
+    fromUuid(techComponent.uuid);
+    console.log(techComponent)
+  }
+});
+
 /* -------------------------------------------- */
 /*  Handlebars Helpers                          */
 /* -------------------------------------------- */

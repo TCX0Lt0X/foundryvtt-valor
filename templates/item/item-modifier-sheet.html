@@ -2,7 +2,22 @@
     <header class="sheet-header">
         <img class="item-image" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
         <div class="header-fields">
-            <span class="valor titlebox season4dark"><input class="valor charname season4dark" name="name" type="text" value="{{item.name}}" placeholder="Name"/></span>
+
+            <div class="titlebox season{{system.season}} text-border1">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+                <div class="grid grid-3col titlebox-right season{{system.season}} text-border2">
+
+                    <span></span>
+
+                    <span></span>
+
+                    <div class="flex-group-center level season{{system.season}} text-border2">
+                        <input type="text" name="system.season" value="{{system.season}}" data-dtype="Number"/>
+                        <label for="system.misc.season.value" class="resource-label">Season</label>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </header>
 
@@ -17,14 +32,15 @@
 
         {{!-- Description Tab --}}
         <div class="tab" data-group="primary" data-tab="description">
-            <div class="valor orange-box">
+            <div class="valor season{{system.season}} background">
                 <i>{{editor content=system.text.flavor.default target="system.text.flavor.default" rollData=rollData button=true owner=owner editable=editable}}</i>
             </div>
-            <h2 for="system.text.crunch.effect" class="resource-label">Effect</h2>
+            <br>
+            <h2 for="system.text.crunch.effect" class="resource-label season{{system.season}} text-border1">Effect</h2>
             {{editor content=system.text.crunch.effect target="system.text.crunch.effect" rollData=rollData button=true owner=owner editable=editable}}
-            <h2 for="system.text.crunch.levelUp" class="resource-label">Level Up</h2>
+            <h2 for="system.text.crunch.levelUp" class="resource-label season{{system.season}} text-border1">Level Up</h2>
             {{editor content=system.text.crunch.levelUp target="system.text.crunch.levelUp" rollData=rollData button=true owner=owner editable=editable}}
-            <h2 for="system.text.crunch.special" class="resource-label">Special</h2>
+            <h2 for="system.text.crunch.special" class="resource-label season{{system.season}} text-border1">Special</h2>
             {{editor content=system.text.crunch.special target="system.text.crunch.special" rollData=rollData button=true owner=owner editable=editable}}
         </div>
 
@@ -49,17 +65,6 @@
                     <div class="resource-content flex-group-center flex-between">
                         <label class="resource-label">Per Level</label>
                         <input type="text" name="system.techniqueLevelModifier.perLevel" value="{{system.techniqueLevelModifier.perLevel}}" data-dtype="Number"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="resource-content flexrow flex-group-right flex-between">
-                <label class="resource-label">Season: </label>
-                <div class="resources grid grid-5col flex-group-right">
-                    <div class="resource-content flex-group-center flex-between">
-                        <label class="resource-label">Per Level
-                            <input type="text" name="system.season" value="{{system.season}}" data-dtype="Number"/>
-                        </label>
                     </div>
                 </div>
             </div>

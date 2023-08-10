@@ -1,11 +1,5 @@
 export const VALOR = {};
 
-// Define constants here, such as:
-VALOR.foobar = {
-  'bas': 'VALOR.bas',
-  'bar': 'VALOR.bar'
-};
-
 /**
  * The set of Ability Scores used within the sytem.
  * @type {Object}
@@ -34,6 +28,10 @@ VALOR.activeAbilities = {
   "resolve": "VALOR.AbilityRes"
 };
 
+/**
+ * Abbreviations of attributes.
+ * @type {Object}
+ */
 VALOR.abilityAbbreviations = {
   "str": "VALOR.AbilityStrAbbr",
   "agi": "VALOR.AbilityAgiAbbr",
@@ -47,6 +45,11 @@ VALOR.abilityAbbreviations = {
   "res": "VALOR.AbilityResAbbr"
 };
 
+/**
+ * actor data which can be altered by
+ * valorActiveEffects
+ * @type {Object}
+ * */
 VALOR.activeEffectStats = {
   "system.attribute.strength.value": "VALOR.baseAttributeStr",
   "system.attribute.agility.value": "VALOR.baseAttributeAgi",
@@ -92,6 +95,10 @@ VALOR.activeEffectStats = {
   "system.rollModifiers.defenseRolls.resolve": "VALOR.rollMod.defense.res"
 };
 
+/**
+ * modifiers for actor based on valor character type
+ * @type {Object}
+ * */
 VALOR.characterTypes = {
   flunkie: {
     baseSize: 1,
@@ -251,6 +258,10 @@ VALOR.characterTypes = {
   }
 }
 
+/**
+ * progression values for skills
+ * @type {Object}
+ * */
 VALOR.skills = {
   progression: {
     "fixed": Number.POSITIVE_INFINITY,

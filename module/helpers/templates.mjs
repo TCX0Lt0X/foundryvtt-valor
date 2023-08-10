@@ -7,11 +7,9 @@
   return loadTemplates([
 
       // Actor partials.
-      "systems/valor/templates/actor/parts/actor-flaws.html",
       "systems/valor/templates/actor/parts/actor-techniques.html",
       "systems/valor/templates/actor/parts/actor-items.html",
-      "systems/valor/templates/actor/parts/actor-skills.html",
-      "systems/valor/templates/actor/parts/actor-spells.html",
+      "systems/valor/templates/actor/parts/actor-skillsflaws.html",
       "systems/valor/templates/actor/parts/actor-effects.html",
 
       // Item partials.

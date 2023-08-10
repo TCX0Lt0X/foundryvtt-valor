@@ -2,19 +2,23 @@
   <header class="sheet-header">
     <img class="item-image" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
     <div class="header-fields">
-      <span class="valor titlebox season4dark"><input class="valor charname season4dark" name="name" type="text" value="{{item.name}}" placeholder="Name"/></span>
-      <div class="resources grid grid-2col">
-        <div class="resource flex-group-center">
-          <label for="system.technique.cost.stamina.value" class="resource-label">Stamina Cost</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.cost.stamina.value" value="{{system.cost.stamina.value}}" data-dtype="Number"/>
+      <div class="titlebox season2 text-border1">
+        <input class="season4 text-border2" name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+
+        <div class="grid grid-3col titlebox-right season2 text-border2">
+
+          <span></span>
+
+          <div class="flex-group-center level">
+            <input class="season4 text-border1" type="text" name="system.cost.stamina.value" value="{{system.cost.stamina.value}}" data-dtype="Number"/>
+            <label for="system.cost.stamina.value" class="resource-label season4 text-border2">Cost</label>
           </div>
-        </div>
-        <div class="resource flex-group-center">
-          <label for="system.technique.level.techniqueLevel" class="resource-label">Technique Level</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="system.level.techniqueLevel" value="{{system.level.techniqueLevel}}" data-dtype="Number"/>
+
+          <div class="flex-group-center level">
+            <input class="season4 text-border1" type="text" name="system.level.value" value="{{system.level.techniqueLevel}}" data-dtype="Number"/>
+            <label for="system.level.techniqueLevel" class="resource-label season4 text-border2">Level</label>
           </div>
+
         </div>
       </div>
     </div>
@@ -23,133 +27,175 @@
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="attributes">Attributes</a>
-    <a class="item" data-tab="description">Description</a>
   </nav>
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
+
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
-      <section class="grid grid-3col">
-        <aside class="sidebar">
-          <div class="resources green-box flexcol">
-            <div class="resource flexrow flex-group-center">
-              <label for="system.action" class="resource-label rollable flexlarge align-left" data-label="Action">Action: </label>
-              <input type="text" name="system.action" value="{{system.action}}" data-dtype="String"/>
-            </div>
-            <div class="resource flexrow flex-group-center">
-              <label for="system.targets" class="resource-label rollable flexlarge align-left" data-label="Targets">Target(s): </label>
-              <input type="text" name="system.targets" value="{{system.targets}}" data-dtype="Number"/>
-            </div>
-            <div class="resource flexrow flex-group-center">
-              <label for="system.range" class="resource-label rollable flexlarge align-left" data-label="Range">Range: </label>
-              <input type="text" name="system.range.max" value="{{system.range.max}}" data-dtype="Number"/>
-            </div>
-            <div class="resource flexrow flex-group-center">
-              <label for="system.area" class="resource-label rollable flexlarge align-left" data-label="Area">Area: </label>
-              <input type="text" name="system.area.xAxis" value="{{system.area.xAxis}}" data-dtype="Number"/>
-              <span>x</span>
-              <input type="text" name="system.area.yAxis" value="{{system.area.yAxis}}" data-dtype="Number"/>
-            </div>
-            <div class="resource flexrow flex-group-center">
-              <label for="system.attribute.effect" class="resource-label rollable flexlarge align-left" data-label="Effect">Effect Roll: </label>
-              <input type="text" name="system.attribute.effect" value="{{system.attribute.effect}}" data-dtype="String"/>
-            </div>
-            <div class="resource flexrow flex-group-center">
-              <label for="system.attribute.opposedRoll" class="resource-label rollable flexlarge align-left" data-label="Opposed">Opposed Roll: </label>
-              <input type="text" name="system.attribute.opposedRoll" value="{{system.attribute.opposedRoll}}" data-dtype="String"/>
-            </div>
+      <section class="grid grid-5col">
+
+        <div class="resources flexcol attribute-box season2 text-border1 background">
+          <div class="resource flexrow flex-group-center season4 text-border1">
+            <label for="system.action" class="resource-label rollable flexlarge align-left" data-label="Action">Action: </label>
+            {{system.action}}
           </div>
-        </aside>
-        <div class="grid grid-2col">
-          <div class="resource flex-group-center">
-            <label for="system.core.name" class="resource-label" data-label="Core">Core
-              <div>
-              <select id="coreSelect" name="system.core._id">
-                {{#select system.core._id}}
+          <div class="resource flexrow flex-group-center season4 text-border1">
+            <label for="system.targets" class="resource-label rollable flexlarge align-left" data-label="Targets">Target(s): </label>
+            {{system.targets}}
+          </div>
+          <div class="resource flexrow flex-group-center season4 text-border1">
+            <label for="system.range" class="resource-label rollable flexlarge align-left" data-label="Range">Range: </label>
+            {{system.range.max}}
+          </div>
+          <div class="resource flexrow flex-group-center season4 text-border1">
+            <label for="system.area" class="resource-label rollable flexlarge align-left" data-label="Area">Area: </label>
+            {{system.area.xAxis}}
+            <span>x</span>
+            {{system.area.yAxis}}
+          </div>
+          <div class="resource flexrow flex-group-center season4 text-border1">
+            <label for="system.attribute.opposedRoll" class="resource-label rollable flexlarge align-left" data-label="Opposed">Opposed Roll: </label>
+            {{system.attribute.opposedRoll}}
+          </div>
+        </div>
+
+        <div class="item-list-container season1 text-border1" style="--columns: 2;">
+
+          {{!--Core--}}
+          <label class="resource-label" data-label="Core">Core
+            <div>
+              <select class="techOptSelect">
                 <option value='{{system.core._id}}'>{{ system.core.name }}</option>
                 {{#each compendiumCores}}
                 <option value='{{this._id}}'>{{ this.name }}</option>
                 {{/each}}
-                {{/select}}
               </select>
-              </div>
-            </label>
-            <label for="flags.valor.technique.modifier" class="resource-label rollable flexlarge align-left" data-label="Mods">Mods</label>
-            {{#each flags.valor.technique.modifier as |techMod techId|}}
-              <li class="item-name flexrow grid grid-3col">
-                <span class="item-name flexrow">{{techMod.name}}</span>
-                <input type="text" name="flags.valor.technique.modifier.{{techId}}.level" value="{{techMod.level}}" data-dtype="Number"/>
-                <a class="techOpt" data-action="delete" title="{{localize 'VALOR.ModifierDelete'}}" value="{{techId}}">
-                  <i class="fas fa-trash"value="{{techId}}"></i>
-                </a>
+
+              <label for="system.level.coreLevel" class="resource-label rollable flexlarge align-left" data-label="Core Power">Core Power
+                <input type="text" name="system.level.coreLevel" value="{{system.level.coreLevel}}" data-dtype="Number"/>
+              </label>
+            </div>
+          </label>
+
+          <br>
+
+          <label class="resource-label">Modifiers
+            <ol class="items-list season3 text-border1">
+              <li class="item flexrow items-header season3 background">
+                <div class="item-name">Name</div>
+                <div class="item-controls">
+<!--                  <a class="item-control item-create" title="Create item" data-type="skill"><i class="fas fa-plus"></i> Add Skill</a>-->
+                </div>
               </li>
-            {{/each}}
-            <select class="techOptSelect">
-              <option value=-1>- Add Modifier -</option>
-              <option value=-1>-</option>
-              {{#each compendiumMods}}
-              <option value='{{this._id}}'>{{ this.name }}</option>
+              {{#each flags.valor.technique.modifier as |item id|}}
+              <li class="item flexrow" data-item-id="{{item._id}}">
+                <div class="item-name">
+<!--                  <div class="item-image">-->
+<!--                    <a class="rollable" data-roll-type="item"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></a>-->
+<!--                  </div>-->
+                  <h4>{{item.name}}</h4>
+                </div>
+                <div class="item-image">
+                  <input type="text" name="flags.valor.technique.modifier.{{id}}.level" value="{{item.level}}" data-dtype="Number"/>
+                </div>
+                <div class="item-controls">
+<!--                  <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>-->
+                  <a class="techOpt" data-action="delete" title="{{localize 'VALOR.ModifierDelete'}}" value="{{id}}"><i class="fas fa-trash" value="{{id}}"></i></a>
+                </div>
+              </li>
               {{/each}}
-            </select>
+            </ol>
+            <br>
+            <label for="flags.valor.technique.modifier" class="resource-label rollable flexlarge align-left" data-label="Mods">
+              <select class="techOptSelect">
+                <option value=-1>- Add Modifier -</option>
+                <option value=-1>-</option>
+                {{#each compendiumMods}}
+                <option value='{{this._id}}'>{{ this.name }}</option>
+                {{/each}}
+              </select>
+            </label>
+          </label>
 
-<!--            <div>-->
-<!--              <select name="system.core._id" onChange="testOnCVhange(this)">-->
-<!--                {{#select system.core._id}}-->
-<!--                {{#each compendiumCores}}-->
-<!--                <option value='{{this._id}}'>{{ this.name }}</option>-->
-<!--                {{/each}}-->
-<!--                {{/select}}-->
-<!--              </select>-->
-<!--            </div>-->
-
-
-
-          </div>
-          <div class="resource flex-group-center ">
-            <label for="system.level.coreLevel" class="resource-label rollable flexlarge align-left" data-label="Core Power">Core Power</label>
-            <input type="text" name="system.level.coreLevel" value="{{system.level.coreLevel}}" data-dtype="Number"/>
-
-            <label for="flags.valor.technique.limit" class="resource-label rollable flexlarge align-left" data-label="Limit">Limits</label>
-            {{#each flags.valor.technique.limit as |techLimit techId|}}
-            <li class="item-name flexrow grid grid-3col">
-              <span class="item-name flexrow">{{techLimit.name}}</span>
-              <input type="text" name="flags.valor.technique.limit.{{techId}}.level" value="{{techLimit.level}}" data-dtype="Number"/>
-              <a class="techOpt" data-action="delete" title="{{localize 'VALOR.ModifierDelete'}}" value="{{techId}}">
-                <i class="fas fa-trash"value="{{techId}}"></i>
-              </a>
-            </li>
-            {{/each}}
-            <select class="techOptSelect">
-              <option value='-1'>- Add Limit -</option>
-              <option value='-1'>-</option>
-              {{#each compendiumLimits}}
-              <option value='{{this._id}}'>{{ this.name }}</option>
-              {{/each}}
-            </select>
-          </div>
         </div>
 
 
+        <div class="item-list-container season4 text-border1" style="--columns: 2;">
+
+          <label class="resource-label" data-label="Attribute">Attribute
+            <div>
+              <select class="techOptSelect">
+                <option value='{{system.attribute.effect}}'>{{ system.attribute.effect }}</option>
+                {{#each system.core.system.applicableAttributes}}
+                {{#if this}}
+                <option value='{{@key}}'>{{@key}}</option>
+                {{/if}}
+                {{/each}}
+              </select>
+            </div>
+          </label>
+
+          <br>
+
+          <label class="resource-label">Limits
+            <ol class="items-list season4 text-border1">
+              <li class="item flexrow items-header season4 background">
+                <div class="item-name">Name</div>
+                <div class="item-controls">
+                  <!--                  <a class="item-control item-create" title="Create item" data-type="skill"><i class="fas fa-plus"></i> Add Skill</a>-->
+                </div>
+              </li>
+              {{#each flags.valor.technique.limit as |item id|}}
+              <li class="item flexrow" data-item-id="{{item._id}}">
+                <div class="item-name">
+                  <!--                  <div class="item-image">-->
+                  <!--                    <a class="rollable" data-roll-type="item"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></a>-->
+                  <!--                  </div>-->
+                  <h4>{{item.name}}</h4>
+                </div>
+                <div class="item-image">
+                  <input type="text" name="flags.valor.technique.limit.{{id}}.level" value="{{item.level}}" data-dtype="Number"/>
+                </div>
+                <div class="item-controls">
+                  <!--                  <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>-->
+                  <a class="techOpt" data-action="delete" title="{{localize 'VALOR.LimitDelete'}}" value="{{id}}"><i class="fas fa-trash"value="{{id}}"></i></a>
+                </div>
+              </li>
+              {{/each}}
+            </ol>
+            <br>
+            <label for="flags.valor.technique.limit" class="resource-label rollable flexlarge align-left" data-label="Limits">
+              <select class="techOptSelect">
+                <option value='-1'>- Add Limit -</option>
+                <option value='-1'>-</option>
+                {{#each compendiumLimits}}
+                <option value='{{this._id}}'>{{ this.name }}</option>
+                {{/each}}
+              </select>
+            </label>
+          </label>
+        </div>
       </section>
+
+      <br>
+
       <div>
-        <div class="resource flex-group-center ">
-          <label for="system.text.crunch.effect" class="resource-label rollable flexlarge align-left" data-label="Effects">Effects</label>
-          <textarea name = "system.text.crunch.effect" placeholder="What does the effect do mechanically?">{{system.text.crunch.effect}}</textarea>
-          <textarea name = "system.text.crunch.special" value="{{system.text.crunch.special}}" placeholder="What special properties does this effect have?"></textarea>
-        </div>
-        <div class="resource flex-group-center ">
-          <label for="system.text.flavor" class="resource-label rollable flexlarge align-left" data-label="Flavor">Flavor Text</label>
-          <textarea name = "system.text.flavor.user" placeholder="{{system.text.flavor.default}}">{{system.text.flavor.user}}</textarea>
+        <div class="resource">
+          <div class="valor season2 light background">
+            <i>{{editor content=system.text.flavor.default target="system.text.flavor.default" rollData=rollData button=true owner=owner editable=editable}}</i>
+          </div>
+
+          <br>
+
+          <div class="resource">
+            <h2 for="system.text.effect" class="resource-label season2 text-border1">Effect</h2>
+            {{editor content=system.text.crunch.effect target="system.text.crunch.effect" rollData=rollData button=true owner=owner editable=editable}}
+          </div>
         </div>
       </div>
     </div>
 
-    {{!-- Description Tab --}}
-    <div class="tab" data-group="primary" data-tab="description">
-      {{editor content=system.description target="system.description" rollData=rollData button=true owner=owner editable=editable}}
-    </div>
-
   </section>
-
 </form>

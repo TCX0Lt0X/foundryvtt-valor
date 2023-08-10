@@ -341,7 +341,10 @@
       },
       "core": {
         "name": "",
-        "uuid": ""
+        "_id": "",
+        "uuid": "",
+        "flags": {},
+        "system": {}
       },
       "mods": {},
       "limits": {},

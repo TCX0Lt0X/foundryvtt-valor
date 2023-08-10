@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: valor.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: valor.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Import document classes.
+import { valorActor } from "./documents/actor.mjs";
+import { valorItem } from "./documents/item.mjs";
+import { valorActiveEffect } from "./documents/activeEffect.mjs";
+// Import sheet classes.
+import { valorActorSheet } from "./sheets/actor-sheet.mjs";
+import { valorItemSheet } from "./sheets/item-sheet.mjs";
+import { valorActiveEffectConfig } from "./sheets/valor-active-effect-sheet.mjs";
+// Import helper/utility classes and constants.
+import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
+import { VALOR } from "./helpers/config.mjs";
+import {_runCompendiumTechScript} from "./documents/items/technique.mjs";
+
+/* -------------------------------------------- */
+/*  Init Hook                                   */
+/* -------------------------------------------- */
+
+Hooks.once('init', async function() {
+
+  // Add utility classes to the global game object so that they're more easily
+  // accessible in global contexts.
+  game.valor = {
+    valorActor,
+    valorItem,
+    valorActiveEffect,
+    rollItemMacro
+  };
+
+  // Add custom constants for configuration.
+  CONFIG.VALOR = VALOR;
+  CONFIG.ActiveEffect.legacyTransferral = false;
+
+  /**
+   * Set an initiative formula for the system
+   * @type {String}
+   */
+  CONFIG.Combat.initiative = {
+    formula: "1d10 + @statistic.initiative.value",
+    decimals: 2
+  };
+
+  // Define custom Document classes
+  CONFIG.Actor.documentClass = valorActor;
+  CONFIG.Item.documentClass = valorItem;
+  CONFIG.ActiveEffect.documentClass = valorActiveEffect;
+  
+
+  // Register sheet application classes
+  Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet("valor", valorActorSheet, { makeDefault: true });
+  Items.unregisterSheet("core", ItemSheet);
+  Items.registerSheet("valor", valorItemSheet, { makeDefault: true });
+  DocumentSheetConfig.registerSheet(ActiveEffect, 'valor', valorActiveEffectConfig, {makeDefault: true})
+
+  //enable sockets
+  game.socket.on('system.valor', await handleSocketEvent);
+
+  // Preload Handlebars templates.
+  return preloadHandlebarsTemplates();
+});
+
+//preload Technique Compendium
+Hooks.once('ready', async function() {
+  const techCompendium = game.packs.get("valor.techniques");
+
+  for (let techComponent of techCompendium.index) {
+    fromUuid(techComponent.uuid);
+    console.log(techComponent)
+  }
+});
+
+/* -------------------------------------------- */
+/*  Handlebars Helpers                          */
+/* -------------------------------------------- */
+
+// If you need to add Handlebars helpers, here are a few useful examples:
+Handlebars.registerHelper('concat', function() {
+  var outStr = '';
+  for (var arg in arguments) {
+    if (typeof arguments[arg] != 'object') {
+      outStr += arguments[arg];
+    }
+  }
+  return outStr;
+});
+
+Handlebars.registerHelper('toLowerCase', function(str) {
+  return str.toLowerCase();
+});
+
+/* -------------------------------------------- */
+/*  Ready Hook                                  */
+/* -------------------------------------------- */
+
+Hooks.once("ready", async function() {
+  // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
+  Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
+});
+
+/* -------------------------------------------- */
+/*  Hotbar Macros                               */
+/* -------------------------------------------- */
+
+/**
+ * Create a Macro from an Item drop.
+ * Get an existing item macro if one exists, otherwise create a new one.
+ * @param {Object} data     The dropped data
+ * @param {number} slot     The hotbar slot to use
+ * @returns {Promise}
+ */
+async function createItemMacro(data, slot) {
+  if (data.type !== "Item") return;
+  if (!("data" in data)) return ui.notifications.warn("You can only create macro buttons for owned Items");
+  const item = system;
+
+  // Create the macro command
+  const command = `game.valor.rollItemMacro("${item.name}");`;
+  let macro = game.macros.find(m => (m.name === item.name) &amp;&amp; (m.command === command));
+  if (!macro) {
+    macro = await Macro.create({
+      name: item.name,
+      type: "script",
+      img: item.img,
+      command: command,
+      flags: { "valor.itemMacro": true }
+    });
+  }
+  game.user.assignHotbarMacro(macro, slot);
+  return false;
+}
+
+/**
+ * Create a Macro from an Item drop.
+ * Get an existing item macro if one exists, otherwise create a new one.
+ * @param {string} itemName
+ * @return {Promise}
+ */
+function rollItemMacro(itemName) {
+  const speaker = ChatMessage.getSpeaker();
+  let actor;
+  if (speaker.token) actor = game.actors.tokens[speaker.token];
+  if (!actor) actor = game.actors.get(speaker.actor);
+  const item = actor ? actor.items.find(i => i.name === itemName) : null;
+  if (!item) return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
+
+  // Trigger the item roll
+  return item.roll();
+}
+
+/* -------------------------------------------- */
+/*  Socket Functions                             */
+/* -------------------------------------------- */
+
+//handle Socket Events
+async function handleSocketEvent({type, ...args}) {
+  switch(type) {
+    case 'TECHCOMPENDIUMSCRIPT':
+      console.log(args)
+      await _runCompendiumTechScript(args.technique, args.item);
+      break;
+  }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="valorActiveEffect.html">valorActiveEffect</a></li><li><a href="valorActiveEffectConfig.html">valorActiveEffectConfig</a></li><li><a href="valorActor.html">valorActor</a></li><li><a href="valorActorSheet.html">valorActorSheet</a></li><li><a href="valorItem.html">valorItem</a></li><li><a href="valorItemSheet.html">valorItemSheet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createItemMacro">createItemMacro</a></li><li><a href="global.html#getActiveAttribute">getActiveAttribute</a></li><li><a href="global.html#getBaseAttribute">getBaseAttribute</a></li><li><a href="global.html#isLeastGM">isLeastGM</a></li><li><a href="global.html#onManageActiveEffect">onManageActiveEffect</a></li><li><a href="global.html#onManageModifier">onManageModifier</a></li><li><a href="global.html#onTechOptChange">onTechOptChange</a></li><li><a href="global.html#onTechOptDelete">onTechOptDelete</a></li><li><a href="global.html#preloadHandlebarsTemplates">preloadHandlebarsTemplates</a></li><li><a href="global.html#prepareActiveEffectCategories">prepareActiveEffectCategories</a></li><li><a href="global.html#prepareModifiers">prepareModifiers</a></li><li><a href="global.html#rollItemMacro">rollItemMacro</a></li><li><a href="global.html#updateGrandParent">updateGrandParent</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Aug 10 2023 15:04:44 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

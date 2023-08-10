@@ -3,8 +3,8 @@ import { VALOR } from "../helpers/config.mjs"
 import {updateGrandParent} from "../utils.mjs";
 
 /**
- * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
- * @extends {Actor}
+ * Extend the base ActiveEffect for modification.
+ * @override
  */
 export class valorActiveEffect extends ActiveEffect {
 
@@ -16,6 +16,15 @@ export class valorActiveEffect extends ActiveEffect {
         updateGrandParent(activeEffect);
     }
 
+
+    /**
+     * used to update actor of activeEffects parent item when updated
+     * @override
+     * @param data
+     * @param options
+     * @param userId
+     * @private
+     */
     _onUpdate(data, options, userId) {
         let activeEffect = this;
 
@@ -24,6 +33,14 @@ export class valorActiveEffect extends ActiveEffect {
         updateGrandParent(activeEffect);
     }
 
+    /**
+     * used to update actor of activeEffects parent item when deleted
+     * @override
+     * @param data
+     * @param options
+     * @param userId
+     * @private
+     */
     _onDelete(options, userId) {
         let activeEffect = this;
 

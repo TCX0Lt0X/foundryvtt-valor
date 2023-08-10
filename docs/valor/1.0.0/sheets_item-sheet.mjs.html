@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: sheets/item-sheet.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: sheets/item-sheet.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
+import {onManageModifier, prepareModifiers} from "../helpers/modifiers.mjs";
+import {onTechOptChange, onTechOptDelete} from "../utils.mjs";
+import {VALOR} from "../helpers/config.mjs";
+
+/**
+ * Extend the basic ItemSheet with some very simple modifications
+ * @extends {ItemSheet}
+ */
+export class valorItemSheet extends ItemSheet {
+
+  /** @override */
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+      classes: ["valor", "sheet", "item"],
+      width: 620,
+      height: 480,
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
+    });
+  }
+
+  /** @override */
+  get template() {
+    const path = "systems/valor/templates/item";
+    // Return a single sheet for all item types.
+    // return `${path}/item-sheet.html`;
+
+    // Alternatively, you could use the following return statement to do a
+    // unique item sheet by type, like `weapon-sheet.html`.
+    return `${path}/item-${this.item.type}-sheet.html`;
+  }
+
+  /* -------------------------------------------- */
+
+  /** @override */
+  getData() {
+    // Retrieve base data structure.
+    const context = super.getData();
+
+
+    // Use a safe clone of the item data for further operations.
+    const item = context.item;
+
+    context.VALOR = VALOR;
+
+    // Retrieve the roll data for TinyMCE editors.
+    context.rollData = {};
+    let actor = this.object?.parent ?? null;
+    if (actor) {
+      context.rollData = actor.getRollData();
+    }
+
+    // Add the actor's data to context.data for easier access, as well as flags.
+    context.system = item.system;
+    context.flags = item.flags;
+
+    // Prepare active effect
+    //context.effects = prepareActiveEffectCategories(item.effects);
+    context.effects = prepareModifiers(item.effects);
+
+    if(item.type === 'technique') {
+      this._prepareTechniqueSheetData(context);
+    }
+
+    return context;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * prepares data for Technique sheet by grabing Cores
+   * Modifiers, and Limits from Compendium
+   * @param context
+   * @private
+   */
+   _prepareTechniqueSheetData(context) {
+     const compendiumCores = [];
+     const compendiumMods = [];
+     const compendiumLimits = [];
+
+     let techCompendium = game.packs.get("valor.techniques");
+
+     for (let techComponent of techCompendium.index) {
+       if (techComponent.type === "core") {
+         compendiumCores.push(techComponent);
+       } else if (techComponent.type === "modifier") {
+         compendiumMods.push(techComponent);
+       } else if (techComponent.type === "limit") {
+         compendiumLimits.push(techComponent);
+       }
+     }
+
+
+     context.compendiumCores = compendiumCores;
+     context.compendiumMods = compendiumMods;
+     context.compendiumLimits = compendiumLimits;
+   }
+
+
+
+  /** @override */
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    // Everything below here is only needed if the sheet is editable
+    if (!this.isEditable) return;
+
+    // Roll handlers, click handlers, etc. would go here.
+    html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.item));
+
+    html.find(".modifier-control").click(ev => onManageModifier(ev, this.item));
+
+
+    //deletes a Modifier or Limit from Technique
+    html.find(".techOpt").click(ev => onTechOptDelete(ev.target.getAttribute('value'), this.item));
+
+    //changes a technique option (Core, Modifier, Limit, Attribute) to new value
+    html.find(".techOptSelect").on('change', ev => onTechOptChange(ev.target.value, this.item));
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="valorActiveEffect.html">valorActiveEffect</a></li><li><a href="valorActiveEffectConfig.html">valorActiveEffectConfig</a></li><li><a href="valorActor.html">valorActor</a></li><li><a href="valorActorSheet.html">valorActorSheet</a></li><li><a href="valorItem.html">valorItem</a></li><li><a href="valorItemSheet.html">valorItemSheet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createItemMacro">createItemMacro</a></li><li><a href="global.html#getActiveAttribute">getActiveAttribute</a></li><li><a href="global.html#getBaseAttribute">getBaseAttribute</a></li><li><a href="global.html#isLeastGM">isLeastGM</a></li><li><a href="global.html#onManageActiveEffect">onManageActiveEffect</a></li><li><a href="global.html#onManageModifier">onManageModifier</a></li><li><a href="global.html#onTechOptChange">onTechOptChange</a></li><li><a href="global.html#onTechOptDelete">onTechOptDelete</a></li><li><a href="global.html#preloadHandlebarsTemplates">preloadHandlebarsTemplates</a></li><li><a href="global.html#prepareActiveEffectCategories">prepareActiveEffectCategories</a></li><li><a href="global.html#prepareModifiers">prepareModifiers</a></li><li><a href="global.html#rollItemMacro">rollItemMacro</a></li><li><a href="global.html#updateGrandParent">updateGrandParent</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Aug 10 2023 15:04:44 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
