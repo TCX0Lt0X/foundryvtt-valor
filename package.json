@@ -6,7 +6,9 @@
     "build": "gulp build",
     "compile": "gulp css",
     "watch": "gulp",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "unpack": "node ./tools/unpack-compendia.mjs",
+    "pack": "node ./tools/pack-compendia.mjs"
   },
   "browserslist": [
     "last 3 versions"
@@ -20,5 +22,8 @@
     "gulp-sass": "^5",
     "gulp-sourcemaps": "^3",
     "jsdoc": "^4.0.2"
+  },
+  "devDependencies": {
+    "@foundryvtt/foundryvtt-cli": "^1.1.0"
   }
 }
